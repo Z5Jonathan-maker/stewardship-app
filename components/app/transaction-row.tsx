@@ -42,7 +42,7 @@ export function TransactionRow({
       </div>
 
       <div
-        className={`w-28 shrink-0 text-right text-sm font-semibold ${
+        className={`w-28 shrink-0 text-right text-sm font-semibold tabular-nums ${
           t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"
         }`}
       >

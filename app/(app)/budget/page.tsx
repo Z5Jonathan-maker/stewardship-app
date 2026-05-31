@@ -75,7 +75,7 @@ export default function BudgetPage() {
                           <span className="font-medium text-evergreen-800">
                             {b.emoji} {b.name}
                           </span>
-                          <span className={over ? "font-semibold text-destructive" : "text-evergreen-700"}>
+                          <span className={`tabular-nums ${over ? "font-semibold text-destructive" : "text-evergreen-700"}`}>
                             {formatCurrency(b.actual)} / {formatCurrency(b.budgeted)}
                           </span>
                         </div>

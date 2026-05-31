@@ -1,6 +1,8 @@
 import { formatCurrency } from "@/lib/utils";
 
-/** Grouped income/expense bar chart (pure SVG, no deps). */
+const GRIDLINES = [0.25, 0.5, 0.75, 1];
+
+/** Grouped income/expense bar chart (pure SVG/CSS, no deps). */
 export function CashFlowBars({
   data,
   height = 200,
@@ -8,28 +10,53 @@ export function CashFlowBars({
   data: { month: string; income: number; expenses: number }[];
   height?: number;
 }) {
-  const max = Math.max(...data.map((d) => Math.max(d.income, d.expenses))) * 1.1;
+  const max = Math.max(...data.map((d) => Math.max(d.income, d.expenses))) * 1.15 || 1;
   return (
     <div>
-      <div className="flex items-end gap-3" style={{ height }}>
-        {data.map((d) => (
-          <div key={d.month} className="flex h-full flex-1 flex-col items-center gap-2">
-            <div className="flex w-full flex-1 items-end justify-center gap-1.5">
+      <div className="relative" style={{ height }}>
+        {/* gridlines */}
+        <div className="pointer-events-none absolute inset-0">
+          {GRIDLINES.map((g) => (
+            <div
+              key={g}
+              className="absolute inset-x-0 border-t border-dashed border-border/60"
+              style={{ bottom: `${g * 100}%` }}
+            />
+          ))}
+        </div>
+        {/* baseline */}
+        <div className="absolute inset-x-0 bottom-0 border-t border-border" />
+        {/* bars */}
+        <div className="absolute inset-0 flex items-end gap-2 sm:gap-3">
+          {data.map((d) => (
+            <div
+              key={d.month}
+              className="group flex h-full flex-1 items-end justify-center gap-1 sm:gap-1.5"
+            >
               <div
-                className="w-1/3 rounded-t-md bg-evergreen-500 transition-all"
+                className="w-2.5 rounded-t-md bg-evergreen-500/90 transition-all duration-200 group-hover:bg-evergreen-500"
                 style={{ height: `${(d.income / max) * 100}%` }}
-                title={`Income ${formatCurrency(d.income)}`}
+                title={`${d.month} income · ${formatCurrency(d.income)}`}
               />
               <div
-                className="w-1/3 rounded-t-md bg-brand-400 transition-all"
+                className="w-2.5 rounded-t-md bg-brand-400/90 transition-all duration-200 group-hover:bg-brand-500"
                 style={{ height: `${(d.expenses / max) * 100}%` }}
-                title={`Expenses ${formatCurrency(d.expenses)}`}
+                title={`${d.month} expenses · ${formatCurrency(d.expenses)}`}
               />
             </div>
-            <span className="text-xs text-muted-foreground">{d.month}</span>
-          </div>
+          ))}
+        </div>
+      </div>
+
+      {/* month labels, aligned under each group */}
+      <div className="mt-2.5 flex gap-2 sm:gap-3">
+        {data.map((d) => (
+          <span key={d.month} className="flex-1 text-center text-xs text-muted-foreground">
+            {d.month}
+          </span>
         ))}
       </div>
+
       <div className="mt-4 flex items-center gap-5 text-xs text-evergreen-700">
         <Legend className="bg-evergreen-500" label="Income" />
         <Legend className="bg-brand-400" label="Expenses" />
@@ -38,7 +65,7 @@ export function CashFlowBars({
   );
 }
 
-/** Smooth area/line sparkline for trends (pure SVG). */
+/** Smooth area/line sparkline for trends, with an endpoint marker (pure SVG). */
 export function TrendLine({
   data,
   height = 120,
@@ -63,12 +90,13 @@ export function TrendLine({
     .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`)
     .join(" ");
   const areaPath = `${linePath} L ${width} ${height} L 0 ${height} Z`;
+  const end = points[points.length - 1];
 
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
-      className="h-full w-full"
+      className="h-full w-full overflow-visible"
       role="img"
       aria-label="Trend over time"
     >
@@ -78,6 +106,16 @@ export function TrendLine({
           <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
         </linearGradient>
       </defs>
+      {/* faint baseline */}
+      <line
+        x1="0"
+        y1={height - 0.5}
+        x2={width}
+        y2={height - 0.5}
+        stroke="hsl(var(--border))"
+        strokeWidth="1"
+        vectorEffect="non-scaling-stroke"
+      />
       <path d={areaPath} fill="url(#trendFill)" />
       <path
         d={linePath}
@@ -88,6 +126,9 @@ export function TrendLine({
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
       />
+      {/* endpoint marker */}
+      <circle cx={end.x} cy={end.y} r="3.5" fill="hsl(var(--primary))" vectorEffect="non-scaling-stroke" />
+      <circle cx={end.x} cy={end.y} r="6" fill="hsl(var(--primary))" fillOpacity="0.18" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }
@@ -98,7 +139,7 @@ export function BreakdownBars({
 }: {
   items: { name: string; emoji: string; amount: number }[];
 }) {
-  const total = items.reduce((s, i) => s + i.amount, 0);
+  const total = items.reduce((s, i) => s + i.amount, 0) || 1;
   return (
     <div className="space-y-3">
       {items.slice(0, 6).map((item) => {
@@ -109,13 +150,13 @@ export function BreakdownBars({
               <span className="text-evergreen-800">
                 {item.emoji} {item.name}
               </span>
-              <span className="font-medium text-evergreen-900">
+              <span className="font-medium tabular-nums text-evergreen-900">
                 {formatCurrency(item.amount)}
               </span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-brand-500"
+                className="h-full rounded-full bg-brand-500 transition-all duration-500"
                 style={{ width: `${pct * 100}%` }}
               />
             </div>

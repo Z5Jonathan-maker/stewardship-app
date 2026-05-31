@@ -17,7 +17,7 @@ export function GiftRow({ t }: { t: Transaction }) {
       </div>
       <div className="flex items-center gap-3">
         <Badge variant="brand">{t.category}</Badge>
-        <span className="w-24 text-right text-sm font-semibold text-evergreen-900">
+        <span className="w-24 text-right text-sm font-semibold tabular-nums text-evergreen-900">
           {formatCurrency(t.amount)}
         </span>
       </div>

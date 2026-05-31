@@ -92,7 +92,7 @@ export default function DashboardPage() {
                     <span className="font-medium text-evergreen-800">
                       {b.emoji} {b.name}
                     </span>
-                    <span className={over ? "font-semibold text-destructive" : "text-evergreen-700"}>
+                    <span className={`tabular-nums ${over ? "font-semibold text-destructive" : "text-evergreen-700"}`}>
                       {formatCurrency(b.actual)} / {formatCurrency(b.budgeted)}
                     </span>
                   </div>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
                     <p className="text-xs text-muted-foreground">{t.category}</p>
                   </div>
                 </div>
-                <span className={`text-sm font-semibold ${t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"}`}>
+                <span className={`text-sm font-semibold tabular-nums ${t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"}`}>
                   {formatCurrency(t.amount, { signed: true })}
                 </span>
               </div>

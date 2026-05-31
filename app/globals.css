@@ -72,10 +72,18 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "cv01", "cv11";
     text-rendering: optimizeLegibility;
+  }
+  /* Financial figures: tabular lining numerals so columns line up cleanly. */
+  .font-display,
+  .tnum {
+    font-variant-numeric: tabular-nums lining-nums;
   }
   ::selection {
     @apply bg-primary/20;
