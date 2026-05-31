@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme — warm cream canvas, evergreen ink, blue accent */
+    --background: 43 50% 98%;        /* cream-50 */
+    --foreground: 165 45% 9%;        /* evergreen-900 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 165 45% 9%;
+
+    --muted: 41 38% 94%;             /* cream-100 */
+    --muted-foreground: 165 12% 38%;
+
+    --accent: 226 100% 96%;          /* brand-50 */
+    --accent-foreground: 226 55% 28%;
+
+    --primary: 226 85% 59%;          /* brand-500 — the blue accent */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 165 35% 14%;        /* evergreen-800 */
+    --secondary-foreground: 43 50% 98%;
+
+    --success: 158 38% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 4 74% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 25% 88%;
+    --input: 40 25% 88%;
+    --ring: 226 85% 59%;
+
+    --radius: 0.875rem;
+  }
+
+  .dark {
+    /* Dark theme — deep evergreen, same blue accent */
+    --background: 165 40% 7%;
+    --foreground: 43 40% 96%;
+
+    --card: 165 36% 10%;
+    --card-foreground: 43 40% 96%;
+
+    --muted: 165 28% 14%;
+    --muted-foreground: 158 14% 64%;
+
+    --accent: 165 30% 16%;
+    --accent-foreground: 43 40% 96%;
+
+    --primary: 226 90% 66%;
+    --primary-foreground: 165 45% 9%;
+
+    --secondary: 165 28% 16%;
+    --secondary-foreground: 43 40% 96%;
+
+    --success: 158 42% 46%;
+    --success-foreground: 165 45% 9%;
+
+    --destructive: 4 74% 58%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 165 22% 18%;
+    --input: 165 22% 18%;
+    --ring: 226 90% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-primary/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Subtle dotted/grid texture used on marketing hero */
+  .bg-grid {
+    background-image: radial-gradient(
+      hsl(var(--foreground) / 0.05) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+}
