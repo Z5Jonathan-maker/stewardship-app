@@ -61,6 +61,16 @@ test("logging a gift appears in recent gifts", async ({ page }) => {
   await expect(page.getByText("Hope Mission")).toBeVisible();
 });
 
+test("command palette: hotkey opens, search result navigates", async ({ page }) => {
+  await page.goto("/dashboard");
+  await page.keyboard.press("ControlOrMeta+k");
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel("Search").fill("trader");
+  await dialog.getByText("Trader Joe's").click();
+  await expect(page).toHaveURL(/\/transactions/);
+});
+
 test("mobile drawer: opens, traps focus, and closes on Escape", async ({ page }) => {
   await page.goto("/dashboard");
   const burger = page.getByRole("button", { name: "Open menu" });

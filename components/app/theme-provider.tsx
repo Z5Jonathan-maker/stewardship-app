@@ -15,10 +15,14 @@ const STORAGE_KEY = "unite-theme";
 /** Holds the app's theme and applies a `.dark` class to its subtree (so the
  * marketing/auth sides stay light). Hydrates the stored/system preference
  * after mount to avoid a hydration mismatch. */
+// Runs before paint on the client (no flash), no-ops on the server.
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = React.useState<Theme>("light");
 
-  React.useEffect(() => {
+  useIsoLayoutEffect(() => {
     let initial: Theme | null = null;
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
