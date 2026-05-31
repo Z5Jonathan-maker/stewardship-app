@@ -1,4 +1,7 @@
+"use client";
+
 import { TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 import { categoryMeta } from "@/lib/categories";
 import {
@@ -61,16 +64,24 @@ export function AppMockup() {
             </span>
           </div>
           <div className="flex h-28 items-end justify-between gap-2">
-            {cashFlow.map((m) => (
+            {cashFlow.map((m, i) => (
               <div key={m.month} className="flex flex-1 flex-col items-center gap-1">
                 <div className="flex w-full items-end justify-center gap-0.5">
-                  <div
-                    className="w-2 rounded-t bg-evergreen-500"
+                  <motion.div
+                    className="w-2 origin-bottom rounded-t bg-evergreen-500"
                     style={{ height: `${(m.income / maxBar) * 88}px` }}
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.05 * i, ease: [0.16, 1, 0.3, 1] }}
                   />
-                  <div
-                    className="w-2 rounded-t bg-brand-400"
+                  <motion.div
+                    className="w-2 origin-bottom rounded-t bg-brand-400"
                     style={{ height: `${(m.expenses / maxBar) * 88}px` }}
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.05 * i + 0.06, ease: [0.16, 1, 0.3, 1] }}
                   />
                 </div>
                 <span className="text-[9px] text-muted-foreground">{m.month}</span>
@@ -139,9 +150,13 @@ function MiniBudget({
         <span className="text-evergreen-800">{name}</span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-        <div
+        <motion.div
           className="h-full rounded-full"
-          style={{ width: `${pct * 100}%`, backgroundColor: over ? "#d64545" : color }}
+          style={{ backgroundColor: over ? "#d64545" : color }}
+          initial={{ width: 0 }}
+          whileInView={{ width: `${pct * 100}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
     </div>

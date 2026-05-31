@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { CategoryIcon, CategoryChip } from "@/components/app/category-icon";
-import { formatCurrency, formatDateShort } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import type { Transaction } from "@/lib/mock-data";
 
 export function TransactionRow({
@@ -13,8 +13,8 @@ export function TransactionRow({
 }) {
   return (
     <div
-      className={`flex items-center gap-4 px-4 py-3 transition-colors hover:bg-cream-50 ${
-        highlight ? "bg-brand-50/60" : ""
+      className={`flex items-center gap-3 px-4 py-3 transition-colors hover:bg-cream-50 ${
+        highlight ? "bg-brand-50/50" : ""
       }`}
     >
       <CategoryIcon category={t.category} />
@@ -31,16 +31,10 @@ export function TransactionRow({
         <p className="truncate text-xs text-muted-foreground">{t.account}</p>
       </div>
 
-      <div className="hidden md:block">
-        <CategoryChip category={t.category} />
-      </div>
-
-      <div className="w-16 shrink-0 text-right text-xs text-muted-foreground sm:w-20">
-        {formatDateShort(t.date)}
-      </div>
+      <CategoryChip category={t.category} className="hidden shrink-0 md:inline-flex" />
 
       <div
-        className={`w-24 shrink-0 text-right text-sm font-semibold tabular-nums sm:w-28 ${
+        className={`w-24 shrink-0 text-right text-sm font-semibold tabular-nums ${
           t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"
         }`}
       >

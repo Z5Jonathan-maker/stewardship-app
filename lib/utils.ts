@@ -55,3 +55,25 @@ export function formatDateLong(iso: string) {
   const [, m, d] = iso.split("-").map(Number);
   return `${MONTHS_LONG[m - 1]} ${d}`;
 }
+
+// "Today" is fixed to the demo's current date so grouping is deterministic.
+const TODAY_ISO = "2026-05-31";
+const YESTERDAY_ISO = "2026-05-30";
+
+/** A relative day label for transaction grouping ("Today" / "Yesterday" / "May 30"). */
+export function formatDayGroup(iso: string) {
+  if (iso === TODAY_ISO) return "Today";
+  if (iso === YESTERDAY_ISO) return "Yesterday";
+  return formatDateLong(iso);
+}
+
+/** Group date-sorted items into consecutive day buckets, preserving order. */
+export function groupByDay<T extends { date: string }>(items: T[]) {
+  const groups: { label: string; date: string; items: T[] }[] = [];
+  for (const item of items) {
+    const last = groups[groups.length - 1];
+    if (last && last.date === item.date) last.items.push(item);
+    else groups.push({ label: formatDayGroup(item.date), date: item.date, items: [item] });
+  }
+  return groups;
+}
