@@ -14,35 +14,6 @@ interface ChatTurn {
   text: string;
 }
 
-interface AssistantReply {
-  answer: string;
-  verse?: { text: string; reference: string } | null;
-}
-
-/** Defensively parse the model's JSON reply; fall back to raw text. */
-function parseReply(raw: string): AssistantReply {
-  const cleaned = raw
-    .trim()
-    .replace(/^```(?:json)?/i, "")
-    .replace(/```$/, "")
-    .trim();
-  try {
-    const parsed = JSON.parse(cleaned);
-    if (parsed && typeof parsed.answer === "string") {
-      return {
-        answer: parsed.answer,
-        verse:
-          parsed.verse && parsed.verse.text && parsed.verse.reference
-            ? { text: parsed.verse.text, reference: parsed.verse.reference }
-            : null,
-      };
-    }
-  } catch {
-    // not JSON — treat the whole thing as the answer
-  }
-  return { answer: raw.trim(), verse: null };
-}
-
 export async function POST(request: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   // No key configured (e.g. the public demo): tell the client to use its
@@ -73,36 +44,50 @@ export async function POST(request: Request) {
 
   const client = new Anthropic({ apiKey });
 
-  try {
-    const response = await client.messages.create({
-      model: "claude-opus-4-8",
-      max_tokens: 1024,
-      // Stable persona first, then the (deterministic) data snapshot with a
-      // cache breakpoint so repeated questions reuse the cached prefix.
-      system: [
-        { type: "text", text: ASSISTANT_SYSTEM_PROMPT },
-        {
-          type: "text",
-          text: buildFinancialContext(),
-          cache_control: { type: "ephemeral" },
-        },
-      ],
-      messages,
-    });
+  const stream = client.messages.stream({
+    model: "claude-opus-4-8",
+    max_tokens: 1024,
+    // Stable persona first, then the (deterministic) data snapshot with a
+    // cache breakpoint so repeated questions reuse the cached prefix.
+    system: [
+      { type: "text", text: ASSISTANT_SYSTEM_PROMPT },
+      {
+        type: "text",
+        text: buildFinancialContext(),
+        cache_control: { type: "ephemeral" },
+      },
+    ],
+    messages,
+  });
 
-    const text = response.content
-      .filter((b): b is Anthropic.TextBlock => b.type === "text")
-      .map((b) => b.text)
-      .join("\n")
-      .trim();
+  const encoder = new TextEncoder();
+  const body = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      try {
+        stream.on("text", (delta) => controller.enqueue(encoder.encode(delta)));
+        await stream.finalMessage();
+        controller.close();
+      } catch (err) {
+        if (err instanceof Anthropic.APIError) {
+          console.error(`Anthropic API error ${err.status}:`, err.message);
+        } else {
+          console.error("Assistant stream error:", err);
+        }
+        // Close cleanly; the client treats an empty/short stream as a failure
+        // and falls back to its local mock.
+        controller.close();
+      }
+    },
+    cancel() {
+      stream.abort();
+    },
+  });
 
-    return NextResponse.json({ ...parseReply(text), source: "claude" });
-  } catch (err) {
-    if (err instanceof Anthropic.APIError) {
-      console.error(`Anthropic API error ${err.status}:`, err.message);
-    } else {
-      console.error("Assistant route error:", err);
-    }
-    return NextResponse.json({ error: "assistant_error" }, { status: 502 });
-  }
+  return new Response(body, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }

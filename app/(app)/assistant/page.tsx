@@ -98,6 +98,8 @@ export default function AssistantPage() {
     setMessages(history);
     setInput("");
     setPending(true);
+
+    let started = false;
     try {
       const res = await fetch("/api/assistant", {
         method: "POST",
@@ -106,22 +108,34 @@ export default function AssistantPage() {
           messages: history.map((m) => ({ role: m.role, text: m.text })),
         }),
       });
-      if (!res.ok) throw new Error("assistant unavailable");
-      const data = await res.json();
-      setMessages((m) => [
-        ...m,
-        {
-          role: "unite",
-          text: data.answer,
-          verse: data.verse
-            ? { text: data.verse.text, ref: data.verse.reference }
-            : undefined,
-        },
-      ]);
+      if (!res.ok || !res.body) throw new Error("assistant unavailable");
+
+      // Stream tokens into a single growing assistant message.
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let acc = "";
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        if (!started) {
+          started = true;
+          setPending(false);
+          setMessages((m) => [...m, { role: "unite", text: acc }]);
+        } else {
+          setMessages((m) => {
+            const next = [...m];
+            next[next.length - 1] = { role: "unite", text: acc };
+            return next;
+          });
+        }
+      }
+      if (!started || !acc.trim()) throw new Error("empty response");
     } catch {
       // Graceful fallback to the local stewardship mock so the demo always
-      // works even without an ANTHROPIC_API_KEY configured.
-      setMessages((m) => [...m, answer(question)]);
+      // works even without an ANTHROPIC_API_KEY configured. Only fall back if
+      // nothing streamed, to avoid duplicating a partial reply.
+      if (!started) setMessages((m) => [...m, answer(question)]);
     } finally {
       setPending(false);
     }
