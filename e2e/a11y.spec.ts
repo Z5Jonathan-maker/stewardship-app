@@ -20,6 +20,7 @@ const routes = [
   "/giving",
   "/accounts",
   "/assistant",
+  "/settings",
 ];
 
 for (const route of routes) {

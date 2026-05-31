@@ -19,7 +19,7 @@ export function GoalCard({ goal: g }: { goal: Goal }) {
   const months = monthsUntil(g.targetDate);
 
   return (
-    <Card>
+    <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">

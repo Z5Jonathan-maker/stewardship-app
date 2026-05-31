@@ -5,7 +5,11 @@ import { Sun, Moon } from "lucide-react";
 
 type Theme = "light" | "dark";
 
-const ThemeContext = React.createContext<{ theme: Theme; toggle: () => void } | null>(null);
+const ThemeContext = React.createContext<{
+  theme: Theme;
+  toggle: () => void;
+  setTheme: (t: Theme) => void;
+} | null>(null);
 const STORAGE_KEY = "unite-theme";
 
 /** Holds the app's theme and applies a `.dark` class to its subtree (so the
@@ -28,6 +32,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (initial) setTheme(initial);
   }, []);
 
+  const setThemePersisted = React.useCallback((next: Theme) => {
+    setTheme(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   const toggle = React.useCallback(() => {
     setTheme((t) => {
       const next = t === "dark" ? "light" : "dark";
@@ -41,7 +54,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle }}>
+    <ThemeContext.Provider value={{ theme, toggle, setTheme: setThemePersisted }}>
       <div className={theme === "dark" ? "dark" : undefined}>{children}</div>
     </ThemeContext.Provider>
   );

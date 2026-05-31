@@ -103,7 +103,7 @@ function AccountGroup({
       <Card>
         <CardContent className="divide-y divide-border p-0">
           {items.map((a) => (
-            <div key={a.id} className="flex items-center justify-between px-5 py-4">
+            <div key={a.id} className="flex items-center justify-between px-5 py-4 transition-colors hover:bg-cream-50">
               <div className="flex min-w-0 items-center gap-3">
                 <InstitutionLogo institution={a.institution} />
                 <div className="min-w-0">

@@ -7,6 +7,7 @@ import {
   HandHeart,
   Wallet,
   Sparkles,
+  Settings,
   type LucideIcon,
 } from "lucide-react";
 
@@ -26,4 +27,5 @@ export const appNav: NavItem[] = [
   { label: "Giving", href: "/giving", icon: HandHeart },
   { label: "Accounts", href: "/accounts", icon: Wallet },
   { label: "Ask Unite", href: "/assistant", icon: Sparkles },
+  { label: "Settings", href: "/settings", icon: Settings },
 ];
