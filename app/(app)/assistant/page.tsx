@@ -113,7 +113,12 @@ export default function AssistantPage() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 space-y-4 overflow-y-auto rounded-2xl border border-border bg-card p-5">
+      <div
+        role="log"
+        aria-live="polite"
+        aria-label="Conversation with Unite"
+        className="flex-1 space-y-4 overflow-y-auto rounded-2xl border border-border bg-card p-5"
+      >
         {messages.map((m, i) => (
           <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
             <div

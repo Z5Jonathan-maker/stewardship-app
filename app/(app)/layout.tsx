@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { AppSidebar } from "@/components/app/app-sidebar";
 import { AppTopbar } from "@/components/app/app-topbar";
+
+// Private, data-bearing screens — keep them out of search indexes.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function AppLayout({
   children,
