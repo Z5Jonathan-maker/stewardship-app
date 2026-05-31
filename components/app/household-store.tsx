@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import type { Transaction, Goal } from "@/lib/mock-data";
+import type { Transaction, Goal, Account } from "@/lib/mock-data";
 
 /** Giving categories — a transaction in one of these counts as a gift. */
 export const GIVING_CATEGORIES = ["Tithe & Offering", "Charitable Giving"];
@@ -28,12 +28,15 @@ interface HouseholdState {
   goals: Goal[];
   /** Per-category budgeted-amount overrides (keyed by budget category id). */
   budgetOverrides: Record<string, number>;
+  /** Accounts the user connected this session (via Plaid or the mock flow). */
+  accounts: Account[];
 }
 
 interface HouseholdContextValue extends HouseholdState {
   addTransaction: (t: NewTransaction) => void;
   addGoal: (g: NewGoal) => void;
   setBudgetAmount: (id: string, amount: number) => void;
+  addAccounts: (a: Account[]) => void;
   /** Sum of gifts added this session (for live "given this month"). */
   addedGiving: number;
   ready: boolean;
@@ -58,6 +61,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     transactions: [],
     goals: [],
     budgetOverrides: {},
+    accounts: [],
   });
   const [ready, setReady] = React.useState(false);
 
@@ -73,6 +77,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
             parsed.budgetOverrides && typeof parsed.budgetOverrides === "object"
               ? parsed.budgetOverrides
               : {},
+          accounts: Array.isArray(parsed.accounts) ? parsed.accounts : [],
         });
       }
     } catch {
@@ -114,6 +119,14 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const addAccounts = React.useCallback((a: Account[]) => {
+    setState((s) => {
+      const seen = new Set(s.accounts.map((x) => x.id));
+      const fresh = a.filter((x) => !seen.has(x.id));
+      return { ...s, accounts: [...fresh, ...s.accounts] };
+    });
+  }, []);
+
   const addedGiving = React.useMemo(
     () =>
       state.transactions
@@ -127,6 +140,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     addTransaction,
     addGoal,
     setBudgetAmount,
+    addAccounts,
     addedGiving,
     ready,
   };

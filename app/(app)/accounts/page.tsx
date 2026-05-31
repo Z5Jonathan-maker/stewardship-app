@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
-import { InstitutionLogo } from "@/components/app/category-icon";
+import { AccountRow } from "@/components/app/account-row";
 import { ConnectAccountButton } from "@/components/app/forms/connect-account-button";
-import { Sparkline } from "@/components/app/sparkline";
-import { accountSeries } from "@/lib/account-series";
+import { AddedAccounts } from "@/components/app/added/added-accounts";
 import { formatCurrency } from "@/lib/utils";
 import {
   accounts,
@@ -13,19 +12,9 @@ import {
   totalAssets,
   totalLiabilities,
   netWorth,
-  type AccountType,
 } from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Accounts" };
-
-const typeLabel: Record<AccountType, string> = {
-  checking: "Checking",
-  savings: "Savings",
-  credit: "Credit Card",
-  investment: "Investment",
-  property: "Real Estate",
-  loan: "Loan",
-};
 
 export default function AccountsPage() {
   return (
@@ -41,7 +30,7 @@ export default function AccountsPage() {
         <Card className="bg-evergreen-50">
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Assets</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold text-evergreen-700">
+            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-700">
               {formatCurrency(totalAssets)}
             </p>
           </CardContent>
@@ -49,7 +38,7 @@ export default function AccountsPage() {
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Liabilities</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold text-evergreen-900">
+            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
               {formatCurrency(totalLiabilities)}
             </p>
           </CardContent>
@@ -57,70 +46,49 @@ export default function AccountsPage() {
         <Card className="bg-brand-50">
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Net worth</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold text-evergreen-900">
+            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
               {formatCurrency(netWorth)}
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <AccountGroup title="Assets" items={assets} />
-      <AccountGroup title="Liabilities" items={liabilities} />
+      <div className="mt-6">
+        <h2 className="mb-3 font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          Assets
+        </h2>
+        <Card>
+          <CardContent className="divide-y divide-border p-0">
+            <AddedAccounts kind="asset" />
+            {assets.map((a) => (
+              <AccountRow key={a.id} account={a} />
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-6">
+        <h2 className="mb-3 font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          Liabilities
+        </h2>
+        <Card>
+          <CardContent className="divide-y divide-border p-0">
+            <AddedAccounts kind="liability" />
+            {liabilities.map((a) => (
+              <AccountRow key={a.id} account={a} />
+            ))}
+          </CardContent>
+        </Card>
+      </div>
 
       <div className="mt-6 rounded-2xl border border-dashed border-border bg-cream-50 p-6 text-center">
-        <p className="text-sm font-medium text-evergreen-900">
-          Connect another account
-        </p>
+        <p className="text-sm font-medium text-evergreen-900">Connect another account</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Unite will securely link your accounts through Plaid. Connections are
-          designed to be read-only — Unite never moves your money.
+          Unite securely links your accounts through Plaid. Connections are
+          read-only — Unite never moves your money.
         </p>
         <ConnectAccountButton label="Add via secure link" variant="outline" className="mt-4" />
       </div>
-    </div>
-  );
-}
-
-function AccountGroup({
-  title,
-  items,
-}: {
-  title: string;
-  items: typeof accounts;
-}) {
-  return (
-    <div className="mt-6">
-      <h2 className="mb-3 font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-        {title}
-      </h2>
-      <Card>
-        <CardContent className="divide-y divide-border p-0">
-          {items.map((a) => (
-            <div key={a.id} className="flex items-center justify-between px-5 py-4 transition-colors hover:bg-cream-50">
-              <div className="flex min-w-0 items-center gap-3">
-                <InstitutionLogo institution={a.institution} />
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-evergreen-900">{a.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {a.institution} · {typeLabel[a.type]} ••{a.mask}
-                  </p>
-                </div>
-              </div>
-              <div className="flex shrink-0 items-center gap-4 pl-3">
-                <div className="hidden sm:block">
-                  <Sparkline
-                    data={accountSeries(a.id, a.balance)}
-                    color={a.balance < 0 ? "#9aa39c" : "#33745c"}
-                  />
-                </div>
-                <span className={`text-sm font-semibold tabular-nums ${a.balance < 0 ? "text-destructive" : "text-evergreen-900"}`}>
-                  {formatCurrency(a.balance)}
-                </span>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
     </div>
   );
 }
