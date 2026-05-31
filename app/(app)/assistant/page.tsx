@@ -22,9 +22,10 @@ interface Message {
 }
 
 /**
- * Mock "Ask Unite" assistant. Answers from the local mock data with a
- * stewardship lens. Real version swaps `answer()` for a Claude API call
- * grounded in the user's connected accounts.
+ * Local stewardship fallback for "Ask Unite". The page calls the Claude-backed
+ * `/api/assistant` route first; this keyword-matched mock is used only when no
+ * ANTHROPIC_API_KEY is configured (e.g. the public demo) or the request fails,
+ * so the experience always degrades gracefully.
  */
 function answer(question: string): Message {
   const q = question.toLowerCase();
@@ -84,16 +85,46 @@ export default function AssistantPage() {
     },
   ]);
   const [input, setInput] = useState("");
+  const [pending, setPending] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, pending]);
 
-  function ask(question: string) {
-    if (!question.trim()) return;
-    setMessages((m) => [...m, { role: "user", text: question }, answer(question)]);
+  async function ask(question: string) {
+    if (!question.trim() || pending) return;
+    const history = [...messages, { role: "user" as const, text: question }];
+    setMessages(history);
     setInput("");
+    setPending(true);
+    try {
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: history.map((m) => ({ role: m.role, text: m.text })),
+        }),
+      });
+      if (!res.ok) throw new Error("assistant unavailable");
+      const data = await res.json();
+      setMessages((m) => [
+        ...m,
+        {
+          role: "unite",
+          text: data.answer,
+          verse: data.verse
+            ? { text: data.verse.text, ref: data.verse.reference }
+            : undefined,
+        },
+      ]);
+    } catch {
+      // Graceful fallback to the local stewardship mock so the demo always
+      // works even without an ANTHROPIC_API_KEY configured.
+      setMessages((m) => [...m, answer(question)]);
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -147,6 +178,16 @@ export default function AssistantPage() {
             </div>
           </div>
         ))}
+        {pending && (
+          <div className="flex justify-start">
+            <div className="flex max-w-[85%] items-center gap-1.5 rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3.5">
+              <span className="sr-only">Unite is thinking…</span>
+              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.3s]" />
+              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.15s]" />
+              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400" />
+            </div>
+          </div>
+        )}
         <div ref={endRef} />
       </div>
 
@@ -156,7 +197,8 @@ export default function AssistantPage() {
           <button
             key={s}
             onClick={() => ask(s)}
-            className="rounded-full border border-border bg-cream-50 px-3 py-1.5 text-xs font-medium text-evergreen-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+            disabled={pending}
+            className="rounded-full border border-border bg-cream-50 px-3 py-1.5 text-xs font-medium text-evergreen-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {s}
           </button>
@@ -174,10 +216,11 @@ export default function AssistantPage() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          disabled={pending}
           placeholder="Ask about spending, giving, goals…"
-          className="h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
+          className="h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-200 disabled:opacity-60"
         />
-        <Button type="submit" size="icon" className="h-12 w-12" aria-label="Send">
+        <Button type="submit" size="icon" className="h-12 w-12" aria-label="Send" disabled={pending}>
           <Send className="h-5 w-5" />
         </Button>
       </form>

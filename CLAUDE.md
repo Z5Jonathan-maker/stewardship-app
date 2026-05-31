@@ -53,8 +53,18 @@ npm run dev      # local dev
 npm run build    # must pass before pushing
 ```
 
+## Ask Unite (live Claude integration)
+
+"Ask Unite" is wired to Claude. The client (`app/(app)/assistant/page.tsx`)
+POSTs the conversation to the server route `app/api/assistant/route.ts`, which
+calls `claude-opus-4-8` via the official `@anthropic-ai/sdk`, grounded in a
+deterministic financial snapshot built from `lib/mock-data.ts` (see
+`lib/assistant-context.ts`). The system prompt + snapshot are sent as cached
+system blocks (prompt caching). Set `ANTHROPIC_API_KEY` (see `.env.example`);
+without it, the route returns 503 and the client falls back to the local
+keyword `answer()` mock so the demo still works. When real per-household data
+lands, swap `buildFinancialContext()` to read it — the route is unchanged.
+
 ## Not yet built (intentionally)
 
-Real auth, real Plaid, a backend/DB, and a live LLM for "Ask Unite"
-(`app/(app)/assistant/page.tsx` currently uses a local `answer()` mock — swap
-it for a Claude API call grounded in real data). See README roadmap.
+Real auth, real Plaid, and a backend/DB. See README roadmap.

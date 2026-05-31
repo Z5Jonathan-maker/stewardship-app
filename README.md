@@ -25,9 +25,21 @@ place of Monarch's orange.
 
 ```bash
 npm install
+cp .env.example .env.local   # add ANTHROPIC_API_KEY to enable "Ask Unite"
 npm run dev      # http://localhost:3000
 npm run build    # production build
+npm run test:e2e # Playwright: a11y + behavior across every route
 ```
+
+### "Ask Unite" assistant
+
+The assistant (`/assistant`) is wired to Claude (`claude-opus-4-8`) via a
+server route (`app/api/assistant`) using the official `@anthropic-ai/sdk`.
+It answers grounded in a deterministic snapshot of the household's finances
+(`lib/assistant-context.ts`, built from `lib/mock-data.ts`) with prompt
+caching on the system+context prefix. Set `ANTHROPIC_API_KEY` to enable it;
+without a key the route returns 503 and the UI gracefully falls back to a
+local stewardship mock, so the demo always works.
 
 ## Routes
 
@@ -56,8 +68,9 @@ lib/
 
 ## Roadmap
 
+- [x] Wire "Ask Unite" to the Claude API, grounded in account data
 - [ ] Real Plaid Link integration (sandbox → production)
-- [ ] Auth + per-household database
-- [ ] Wire "Ask Unite" to the Claude API, grounded in real account data
+- [ ] Auth + per-household database (swap the mock snapshot for real data)
+- [ ] Streaming responses for the assistant
 - [ ] Recurring/bills detection, year-end giving statements
 - [ ] Dark mode toggle (tokens already in place)
