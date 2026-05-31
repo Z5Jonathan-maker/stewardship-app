@@ -83,9 +83,9 @@ export default function CashFlowPage() {
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-evergreen-700">
             <ReviewRow label="Top category" value={spendingByCategory[0]?.name ?? "—"} />
-            <ReviewRow label="Biggest win" value="Under on groceries 🛒" />
-            <ReviewRow label="Watch out" value="Over on shopping 🛍️" />
-            <ReviewRow label="Giving" value={`${formatPercent(givingRate, 1)} of income ⛪`} />
+            <ReviewRow label="Biggest win" value="Under on groceries" />
+            <ReviewRow label="Watch out" value="Over on shopping" />
+            <ReviewRow label="Giving" value={`${formatPercent(givingRate, 1)} of income`} />
           </CardContent>
         </Card>
       </div>

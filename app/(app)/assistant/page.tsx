@@ -1,7 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Sparkles, Send, BookOpen, Square } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Sparkles,
+  Send,
+  BookOpen,
+  Square,
+  HandHeart,
+  Plane,
+  PieChart,
+  PiggyBank,
+  type LucideIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { Markdown } from "@/components/app/markdown";
@@ -71,11 +82,11 @@ function answer(question: string): Message {
   };
 }
 
-const suggestions = [
-  "How much have we given this month?",
-  "Can we afford a family trip?",
-  "What did we spend the most on?",
-  "How's our emergency fund doing?",
+const suggestions: { q: string; Icon: LucideIcon }[] = [
+  { q: "How much have we given this month?", Icon: HandHeart },
+  { q: "Can we afford a family trip?", Icon: Plane },
+  { q: "What did we spend the most on?", Icon: PieChart },
+  { q: "How's our emergency fund doing?", Icon: PiggyBank },
 ];
 
 export default function AssistantPage() {
@@ -163,6 +174,9 @@ export default function AssistantPage() {
     abortRef.current?.abort();
   }
 
+  // Only the seeded greeting so far → show the centered empty state.
+  const showEmpty = messages.length <= 1 && !pending;
+
   return (
     <div className="mx-auto flex h-[calc(100vh-7rem)] max-w-3xl flex-col">
       <div className="mb-4 flex items-center gap-3">
@@ -184,49 +198,87 @@ export default function AssistantPage() {
         role="log"
         aria-live="polite"
         aria-label="Conversation with Unite"
-        className="flex-1 space-y-4 overflow-y-auto rounded-2xl border border-border bg-card p-5"
+        className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card p-5"
       >
-        {messages.map((m, i) => (
-          <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
-            <div
-              className={
-                m.role === "user"
-                  ? "max-w-[80%] rounded-2xl rounded-br-sm bg-brand-500 px-4 py-3 text-sm text-white"
-                  : "max-w-[85%] rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3"
-              }
-            >
-              {m.role === "unite" && (
-                <div className="mb-1.5">
-                  <Logo markOnly className="opacity-90" />
-                </div>
-              )}
-              {m.role === "user" ? (
-                <p>{m.text}</p>
-              ) : (
-                <Markdown text={m.text} />
-              )}
-              {m.verse && (
-                <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3">
-                  <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
-                  <p className="text-xs italic text-evergreen-700">
-                    “{m.verse.text}” — <span className="font-semibold not-italic">{m.verse.ref}</span>
-                  </p>
-                </div>
-              )}
+        {showEmpty ? (
+          <div className="flex h-full flex-col items-center justify-center px-2 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500 text-white shadow-soft">
+              <Sparkles className="h-6 w-6" />
+            </div>
+            <h2 className="mt-4 font-display text-xl font-semibold text-evergreen-900">
+              Ask me anything about your money
+            </h2>
+            <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
+              I answer from your real numbers, with a stewardship lens. Try one
+              of these:
+            </p>
+            <div className="mt-6 grid w-full max-w-lg gap-3 sm:grid-cols-2">
+              {suggestions.map((s, i) => (
+                <motion.button
+                  key={s.q}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.06 * i, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={() => ask(s.q)}
+                  className="group flex items-center gap-3 rounded-2xl border border-border bg-cream-50 p-3.5 text-left transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white">
+                    <s.Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="text-sm font-medium text-evergreen-800">{s.q}</span>
+                </motion.button>
+              ))}
             </div>
           </div>
-        ))}
-        {pending && (
-          <div className="flex justify-start">
-            <div className="flex max-w-[85%] items-center gap-1.5 rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3.5">
-              <span className="sr-only">Unite is thinking…</span>
-              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.3s]" />
-              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.15s]" />
-              <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400" />
-            </div>
+        ) : (
+          <div className="space-y-4">
+            <AnimatePresence initial={false}>
+              {messages.map((m, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className={m.role === "user" ? "flex justify-end" : "flex justify-start"}
+                >
+                  <div
+                    className={
+                      m.role === "user"
+                        ? "max-w-[80%] rounded-2xl rounded-br-sm bg-brand-500 px-4 py-3 text-sm text-white"
+                        : "max-w-[85%] rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3"
+                    }
+                  >
+                    {m.role === "unite" && (
+                      <div className="mb-1.5">
+                        <Logo markOnly className="opacity-90" />
+                      </div>
+                    )}
+                    {m.role === "user" ? <p>{m.text}</p> : <Markdown text={m.text} />}
+                    {m.verse && (
+                      <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3">
+                        <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
+                        <p className="text-xs italic text-evergreen-700">
+                          “{m.verse.text}” — <span className="font-semibold not-italic">{m.verse.ref}</span>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {pending && (
+              <div className="flex justify-start">
+                <div className="flex max-w-[85%] items-center gap-1.5 rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3.5">
+                  <span className="sr-only">Unite is thinking…</span>
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.3s]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.15s]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400" />
+                </div>
+              </div>
+            )}
+            <div ref={endRef} />
           </div>
         )}
-        <div ref={endRef} />
       </div>
 
       {/* Fallback / error toast */}
@@ -239,19 +291,21 @@ export default function AssistantPage() {
         </div>
       )}
 
-      {/* Suggestions */}
-      <div className="mt-3 flex flex-wrap gap-2">
-        {suggestions.map((s) => (
-          <button
-            key={s}
-            onClick={() => ask(s)}
-            disabled={pending}
-            className="rounded-full border border-border bg-cream-50 px-3 py-1.5 text-xs font-medium text-evergreen-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {s}
-          </button>
-        ))}
-      </div>
+      {/* Quick suggestions (during a conversation; the empty state shows cards) */}
+      {!showEmpty && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {suggestions.map((s) => (
+            <button
+              key={s.q}
+              onClick={() => ask(s.q)}
+              disabled={pending}
+              className="rounded-full border border-border bg-cream-50 px-3 py-1.5 text-xs font-medium text-evergreen-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {s.q}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Composer */}
       <form

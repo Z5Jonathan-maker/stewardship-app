@@ -1,5 +1,6 @@
 import { TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { formatCurrency, formatPercent } from "@/lib/utils";
+import { categoryMeta } from "@/lib/categories";
 import {
   netWorth,
   netWorthMonthChange,
@@ -82,9 +83,9 @@ export function AppMockup() {
         <div className="rounded-xl border border-border bg-cream-50 p-4">
           <span className="text-xs font-semibold text-evergreen-800">Top budgets</span>
           <div className="mt-3 space-y-3">
-            <MiniBudget emoji="⛪" name="Tithe" pct={0.78} />
-            <MiniBudget emoji="🛒" name="Groceries" pct={0.64} />
-            <MiniBudget emoji="🛍️" name="Shopping" pct={1} over />
+            <MiniBudget name="Tithe" pct={0.78} />
+            <MiniBudget name="Groceries" pct={0.64} />
+            <MiniBudget name="Shopping" pct={1} over />
           </div>
         </div>
       </div>
@@ -122,25 +123,25 @@ function StatTile({
 }
 
 function MiniBudget({
-  emoji,
   name,
   pct,
   over,
 }: {
-  emoji: string;
   name: string;
   pct: number;
   over?: boolean;
 }) {
+  const { color } = categoryMeta(name);
   return (
     <div>
-      <div className="mb-1 flex items-center justify-between text-[11px]">
-        <span className="text-evergreen-800">{emoji} {name}</span>
+      <div className="mb-1 flex items-center gap-1.5 text-[11px]">
+        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
+        <span className="text-evergreen-800">{name}</span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
         <div
-          className={`h-full rounded-full ${over ? "bg-destructive" : "bg-brand-500"}`}
-          style={{ width: `${pct * 100}%` }}
+          className="h-full rounded-full"
+          style={{ width: `${pct * 100}%`, backgroundColor: over ? "#d64545" : color }}
         />
       </div>
     </div>

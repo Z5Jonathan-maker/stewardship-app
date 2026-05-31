@@ -16,6 +16,7 @@ import {
   HeartPulse,
   HandHeart,
   Church,
+  Plane,
   Tag,
 } from "lucide-react";
 
@@ -40,6 +41,7 @@ const RULES: Rule[] = [
   { test: /coffee/, color: "#9c6b3f", Icon: Coffee },
   { test: /gas|fuel/, color: "#cb6a3c", Icon: Fuel },
   { test: /transport|auto|\bcar\b|ride/, color: "#c25f33", Icon: Car },
+  { test: /vacation|travel|\btrip\b|holiday|missions/, color: "#2f93a3", Icon: Plane },
   { test: /shop/, color: "#bd5894", Icon: ShoppingBag },
   { test: /subscription|netflix|stream|entertain/, color: "#7a5fc4", Icon: Tv },
   { test: /util/, color: "#2f93a3", Icon: Zap },

@@ -13,20 +13,16 @@ import {
 } from "@/components/ui/dialog";
 import { useHousehold } from "@/components/app/household-store";
 
-const EMOJIS = ["🎯", "🛟", "✈️", "🚗", "🎁", "🏡", "📚", "💍"];
-
 export function NewGoalButton() {
   const { addGoal } = useHousehold();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [emoji, setEmoji] = useState("🎯");
   const [target, setTarget] = useState("");
   const [monthly, setMonthly] = useState("");
   const [targetDate, setTargetDate] = useState("");
 
   function reset() {
     setName("");
-    setEmoji("🎯");
     setTarget("");
     setMonthly("");
     setTargetDate("");
@@ -38,7 +34,7 @@ export function NewGoalButton() {
     if (!name.trim() || !targetNum || targetNum <= 0) return;
     addGoal({
       name: name.trim(),
-      emoji,
+      emoji: "",
       target: targetNum,
       monthly: Number(monthly) || 0,
       targetDate: targetDate || "2027-01-01",
@@ -67,26 +63,6 @@ export function NewGoalButton() {
               placeholder="e.g. Family vacation"
               className={fieldInputClass}
             />
-          </Field>
-          <Field label="Icon">
-            <div className="flex flex-wrap gap-2">
-              {EMOJIS.map((em) => (
-                <button
-                  key={em}
-                  type="button"
-                  aria-label={`Choose ${em}`}
-                  aria-pressed={emoji === em}
-                  onClick={() => setEmoji(em)}
-                  className={`flex h-10 w-10 items-center justify-center rounded-xl border text-lg transition ${
-                    emoji === em
-                      ? "border-brand-400 bg-brand-50"
-                      : "border-border bg-card hover:bg-muted"
-                  }`}
-                >
-                  {em}
-                </button>
-              ))}
-            </div>
           </Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Target amount">

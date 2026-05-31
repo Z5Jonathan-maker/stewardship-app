@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { CategoryIcon } from "@/components/app/category-icon";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 import type { Goal } from "@/lib/mock-data";
 
@@ -22,9 +23,7 @@ export function GoalCard({ goal: g }: { goal: Goal }) {
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cream-100 text-2xl">
-              {g.emoji}
-            </div>
+            <CategoryIcon category={g.name} className="h-12 w-12" iconClassName="h-6 w-6" />
             <div>
               <h2 className="font-display text-base font-semibold leading-tight text-evergreen-900">
                 {g.name}
