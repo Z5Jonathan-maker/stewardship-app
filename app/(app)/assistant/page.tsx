@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Sparkles, Send, BookOpen } from "lucide-react";
+import { Sparkles, Send, BookOpen, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
+import { Markdown } from "@/components/app/markdown";
 import {
   netWorth,
   totalGiving,
@@ -86,11 +87,20 @@ export default function AssistantPage() {
   ]);
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, pending]);
+
+  // Auto-dismiss the toast.
+  useEffect(() => {
+    if (!notice) return;
+    const id = setTimeout(() => setNotice(null), 4500);
+    return () => clearTimeout(id);
+  }, [notice]);
 
   async function ask(question: string) {
     if (!question.trim() || pending) return;
@@ -98,7 +108,10 @@ export default function AssistantPage() {
     setMessages(history);
     setInput("");
     setPending(true);
+    setNotice(null);
 
+    const controller = new AbortController();
+    abortRef.current = controller;
     let started = false;
     try {
       const res = await fetch("/api/assistant", {
@@ -107,6 +120,7 @@ export default function AssistantPage() {
         body: JSON.stringify({
           messages: history.map((m) => ({ role: m.role, text: m.text })),
         }),
+        signal: controller.signal,
       });
       if (!res.ok || !res.body) throw new Error("assistant unavailable");
 
@@ -132,13 +146,21 @@ export default function AssistantPage() {
       }
       if (!started || !acc.trim()) throw new Error("empty response");
     } catch {
-      // Graceful fallback to the local stewardship mock so the demo always
-      // works even without an ANTHROPIC_API_KEY configured. Only fall back if
-      // nothing streamed, to avoid duplicating a partial reply.
+      // User pressed Stop — keep whatever streamed, no fallback.
+      if (controller.signal.aborted) return;
+      // Otherwise gracefully fall back to the local stewardship mock (e.g. no
+      // ANTHROPIC_API_KEY) — only if nothing streamed, to avoid duplicating a
+      // partial reply — and let the user know.
       if (!started) setMessages((m) => [...m, answer(question)]);
+      setNotice("Showing offline guidance — couldn't reach the assistant.");
     } finally {
+      abortRef.current = null;
       setPending(false);
     }
+  }
+
+  function stop() {
+    abortRef.current?.abort();
   }
 
   return (
@@ -178,9 +200,11 @@ export default function AssistantPage() {
                   <Logo markOnly className="opacity-90" />
                 </div>
               )}
-              <p className={m.role === "user" ? "" : "text-sm leading-relaxed text-evergreen-900"}>
-                {m.text}
-              </p>
+              {m.role === "user" ? (
+                <p>{m.text}</p>
+              ) : (
+                <Markdown text={m.text} />
+              )}
               {m.verse && (
                 <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3">
                   <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
@@ -204,6 +228,16 @@ export default function AssistantPage() {
         )}
         <div ref={endRef} />
       </div>
+
+      {/* Fallback / error toast */}
+      {notice && (
+        <div
+          role="status"
+          className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-medium text-amber-800"
+        >
+          {notice}
+        </div>
+      )}
 
       {/* Suggestions */}
       <div className="mt-3 flex flex-wrap gap-2">
@@ -234,9 +268,22 @@ export default function AssistantPage() {
           placeholder="Ask about spending, giving, goals…"
           className="h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-200 disabled:opacity-60"
         />
-        <Button type="submit" size="icon" className="h-12 w-12" aria-label="Send" disabled={pending}>
-          <Send className="h-5 w-5" />
-        </Button>
+        {pending ? (
+          <Button
+            type="button"
+            size="icon"
+            variant="secondary"
+            className="h-12 w-12"
+            aria-label="Stop"
+            onClick={stop}
+          >
+            <Square className="h-4 w-4 fill-current" />
+          </Button>
+        ) : (
+          <Button type="submit" size="icon" className="h-12 w-12" aria-label="Send">
+            <Send className="h-5 w-5" />
+          </Button>
+        )}
       </form>
       <p className="mt-2 text-center text-xs text-muted-foreground">
         Unite offers guidance, not professional financial advice.
