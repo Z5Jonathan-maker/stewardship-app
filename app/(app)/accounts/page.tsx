@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/page-header";
 import { InstitutionLogo } from "@/components/app/category-icon";
+import { ConnectAccountButton } from "@/components/app/forms/connect-account-button";
 import { Sparkline } from "@/components/app/sparkline";
 import { accountSeries } from "@/lib/account-series";
 import { formatCurrency } from "@/lib/utils";
@@ -34,11 +33,7 @@ export default function AccountsPage() {
       <PageHeader
         title="Accounts"
         subtitle={`${accounts.length} accounts connected`}
-        action={
-          <Button size="sm">
-            <Plus className="h-4 w-4" /> Connect account
-          </Button>
-        }
+        action={<ConnectAccountButton label="Connect account" variant="primary" />}
       />
 
       {/* Net worth summary */}
@@ -80,9 +75,7 @@ export default function AccountsPage() {
           Unite will securely link your accounts through Plaid. Connections are
           designed to be read-only — Unite never moves your money.
         </p>
-        <Button variant="outline" size="sm" className="mt-4">
-          <Plus className="h-4 w-4" /> Add via secure link
-        </Button>
+        <ConnectAccountButton label="Add via secure link" variant="outline" className="mt-4" />
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Bell, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { MobileNav } from "@/components/app/mobile-nav";
 import { CommandMenu } from "@/components/app/command-menu";
+import { Notifications } from "@/components/app/notifications";
+import { ConnectAccountButton } from "@/components/app/forms/connect-account-button";
 import { ThemeToggle } from "@/components/app/theme-provider";
 import { household } from "@/lib/mock-data";
 
@@ -21,18 +21,16 @@ export function AppTopbar() {
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2 sm:flex-none">
-        <Button asChild variant="outline" size="sm">
-          <Link href="/accounts">
-            <Plus className="h-4 w-4" /> Add account
-          </Link>
-        </Button>
+        <ConnectAccountButton />
         <ThemeToggle />
-        <Button variant="ghost" size="icon" aria-label="Notifications">
-          <Bell className="h-5 w-5" />
-        </Button>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-evergreen-700 text-sm font-semibold text-cream-50">
+        <Notifications />
+        <Link
+          href="/settings"
+          aria-label="Settings"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-evergreen-700 text-sm font-semibold text-cream-50 transition-transform hover:scale-105"
+        >
           {household.members[0][0]}
-        </div>
+        </Link>
       </div>
     </header>
   );

@@ -26,11 +26,14 @@ interface HouseholdState {
   transactions: Transaction[];
   /** User-added goals. */
   goals: Goal[];
+  /** Per-category budgeted-amount overrides (keyed by budget category id). */
+  budgetOverrides: Record<string, number>;
 }
 
 interface HouseholdContextValue extends HouseholdState {
   addTransaction: (t: NewTransaction) => void;
   addGoal: (g: NewGoal) => void;
+  setBudgetAmount: (id: string, amount: number) => void;
   /** Sum of gifts added this session (for live "given this month"). */
   addedGiving: number;
   ready: boolean;
@@ -54,6 +57,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = React.useState<HouseholdState>({
     transactions: [],
     goals: [],
+    budgetOverrides: {},
   });
   const [ready, setReady] = React.useState(false);
 
@@ -65,6 +69,10 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
         setState({
           transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
           goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+          budgetOverrides:
+            parsed.budgetOverrides && typeof parsed.budgetOverrides === "object"
+              ? parsed.budgetOverrides
+              : {},
         });
       }
     } catch {
@@ -99,6 +107,13 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const setBudgetAmount = React.useCallback((id: string, amount: number) => {
+    setState((s) => ({
+      ...s,
+      budgetOverrides: { ...s.budgetOverrides, [id]: amount },
+    }));
+  }, []);
+
   const addedGiving = React.useMemo(
     () =>
       state.transactions
@@ -111,6 +126,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     ...state,
     addTransaction,
     addGoal,
+    setBudgetAmount,
     addedGiving,
     ready,
   };

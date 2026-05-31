@@ -57,9 +57,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  const [container, setContainer] = React.useState<HTMLElement | null>(null);
+
   return (
     <ThemeContext.Provider value={{ theme, toggle, setTheme: setThemePersisted }}>
-      <div className={theme === "dark" ? "dark" : undefined}>{children}</div>
+      <PortalContext.Provider value={container}>
+        <div ref={setContainer} className={theme === "dark" ? "dark" : undefined}>
+          {children}
+        </div>
+      </PortalContext.Provider>
     </ThemeContext.Provider>
   );
 }
@@ -68,6 +74,18 @@ export function useTheme() {
   const ctx = React.useContext(ThemeContext);
   if (!ctx) throw new Error("useTheme must be used within a ThemeProvider");
   return ctx;
+}
+
+/**
+ * Radix portals render at document.body by default — outside the themed
+ * wrapper, so they'd ignore dark mode. Overlays portal into this container
+ * instead. Returns undefined outside the app (marketing/auth) so those
+ * portals fall back to the body as usual.
+ */
+const PortalContext = React.createContext<HTMLElement | null>(null);
+
+export function usePortalContainer() {
+  return React.useContext(PortalContext) ?? undefined;
 }
 
 export function ThemeToggle() {
