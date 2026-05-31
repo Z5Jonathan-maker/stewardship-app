@@ -114,14 +114,14 @@ export const goals: Goal[] = [
   { id: "g4", name: "Generosity Fund", emoji: "🎁", target: 5000, saved: 1650, monthly: 200, targetDate: "2026-12-01" },
 ];
 
-/** 6-month cash flow history + this month projection. */
-export const cashFlow = [
+/** Five months of cash-flow history; the current month is appended below,
+ * derived from the live budget so the chart matches the headline figures. */
+const cashFlowHistory = [
   { month: "Dec", income: 8360, expenses: 6890 },
   { month: "Jan", income: 8360, expenses: 7240 },
   { month: "Feb", income: 8360, expenses: 6510 },
   { month: "Mar", income: 9120, expenses: 7020 },
   { month: "Apr", income: 8360, expenses: 6680 },
-  { month: "May", income: 8361, expenses: 5446 },
 ];
 
 /**
@@ -204,3 +204,9 @@ export const spendingByCategory = budget
   .filter((b) => b.group !== "Income" && b.actual > 0)
   .map((b) => ({ name: b.name, emoji: b.emoji, amount: b.actual, group: b.group }))
   .sort((a, b) => b.amount - a.amount);
+
+/** History + the live current month, so May's bar matches the headline numbers. */
+export const cashFlow = [
+  ...cashFlowHistory,
+  { month: "May", income: Math.round(monthlyIncome), expenses: Math.round(monthlyOutflow) },
+];
