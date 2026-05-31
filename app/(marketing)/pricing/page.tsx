@@ -90,9 +90,9 @@ export default function PricingPage() {
                   Most popular
                 </span>
               )}
-              <h3 className="font-display text-xl font-semibold text-evergreen-900">
+              <h2 className="font-display text-xl font-semibold text-evergreen-900">
                 {tier.name}
-              </h3>
+              </h2>
               <p className="mt-2 text-sm text-evergreen-700">{tier.description}</p>
               <div className="mt-5 flex items-baseline gap-1">
                 <span className="font-display text-4xl font-semibold text-evergreen-900">

@@ -10,16 +10,18 @@ export default function AuthLayout({
     <div className="grid min-h-screen lg:grid-cols-2">
       {/* Form side */}
       <div className="flex flex-col bg-cream-50 px-6 py-8">
-        <Link href="/" aria-label="Unite Financial home">
-          <Logo />
-        </Link>
-        <div className="flex flex-1 items-center justify-center py-12">
+        <header>
+          <Link href="/" aria-label="Unite Financial home">
+            <Logo />
+          </Link>
+        </header>
+        <main className="flex flex-1 items-center justify-center py-12">
           {children}
-        </div>
+        </main>
       </div>
 
       {/* Brand side */}
-      <div className="relative hidden overflow-hidden bg-evergreen-900 lg:block">
+      <aside className="relative hidden overflow-hidden bg-evergreen-900 lg:block">
         <div className="absolute inset-0 bg-grid opacity-[0.08]" aria-hidden />
         <div className="relative flex h-full flex-col justify-center px-16 text-cream-50">
           <blockquote className="font-display text-3xl font-medium leading-relaxed tracking-tight text-balance">
@@ -34,7 +36,7 @@ export default function AuthLayout({
             giving, goals, and cash flow, all in one calm place.
           </p>
         </div>
-      </div>
+      </aside>
     </div>
   );
 }

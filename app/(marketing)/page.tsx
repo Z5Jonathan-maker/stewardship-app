@@ -366,9 +366,9 @@ function Security() {
           {items.map((i) => (
             <div key={i.title} className="rounded-2xl border border-border bg-card p-6 shadow-soft">
               <i.icon className="h-7 w-7 text-brand-500" />
-              <h4 className="mt-4 font-display text-lg font-semibold text-evergreen-900">
+              <h3 className="mt-4 font-display text-lg font-semibold text-evergreen-900">
                 {i.title}
-              </h4>
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-evergreen-700">{i.body}</p>
             </div>
           ))}

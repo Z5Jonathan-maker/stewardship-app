@@ -62,7 +62,7 @@ export default function GoalsPage() {
                 </div>
 
                 <div className="mt-5">
-                  <Progress value={ratio} className="h-2.5" />
+                  <Progress value={ratio} className="h-2.5" aria-label={`${g.name} progress`} />
                   <div className="mt-2 flex items-center justify-between text-sm">
                     <span className="font-semibold text-evergreen-900">
                       {formatCurrency(g.saved)}

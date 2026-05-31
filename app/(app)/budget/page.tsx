@@ -81,6 +81,7 @@ export default function BudgetPage() {
                         </div>
                         <Progress
                           value={clamp(ratio)}
+                          aria-label={`${b.name} budget used`}
                           indicatorClassName={over ? "bg-destructive" : "bg-brand-500"}
                         />
                       </div>

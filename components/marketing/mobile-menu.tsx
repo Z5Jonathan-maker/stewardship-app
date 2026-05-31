@@ -54,8 +54,8 @@ export function MobileMenu({ links }: MobileMenuProps) {
         aria-modal="true"
         aria-label="Menu"
         className={cn(
-          "fixed inset-y-0 right-0 z-50 flex w-72 max-w-[80%] flex-col bg-cream-50 shadow-lift transition-transform duration-300",
-          open ? "translate-x-0" : "translate-x-full"
+          "fixed inset-y-0 left-0 z-50 flex w-72 max-w-[80%] flex-col bg-cream-50 shadow-lift transition-transform duration-300",
+          open ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-16 items-center justify-between px-5">

@@ -17,6 +17,8 @@ export function AppTopbar() {
       <div className="relative hidden flex-1 sm:block">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input
+          type="search"
+          aria-label="Search"
           placeholder="Search transactions, accounts, goals…"
           className="h-10 w-full max-w-md rounded-full border border-border bg-card pl-10 pr-4 text-sm outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
         />

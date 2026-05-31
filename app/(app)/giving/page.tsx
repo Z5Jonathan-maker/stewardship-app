@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/app/page-header";
-import { formatCurrency, formatPercent } from "@/lib/utils";
+import { formatCurrency, formatPercent, formatDateLong } from "@/lib/utils";
 import {
   transactions,
   monthlyIncome,
@@ -60,6 +60,7 @@ export default function GivingPage() {
               </div>
               <Progress
                 value={givingYtd / givingAnnualGoal}
+                aria-label="Annual giving goal progress"
                 className="h-3 bg-evergreen-700"
                 indicatorClassName="bg-brand-400"
               />
@@ -94,7 +95,7 @@ export default function GivingPage() {
                 <div>
                   <p className="text-sm font-medium text-evergreen-900">{t.merchant}</p>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(t.date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+                    {formatDateLong(t.date)}
                   </p>
                 </div>
               </div>

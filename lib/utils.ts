@@ -37,3 +37,21 @@ export function formatPercent(ratio: number, fractionDigits = 0) {
 export function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
+
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/**
+ * Format an ISO date ("YYYY-MM-DD") deterministically — parsed from the
+ * string itself, with no Date/timezone/locale dependence, so server and
+ * client render identical output (avoids hydration mismatches).
+ */
+export function formatDateShort(iso: string) {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${MONTHS_SHORT[m - 1]} ${d}`;
+}
+
+export function formatDateLong(iso: string) {
+  const [, m, d] = iso.split("-").map(Number);
+  return `${MONTHS_LONG[m - 1]} ${d}`;
+}

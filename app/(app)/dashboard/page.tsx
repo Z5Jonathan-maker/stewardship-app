@@ -97,6 +97,7 @@ export default function DashboardPage() {
                   </div>
                   <Progress
                     value={clamp(ratio)}
+                    aria-label={`${b.name} budget used`}
                     indicatorClassName={over ? "bg-destructive" : "bg-brand-500"}
                   />
                 </div>
@@ -167,7 +168,7 @@ export default function DashboardPage() {
                   </span>
                   <span className="text-evergreen-700">{formatPercent(g.saved / g.target)}</span>
                 </div>
-                <Progress value={g.saved / g.target} />
+                <Progress value={g.saved / g.target} aria-label={`${g.name} goal progress`} />
               </div>
             ))}
           </CardContent>
