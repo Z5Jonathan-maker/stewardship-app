@@ -13,7 +13,7 @@ export function CashFlowBars({
     <div>
       <div className="flex items-end gap-3" style={{ height }}>
         {data.map((d) => (
-          <div key={d.month} className="flex flex-1 flex-col items-center gap-2">
+          <div key={d.month} className="flex h-full flex-1 flex-col items-center gap-2">
             <div className="flex w-full flex-1 items-end justify-center gap-1.5">
               <div
                 className="w-1/3 rounded-t-md bg-evergreen-500 transition-all"

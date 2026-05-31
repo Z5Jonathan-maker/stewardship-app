@@ -15,6 +15,7 @@ import {
   givingRate,
   cashFlow,
   netWorthTrend,
+  netWorthGain,
   transactions,
   budget,
   goals,
@@ -63,7 +64,7 @@ export default function DashboardPage() {
               {formatCurrency(netWorth)}
             </p>
             <p className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-evergreen-600">
-              <ArrowUpRight className="h-4 w-4" /> Up {formatCurrency(7766)} in 6 months
+              <ArrowUpRight className="h-4 w-4" /> Up {formatCurrency(netWorthGain)} in 6 months
             </p>
             <div className="mt-4 h-28">
               <TrendLine data={netWorthTrend} />

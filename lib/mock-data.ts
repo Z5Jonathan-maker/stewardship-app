@@ -122,15 +122,23 @@ export const cashFlow = [
   { month: "May", income: 8361, expenses: 5446 },
 ];
 
-/** Net worth trend (last 6 months), in dollars. */
+/**
+ * Net worth trend (last 6 months), in dollars. A household steadily paying
+ * down a mortgage + auto loan: net worth climbs ~$7.8k as debt shrinks,
+ * ending at the live `netWorth` figure below.
+ */
 export const netWorthTrend = [
-  { month: "Dec", value: -82000 + 60000 },
-  { month: "Jan", value: -40000 },
-  { month: "Feb", value: -32000 },
-  { month: "Mar", value: -20000 },
-  { month: "Apr", value: -12000 },
-  { month: "May", value: -4234 },
+  { month: "Dec", value: -73000 },
+  { month: "Jan", value: -71200 },
+  { month: "Feb", value: -70100 },
+  { month: "Mar", value: -68500 },
+  { month: "Apr", value: -67000 },
+  { month: "May", value: -65234 },
 ];
+
+/** Net worth gained over the trend window (used for the dashboard delta). */
+export const netWorthGain =
+  netWorthTrend[netWorthTrend.length - 1].value - netWorthTrend[0].value;
 
 // ---- Derived selectors -------------------------------------------------
 
