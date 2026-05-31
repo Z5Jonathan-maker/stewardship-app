@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
+import { MobileMenu } from "@/components/marketing/mobile-menu";
 
 const navLinks = [
   { label: "Features", href: "/#features" },
@@ -40,12 +41,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
+          <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
             <Link href="/login">Sign in</Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="hidden md:inline-flex">
             <Link href="/signup">Start free</Link>
           </Button>
+          <MobileMenu links={navLinks} />
         </div>
       </div>
     </header>

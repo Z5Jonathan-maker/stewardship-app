@@ -3,22 +3,24 @@ import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, BreakdownBars } from "@/components/app/charts";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatPercent } from "@/lib/utils";
 import {
   cashFlow,
   spendingByCategory,
   monthlyIncome,
-  monthlySpending,
+  monthlyOutflow,
+  netCashFlow,
+  givingRate,
+  checkingBalance,
 } from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Cash Flow" };
 
 export default function CashFlowPage() {
-  const net = monthlyIncome - monthlySpending;
   // Simple forward projection: average net of last 6 months added to current.
   const avgNet =
     cashFlow.reduce((s, m) => s + (m.income - m.expenses), 0) / cashFlow.length;
-  const projectedEndBalance = 8420.16 + avgNet;
+  const projectedEndBalance = checkingBalance + avgNet;
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -29,8 +31,8 @@ export default function CashFlowPage() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <FlowStat label="Income this month" value={formatCurrency(monthlyIncome)} icon={ArrowUpRight} tone="up" />
-        <FlowStat label="Expenses this month" value={formatCurrency(monthlySpending)} icon={ArrowDownRight} tone="down" />
-        <FlowStat label="Net cash flow" value={formatCurrency(net, { signed: true })} icon={TrendingUp} tone="up" />
+        <FlowStat label="Money out this month" value={formatCurrency(monthlyOutflow)} icon={ArrowDownRight} tone="down" />
+        <FlowStat label="Net cash flow" value={formatCurrency(netCashFlow, { signed: true })} icon={TrendingUp} tone="up" />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -82,7 +84,7 @@ export default function CashFlowPage() {
             <ReviewRow label="Top category" value={spendingByCategory[0]?.name ?? "—"} />
             <ReviewRow label="Biggest win" value="Under on groceries 🛒" />
             <ReviewRow label="Watch out" value="Over on shopping 🛍️" />
-            <ReviewRow label="Giving" value="9.5% of income ⛪" />
+            <ReviewRow label="Giving" value={`${formatPercent(givingRate, 1)} of income ⛪`} />
           </CardContent>
         </Card>
       </div>

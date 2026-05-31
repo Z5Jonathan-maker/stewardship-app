@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AppMockup } from "@/components/marketing/app-mockup";
+import { formatCurrency } from "@/lib/utils";
+import { givingYtd, debtPaidYtd } from "@/lib/mock-data";
 
 export default function HomePage() {
   return (
@@ -59,7 +61,7 @@ function Hero() {
             </Button>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-evergreen-700">
-            {["No card required", "Bank-level security", "Cancel anytime"].map((t) => (
+            {["No card required", "Private — never sold", "Cancel anytime"].map((t) => (
               <li key={t} className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-brand-500" /> {t}
               </li>
@@ -79,9 +81,9 @@ function Hero() {
 
 function TrustBar() {
   const stats = [
-    { value: "13,000+", label: "Institutions supported" },
-    { value: "10%+", label: "Avg. giving rate of members" },
-    { value: "4.8★", label: "Loved on the App Store" },
+    { value: "1 place", label: "Your whole financial life" },
+    { value: "Tithe-first", label: "Giving built into the budget" },
+    { value: "$0 / ads", label: "We never sell your data" },
     { value: "100%", label: "Of it belongs to Him" },
   ];
   return (
@@ -326,8 +328,8 @@ function Couples() {
           </p>
           <p className="text-sm text-evergreen-700">Stewarding together since 2024</p>
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <MiniStat label="Given this year" value="$7,420" />
-            <MiniStat label="Debt paid off" value="$18,900" />
+            <MiniStat label="Given this year" value={formatCurrency(givingYtd, { compact: true })} />
+            <MiniStat label="Debt paid off" value={formatCurrency(debtPaidYtd, { compact: true })} />
           </div>
         </div>
       </div>
@@ -348,17 +350,17 @@ function MiniStat({ label, value }: { label: string; value: string }) {
 
 function Security() {
   const items = [
-    { icon: ShieldCheck, title: "Bank-level encryption", body: "256-bit encryption in transit and at rest. Your data is guarded like it's ours." },
-    { icon: CheckCircle2, title: "Read-only connections", body: "We connect through trusted aggregators. Unite can never move your money." },
-    { icon: Users, title: "You're in control", body: "Disconnect any account and delete your data anytime. No lock-in, ever." },
+    { icon: ShieldCheck, title: "Encryption by design", body: "Your data will be encrypted in transit and at rest, and guarded like it's our own." },
+    { icon: CheckCircle2, title: "Read-only by design", body: "We'll connect through trusted aggregators like Plaid — Unite is built so it can never move your money." },
+    { icon: Users, title: "You stay in control", body: "Disconnect any account and delete your data whenever you choose. No lock-in, ever." },
   ];
   return (
     <section id="security" className="bg-cream-100 py-20 lg:py-28">
       <div className="container">
         <SectionHeading
-          eyebrow="Security & trust"
-          title="Your trust is sacred to us"
-          subtitle="Stewardship means protecting what's entrusted to us — including your data."
+          eyebrow="Our security commitments"
+          title="Built to be worthy of your trust"
+          subtitle="Stewardship means protecting what's entrusted to us — including your data. Here's how we're designing Unite to earn that trust."
         />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {items.map((i) => (

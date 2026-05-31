@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { Search, Bell, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/brand/logo";
+import { MobileNav } from "@/components/app/mobile-nav";
 import { household } from "@/lib/mock-data";
 
 export function AppTopbar() {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-cream-50/80 px-4 backdrop-blur-md sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-cream-50/80 px-4 backdrop-blur-md sm:gap-4 sm:px-6">
+      {/* Mobile: hamburger + logo (the sidebar is hidden < lg) */}
+      <MobileNav />
+      <Link href="/dashboard" aria-label="Unite home" className="lg:hidden">
+        <Logo markOnly />
+      </Link>
+
       <div className="relative hidden flex-1 sm:block">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input

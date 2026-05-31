@@ -10,6 +10,7 @@ export type AccountType =
   | "savings"
   | "credit"
   | "investment"
+  | "property"
   | "loan";
 
 export interface Account {
@@ -67,6 +68,7 @@ export const accounts: Account[] = [
   { id: "a5", name: "401(k)", institution: "Vanguard", type: "investment", mask: "5521", balance: 138905.7 },
   { id: "a6", name: "Auto Loan", institution: "Capital One", type: "loan", mask: "3340", balance: -12480.0 },
   { id: "a7", name: "Mortgage", institution: "Rocket", type: "loan", mask: "8890", balance: -284300.0 },
+  { id: "a8", name: "Primary Home", institution: "Home value (est.)", type: "property", mask: "—", balance: 415000.0 },
 ];
 
 export const transactions: Transaction[] = [
@@ -124,50 +126,79 @@ export const cashFlow = [
 
 /**
  * Net worth trend (last 6 months), in dollars. A household steadily paying
- * down a mortgage + auto loan: net worth climbs ~$7.8k as debt shrinks,
+ * down a mortgage + auto loan while equity grows: net worth climbs ~$7.8k,
  * ending at the live `netWorth` figure below.
  */
 export const netWorthTrend = [
-  { month: "Dec", value: -73000 },
-  { month: "Jan", value: -71200 },
-  { month: "Feb", value: -70100 },
-  { month: "Mar", value: -68500 },
-  { month: "Apr", value: -67000 },
-  { month: "May", value: -65234 },
+  { month: "Dec", value: 342000 },
+  { month: "Jan", value: 343800 },
+  { month: "Feb", value: 344900 },
+  { month: "Mar", value: 346500 },
+  { month: "Apr", value: 348000 },
+  { month: "May", value: 349766 },
 ];
-
-/** Net worth gained over the trend window (used for the dashboard delta). */
-export const netWorthGain =
-  netWorthTrend[netWorthTrend.length - 1].value - netWorthTrend[0].value;
 
 // ---- Derived selectors -------------------------------------------------
 
+const sumActual = (g: BudgetCategory["group"]) =>
+  budget.filter((b) => b.group === g).reduce((s, b) => s + b.actual, 0);
+const sumBudgeted = (g: BudgetCategory["group"]) =>
+  budget.filter((b) => b.group === g).reduce((s, b) => s + b.budgeted, 0);
+
+// Net worth
 export const assets = accounts.filter((a) => a.balance >= 0);
 export const liabilities = accounts.filter((a) => a.balance < 0);
-
 export const totalAssets = assets.reduce((s, a) => s + a.balance, 0);
 export const totalLiabilities = liabilities.reduce((s, a) => s + a.balance, 0);
 export const netWorth = totalAssets + totalLiabilities;
+export const checkingBalance =
+  accounts.find((a) => a.type === "checking")?.balance ?? 0;
 
-export const monthlyIncome = budget
-  .filter((b) => b.group === "Income")
-  .reduce((s, b) => s + b.actual, 0);
+/** Net worth gained over the full trend window (6 months). */
+export const netWorthGain =
+  netWorthTrend[netWorthTrend.length - 1].value - netWorthTrend[0].value;
+/** Net worth change month-over-month (latest vs. prior). */
+export const netWorthMonthChange =
+  netWorthTrend[netWorthTrend.length - 1].value -
+  netWorthTrend[netWorthTrend.length - 2].value;
 
-export const monthlySpending = budget
-  .filter((b) => b.group !== "Income")
-  .reduce((s, b) => s + b.actual, 0);
+export const monthlyIncome = sumActual("Income");
 
-export const monthlyBudgeted = budget
-  .filter((b) => b.group !== "Income")
-  .reduce((s, b) => s + b.budgeted, 0);
+// Outflow, split by purpose. Giving and saving are deliberately NOT counted
+// as "spending" — that's the heart of the stewardship model.
+export const monthlyGiving = sumActual("Giving");
+export const monthlySaving = sumActual("Savings");
+export const monthlySpending = sumActual("Fixed") + sumActual("Flexible");
+export const monthlyOutflow = monthlyGiving + monthlySaving + monthlySpending;
 
-export const leftToSpend = monthlyBudgeted - monthlySpending;
+/** Backwards-friendly alias for total giving this month. */
+export const totalGiving = monthlyGiving;
 
-export const totalGiving = budget
-  .filter((b) => b.group === "Giving")
-  .reduce((s, b) => s + b.actual, 0);
+// Budget allocation
+export const spendingBudgeted = sumBudgeted("Fixed") + sumBudgeted("Flexible");
+export const monthlyBudgeted =
+  sumBudgeted("Giving") + sumBudgeted("Savings") + spendingBudgeted;
+/** Remaining room in the spending (fixed + flexible) budget. */
+export const leftToSpend = spendingBudgeted - monthlySpending;
+/** Income not yet assigned to any budget group. */
+export const unallocated = monthlyIncome - monthlyBudgeted;
+/** Income left after every dollar out the door this month. */
+export const netCashFlow = monthlyIncome - monthlyOutflow;
 
-export const givingRate = monthlyIncome > 0 ? totalGiving / monthlyIncome : 0;
+export const givingRate = monthlyIncome > 0 ? monthlyGiving / monthlyIncome : 0;
+
+// Giving, year-to-date (Jan–May 2026). Kept consistent with the ~10% tithe
+// rhythm above so every screen reports the same generosity story.
+export const ytdMonths = 5;
+export const ytdIncome = monthlyIncome * ytdMonths;
+export const givingYtd = 4180;
+export const givingAnnualGoal = Math.round(monthlyIncome * 12 * 0.1);
+export const givingYtdRate = ytdIncome > 0 ? givingYtd / ytdIncome : 0;
+/** Debt retired so far this year (for the marketing couples card). */
+export const debtPaidYtd = 18900;
+
+/** The household's emergency-fund goal (referenced by the assistant). */
+export const emergencyFund = goals.find((g) => g.id === "g1")!;
 
 export const spendingByCategory = budget
   .filter((b) => b.group !== "Income" && b.actual > 0)

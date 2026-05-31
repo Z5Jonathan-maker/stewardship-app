@@ -8,8 +8,9 @@ import { formatCurrency, formatPercent, clamp } from "@/lib/utils";
 import {
   household,
   netWorth,
+  netWorthMonthChange,
   leftToSpend,
-  monthlyBudgeted,
+  spendingBudgeted,
   monthlySpending,
   totalGiving,
   givingRate,
@@ -34,10 +35,10 @@ export default function DashboardPage() {
 
       {/* Stat row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Net worth" value={formatCurrency(netWorth)} delta="+4.1%" positive />
+        <StatCard label="Net worth" value={formatCurrency(netWorth)} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
         <StatCard label="Left to spend" value={formatCurrency(leftToSpend)} delta="On track" positive />
-        <StatCard label="Spent this month" value={formatCurrency(monthlySpending)} delta={`of ${formatCurrency(monthlyBudgeted, { compact: true })}`} />
-        <StatCard label="Given this month" value={formatCurrency(totalGiving)} delta={`${formatPercent(givingRate)} of income`} positive accent />
+        <StatCard label="Spending" value={formatCurrency(monthlySpending)} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
+        <StatCard label="Given this month" value={formatCurrency(totalGiving)} delta={`${formatPercent(givingRate, 1)} of income`} positive accent />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">

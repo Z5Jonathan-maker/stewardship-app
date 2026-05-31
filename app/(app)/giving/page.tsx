@@ -6,15 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/app/page-header";
 import { formatCurrency, formatPercent } from "@/lib/utils";
-import { transactions, monthlyIncome, totalGiving, givingRate } from "@/lib/mock-data";
+import {
+  transactions,
+  monthlyIncome,
+  totalGiving,
+  givingRate,
+  givingYtd,
+  givingAnnualGoal,
+  givingYtdRate,
+} from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Giving" };
 
 const givingCategories = ["Tithe & Offering", "Charitable Giving"];
-
-// Year-to-date giving (illustrative).
-const ytdGiving = 7420;
-const ytdGoal = 10032; // ~10% of annual take-home
 
 export default function GivingPage() {
   const givingTxns = transactions.filter((t) =>
@@ -42,25 +46,26 @@ export default function GivingPage() {
                 <HandHeart className="h-4 w-4" /> Generosity this year
               </div>
               <p className="mt-2 font-display text-4xl font-semibold">
-                {formatCurrency(ytdGiving)}
+                {formatCurrency(givingYtd)}
               </p>
               <p className="mt-1 text-sm text-cream-100/70">
-                {formatPercent(ytdGiving / (ytdGoal / 0.1 / 12 * 5))} of your
-                income, given away with joy.
+                {formatPercent(givingYtdRate, 1)} of your income, given away with
+                joy.
               </p>
             </div>
             <div className="w-full max-w-xs">
               <div className="mb-1.5 flex items-center justify-between text-sm text-cream-100/80">
                 <span>Annual giving goal</span>
-                <span>{formatPercent(ytdGiving / ytdGoal)}</span>
+                <span>{formatPercent(givingYtd / givingAnnualGoal)}</span>
               </div>
               <Progress
-                value={ytdGiving / ytdGoal}
+                value={givingYtd / givingAnnualGoal}
                 className="h-3 bg-evergreen-700"
                 indicatorClassName="bg-brand-400"
               />
               <p className="mt-2 text-xs text-cream-100/60">
-                {formatCurrency(ytdGoal - ytdGiving)} to reach your {formatCurrency(ytdGoal)} goal
+                {formatCurrency(givingAnnualGoal - givingYtd)} to reach your{" "}
+                {formatCurrency(givingAnnualGoal)} goal
               </p>
             </div>
           </div>

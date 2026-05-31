@@ -1,6 +1,13 @@
 import { TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
-import { netWorth, leftToSpend, totalGiving, cashFlow } from "@/lib/mock-data";
+import { formatCurrency, formatPercent } from "@/lib/utils";
+import {
+  netWorth,
+  netWorthMonthChange,
+  leftToSpend,
+  totalGiving,
+  givingRate,
+  cashFlow,
+} from "@/lib/mock-data";
 
 /**
  * A faithful, static preview of the Unite dashboard — used as the hero
@@ -27,7 +34,7 @@ export function AppMockup() {
         <StatTile
           label="Net worth"
           value={formatCurrency(netWorth, { compact: true })}
-          delta="+4.1% this month"
+          delta={`${formatCurrency(netWorthMonthChange, { compact: true, signed: true })} this month`}
           positive
         />
         <StatTile
@@ -39,7 +46,7 @@ export function AppMockup() {
         <StatTile
           label="Given this month"
           value={formatCurrency(totalGiving, { compact: true })}
-          delta="9.5% of income"
+          delta={`${formatPercent(givingRate, 1)} of income`}
           positive
           accent
         />

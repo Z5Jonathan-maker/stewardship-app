@@ -7,8 +7,8 @@ import { formatCurrency, clamp } from "@/lib/utils";
 import {
   budget,
   monthlyIncome,
-  monthlySpending,
   monthlyBudgeted,
+  unallocated,
   type BudgetCategory,
 } from "@/lib/mock-data";
 
@@ -29,8 +29,6 @@ const groupMeta: Record<string, { label: string; note: string }> = {
 };
 
 export default function BudgetPage() {
-  const leftToSpend = monthlyBudgeted - monthlySpending;
-
   return (
     <div className="mx-auto max-w-5xl">
       <PageHeader
@@ -43,7 +41,7 @@ export default function BudgetPage() {
       <div className="grid gap-4 sm:grid-cols-3">
         <SummaryCard label="Expected income" value={formatCurrency(monthlyIncome)} tone="income" />
         <SummaryCard label="Budgeted" value={formatCurrency(monthlyBudgeted)} tone="neutral" />
-        <SummaryCard label="Left to budget / spend" value={formatCurrency(leftToSpend)} tone="accent" />
+        <SummaryCard label="Left to budget" value={formatCurrency(unallocated)} tone="accent" />
       </div>
 
       {/* Groups */}

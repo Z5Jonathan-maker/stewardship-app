@@ -11,6 +11,7 @@ import {
   leftToSpend,
   monthlySpending,
   spendingByCategory,
+  emergencyFund,
 } from "@/lib/mock-data";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 
@@ -55,9 +56,10 @@ function answer(question: string): Message {
     };
   }
   if (q.includes("save") || q.includes("emergency")) {
+    const pct = formatPercent(emergencyFund.saved / emergencyFund.target, 0);
     return {
       role: "unite",
-      text: `Your emergency fund is at ${formatCurrency(21750)} of a ${formatCurrency(30000)} goal — about 73%. At ${formatCurrency(500)}/month you'll reach it next spring. Want me to suggest a way to get there sooner?`,
+      text: `Your emergency fund is at ${formatCurrency(emergencyFund.saved)} of a ${formatCurrency(emergencyFund.target)} goal — about ${pct}. At ${formatCurrency(emergencyFund.monthly)}/month you'll reach it next spring. Want me to suggest a way to get there sooner?`,
     };
   }
   return {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus, Landmark, PiggyBank, CreditCard, TrendingUp, Home } from "lucide-react";
+import { Plus, Landmark, PiggyBank, CreditCard, TrendingUp, Home, Banknote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/page-header";
@@ -21,7 +21,8 @@ const typeIcon: Record<AccountType, typeof Landmark> = {
   savings: PiggyBank,
   credit: CreditCard,
   investment: TrendingUp,
-  loan: Home,
+  property: Home,
+  loan: Banknote,
 };
 
 const typeLabel: Record<AccountType, string> = {
@@ -29,6 +30,7 @@ const typeLabel: Record<AccountType, string> = {
   savings: "Savings",
   credit: "Credit Card",
   investment: "Investment",
+  property: "Real Estate",
   loan: "Loan",
 };
 
@@ -81,8 +83,8 @@ export default function AccountsPage() {
           Connect another account
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Unite securely links 13,000+ institutions. Connections are read-only —
-          we can never move your money.
+          Unite will securely link your accounts through Plaid. Connections are
+          designed to be read-only — Unite never moves your money.
         </p>
         <Button variant="outline" size="sm" className="mt-4">
           <Plus className="h-4 w-4" /> Add via secure link

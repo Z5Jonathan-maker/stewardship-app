@@ -2,29 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Receipt,
-  PieChart,
-  LineChart,
-  Target,
-  HandHeart,
-  Wallet,
-  Sparkles,
-} from "lucide-react";
 import { Logo } from "@/components/brand/logo";
+import { appNav } from "@/components/app/nav-items";
 import { cn } from "@/lib/utils";
-
-const nav = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Transactions", href: "/transactions", icon: Receipt },
-  { label: "Budget", href: "/budget", icon: PieChart },
-  { label: "Cash Flow", href: "/cashflow", icon: LineChart },
-  { label: "Goals", href: "/goals", icon: Target },
-  { label: "Giving", href: "/giving", icon: HandHeart },
-  { label: "Accounts", href: "/accounts", icon: Wallet },
-  { label: "Ask Unite", href: "/assistant", icon: Sparkles },
-];
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -38,7 +18,7 @@ export function AppSidebar() {
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {nav.map((item) => {
+        {appNav.map((item) => {
           const active = pathname === item.href;
           return (
             <Link
