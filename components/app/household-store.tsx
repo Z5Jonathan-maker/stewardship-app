@@ -6,6 +6,11 @@ import type { Transaction, Goal, Account } from "@/lib/mock-data";
 /** Giving categories — a transaction in one of these counts as a gift. */
 export const GIVING_CATEGORIES = ["Tithe & Offering", "Charitable Giving"];
 
+/** Categories that count as income (positive cash in) rather than spending. */
+const INCOME_CATEGORIES = ["Paycheck"];
+/** Categories that are saving/investing, not spending. */
+const SAVING_CATEGORIES = ["Investments"];
+
 export interface NewTransaction {
   merchant: string;
   category: string;
@@ -39,6 +44,18 @@ interface HouseholdContextValue extends HouseholdState {
   addAccounts: (a: Account[]) => void;
   /** Sum of gifts added this session (for live "given this month"). */
   addedGiving: number;
+  /** Net-worth delta from connected accounts (signed balances). */
+  addedNetWorth: number;
+  /** Asset/liability deltas from connected accounts. */
+  addedAssets: number;
+  addedLiabilities: number;
+  /** Count of connected accounts this session. */
+  addedAccountCount: number;
+  /** Spending delta this session (expenses that aren't giving/saving/income). */
+  addedSpending: number;
+  /** Total money-in / money-out deltas this session (all added transactions). */
+  addedIncome: number;
+  addedOutflow: number;
   ready: boolean;
 }
 
@@ -135,6 +152,41 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     [state.transactions]
   );
 
+  const addedAssets = React.useMemo(
+    () => state.accounts.filter((a) => a.balance >= 0).reduce((s, a) => s + a.balance, 0),
+    [state.accounts]
+  );
+  const addedLiabilities = React.useMemo(
+    () => state.accounts.filter((a) => a.balance < 0).reduce((s, a) => s + a.balance, 0),
+    [state.accounts]
+  );
+  const addedNetWorth = addedAssets + addedLiabilities;
+  const addedAccountCount = state.accounts.length;
+
+  // Spending = outgoing transactions that aren't giving, saving, or income.
+  const addedSpending = React.useMemo(
+    () =>
+      state.transactions
+        .filter(
+          (t) =>
+            t.amount < 0 &&
+            !GIVING_CATEGORIES.includes(t.category) &&
+            !SAVING_CATEGORIES.includes(t.category) &&
+            !INCOME_CATEGORIES.includes(t.category)
+        )
+        .reduce((sum, t) => sum + Math.abs(t.amount), 0),
+    [state.transactions]
+  );
+
+  const addedIncome = React.useMemo(
+    () => state.transactions.filter((t) => t.amount > 0).reduce((s, t) => s + t.amount, 0),
+    [state.transactions]
+  );
+  const addedOutflow = React.useMemo(
+    () => state.transactions.filter((t) => t.amount < 0).reduce((s, t) => s + Math.abs(t.amount), 0),
+    [state.transactions]
+  );
+
   const value: HouseholdContextValue = {
     ...state,
     addTransaction,
@@ -142,6 +194,13 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     setBudgetAmount,
     addAccounts,
     addedGiving,
+    addedNetWorth,
+    addedAssets,
+    addedLiabilities,
+    addedAccountCount,
+    addedSpending,
+    addedIncome,
+    addedOutflow,
     ready,
   };
 

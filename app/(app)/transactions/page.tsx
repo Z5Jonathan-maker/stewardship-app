@@ -5,7 +5,8 @@ import { TransactionRow } from "@/components/app/transaction-row";
 import { DateHeader } from "@/components/app/date-header";
 import { AddTransactionButton } from "@/components/app/forms/add-transaction-button";
 import { AddedTransactions } from "@/components/app/added/added-transactions";
-import { formatCurrency, groupByDay } from "@/lib/utils";
+import { LiveTransactionsSummary } from "@/components/app/live-stats";
+import { groupByDay } from "@/lib/utils";
 import { transactions } from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Transactions" };
@@ -19,7 +20,7 @@ export default function TransactionsPage() {
     <div className="mx-auto max-w-5xl">
       <PageHeader
         title="Transactions"
-        subtitle={`${transactions.length} transactions · ${formatCurrency(income)} in · ${formatCurrency(spent)} out`}
+        subtitle={<LiveTransactionsSummary count={transactions.length} income={income} spent={spent} />}
         action={<AddTransactionButton />}
       />
 

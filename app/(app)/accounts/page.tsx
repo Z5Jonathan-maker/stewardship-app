@@ -4,7 +4,12 @@ import { PageHeader } from "@/components/app/page-header";
 import { AccountRow } from "@/components/app/account-row";
 import { ConnectAccountButton } from "@/components/app/forms/connect-account-button";
 import { AddedAccounts } from "@/components/app/added/added-accounts";
-import { formatCurrency } from "@/lib/utils";
+import {
+  LiveNetWorth,
+  LiveAssets,
+  LiveLiabilities,
+  LiveAccountCount,
+} from "@/components/app/live-stats";
 import {
   accounts,
   assets,
@@ -21,7 +26,7 @@ export default function AccountsPage() {
     <div className="mx-auto max-w-5xl">
       <PageHeader
         title="Accounts"
-        subtitle={`${accounts.length} accounts connected`}
+        subtitle={<LiveAccountCount base={accounts.length} />}
         action={<ConnectAccountButton label="Connect account" variant="primary" />}
       />
 
@@ -31,7 +36,7 @@ export default function AccountsPage() {
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Assets</p>
             <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-700">
-              {formatCurrency(totalAssets)}
+              <LiveAssets base={totalAssets} />
             </p>
           </CardContent>
         </Card>
@@ -39,7 +44,7 @@ export default function AccountsPage() {
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Liabilities</p>
             <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-              {formatCurrency(totalLiabilities)}
+              <LiveLiabilities base={totalLiabilities} />
             </p>
           </CardContent>
         </Card>
@@ -47,7 +52,7 @@ export default function AccountsPage() {
           <CardContent className="p-5">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Net worth</p>
             <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-              {formatCurrency(netWorth)}
+              <LiveNetWorth base={netWorth} />
             </p>
           </CardContent>
         </Card>

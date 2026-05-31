@@ -3,7 +3,11 @@ import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, SpendingDonut } from "@/components/app/charts";
-import { CountUp } from "@/components/app/count-up";
+import {
+  IncomeCountUp,
+  OutflowCountUp,
+  NetCashFlowCountUp,
+} from "@/components/app/live-stats";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 import {
   cashFlow,
@@ -31,9 +35,9 @@ export default function CashFlowPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <FlowStat label="Income this month" value={<CountUp value={monthlyIncome} />} icon={ArrowUpRight} tone="up" />
-        <FlowStat label="Money out this month" value={<CountUp value={monthlyOutflow} />} icon={ArrowDownRight} tone="down" />
-        <FlowStat label="Net cash flow" value={<CountUp value={netCashFlow} format="currency-signed" />} icon={TrendingUp} tone="up" />
+        <FlowStat label="Income this month" value={<IncomeCountUp base={monthlyIncome} />} icon={ArrowUpRight} tone="up" />
+        <FlowStat label="Money out this month" value={<OutflowCountUp base={monthlyOutflow} />} icon={ArrowDownRight} tone="down" />
+        <FlowStat label="Net cash flow" value={<NetCashFlowCountUp base={netCashFlow} />} icon={TrendingUp} tone="up" />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">

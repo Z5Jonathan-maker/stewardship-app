@@ -2,8 +2,13 @@ import Link from "next/link";
 import { ArrowUpRight, ArrowRight, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { GivenThisMonth } from "@/components/app/given-this-month";
-import { CategoryIcon } from "@/components/app/category-icon";
+import {
+  GivenThisMonth,
+  LiveGivingRate,
+  NetWorthCountUp,
+  SpendingCountUp,
+} from "@/components/app/live-stats";
+import { DashboardRecent } from "@/components/app/dashboard-recent";
 import { CountUp } from "@/components/app/count-up";
 import { categoryMeta } from "@/lib/categories";
 import { PageHeader } from "@/components/app/page-header";
@@ -16,8 +21,8 @@ import {
   leftToSpend,
   spendingBudgeted,
   monthlySpending,
+  monthlyIncome,
   totalGiving,
-  givingRate,
   cashFlow,
   netWorthTrend,
   netWorthGain,
@@ -39,10 +44,10 @@ export default function DashboardPage() {
 
       {/* Stat row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Net worth" value={<CountUp value={netWorth} />} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
+        <StatCard label="Net worth" value={<NetWorthCountUp base={netWorth} />} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
         <StatCard label="Left to spend" value={<CountUp value={leftToSpend} />} delta="On track" positive />
-        <StatCard label="Spending" value={<CountUp value={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
-        <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={`${formatPercent(givingRate, 1)} of income`} positive accent />
+        <StatCard label="Spending" value={<SpendingCountUp base={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
+        <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={<LiveGivingRate givingBase={totalGiving} income={monthlyIncome} />} positive accent />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -66,7 +71,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <p className="font-display text-3xl font-semibold text-evergreen-900">
-              <CountUp value={netWorth} />
+              <NetWorthCountUp base={netWorth} />
             </p>
             <p className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-evergreen-600">
               <ArrowUpRight className="h-4 w-4" /> Up {formatCurrency(netWorthGain)} in 6 months
@@ -140,20 +145,7 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent className="divide-y divide-border">
-            {recent.map((t) => (
-              <div key={t.id} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                <div className="flex min-w-0 items-center gap-3">
-                  <CategoryIcon category={t.category} className="h-9 w-9 rounded-full" iconClassName="h-[18px] w-[18px]" />
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-evergreen-900">{t.merchant}</p>
-                    <p className="truncate text-xs text-muted-foreground">{t.category}</p>
-                  </div>
-                </div>
-                <span className={`text-sm font-semibold tabular-nums ${t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"}`}>
-                  {formatCurrency(t.amount, { signed: true })}
-                </span>
-              </div>
-            ))}
+            <DashboardRecent seed={recent} />
           </CardContent>
         </Card>
 
@@ -193,7 +185,7 @@ function StatCard({
 }: {
   label: string;
   value: React.ReactNode;
-  delta: string;
+  delta: React.ReactNode;
   positive?: boolean;
   accent?: boolean;
 }) {
@@ -207,7 +199,7 @@ function StatCard({
           {value}
         </p>
         <p className={`mt-1 inline-flex items-center gap-0.5 text-xs font-medium ${positive ? "text-evergreen-600" : "text-muted-foreground"}`}>
-          {positive && delta !== "On track" && <ArrowUpRight className="h-3 w-3" />}
+          {positive && typeof delta === "string" && delta !== "On track" && <ArrowUpRight className="h-3 w-3" />}
           {delta}
         </p>
       </CardContent>

@@ -61,6 +61,37 @@ test("logging a gift appears in recent gifts", async ({ page }) => {
   await expect(page.getByText("Hope Mission")).toBeVisible();
 });
 
+test("connecting an account updates net worth and the account count", async ({ page }) => {
+  await page.goto("/accounts");
+  const countBefore = await page.getByText(/accounts connected/).textContent();
+  const nwBefore = await page.locator("text=Net worth").locator("..").textContent();
+  await page.getByRole("button", { name: "Connect account" }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByLabel("Search institutions").fill("citi");
+  await dialog.getByRole("button", { name: /Citi/ }).click();
+  await expect(dialog.getByText("Citi connected")).toBeVisible({ timeout: 5000 });
+  await dialog.getByRole("button", { name: "Done" }).click();
+  // account-count subtitle and net-worth total both changed
+  await expect(page.getByText(/accounts connected/)).not.toHaveText(countBefore ?? "");
+  await expect(page.locator("text=Net worth").locator("..")).not.toHaveText(nwBefore ?? "");
+});
+
+test("adding a transaction updates the header count and dashboard recent", async ({ page }) => {
+  await page.goto("/transactions");
+  const before = await page.getByText(/transactions ·/).textContent();
+  await page.getByRole("button", { name: "Add transaction" }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByLabel("Merchant").fill("Audit Test Expense");
+  await dialog.getByLabel("Amount").fill("123");
+  await dialog.getByRole("button", { name: "Add transaction" }).click();
+  await expect(page.getByText("Audit Test Expense")).toBeVisible();
+  // header summary now reflects the new transaction
+  await expect(page.getByText(/transactions ·/)).not.toHaveText(before ?? "");
+  // and it appears in the dashboard "Recent transactions"
+  await page.goto("/dashboard");
+  await expect(page.getByText("Audit Test Expense")).toBeVisible();
+});
+
 test("command palette: hotkey opens, search result navigates", async ({ page }) => {
   await page.goto("/dashboard");
   await page.keyboard.press("ControlOrMeta+k");
