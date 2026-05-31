@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { GivenThisMonth } from "@/components/app/given-this-month";
 import { CategoryIcon } from "@/components/app/category-icon";
+import { CountUp } from "@/components/app/count-up";
 import { categoryMeta } from "@/lib/categories";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, TrendLine } from "@/components/app/charts";
@@ -38,9 +39,9 @@ export default function DashboardPage() {
 
       {/* Stat row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Net worth" value={formatCurrency(netWorth)} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
-        <StatCard label="Left to spend" value={formatCurrency(leftToSpend)} delta="On track" positive />
-        <StatCard label="Spending" value={formatCurrency(monthlySpending)} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
+        <StatCard label="Net worth" value={<CountUp value={netWorth} />} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
+        <StatCard label="Left to spend" value={<CountUp value={leftToSpend} />} delta="On track" positive />
+        <StatCard label="Spending" value={<CountUp value={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
         <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={`${formatPercent(givingRate, 1)} of income`} positive accent />
       </div>
 
@@ -65,7 +66,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <p className="font-display text-3xl font-semibold text-evergreen-900">
-              {formatCurrency(netWorth)}
+              <CountUp value={netWorth} />
             </p>
             <p className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-evergreen-600">
               <ArrowUpRight className="h-4 w-4" /> Up {formatCurrency(netWorthGain)} in 6 months

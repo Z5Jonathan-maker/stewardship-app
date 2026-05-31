@@ -3,6 +3,7 @@ import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, BreakdownBars } from "@/components/app/charts";
+import { CountUp } from "@/components/app/count-up";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 import {
   cashFlow,
@@ -30,9 +31,9 @@ export default function CashFlowPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <FlowStat label="Income this month" value={formatCurrency(monthlyIncome)} icon={ArrowUpRight} tone="up" />
-        <FlowStat label="Money out this month" value={formatCurrency(monthlyOutflow)} icon={ArrowDownRight} tone="down" />
-        <FlowStat label="Net cash flow" value={formatCurrency(netCashFlow, { signed: true })} icon={TrendingUp} tone="up" />
+        <FlowStat label="Income this month" value={<CountUp value={monthlyIncome} />} icon={ArrowUpRight} tone="up" />
+        <FlowStat label="Money out this month" value={<CountUp value={monthlyOutflow} />} icon={ArrowDownRight} tone="down" />
+        <FlowStat label="Net cash flow" value={<CountUp value={netCashFlow} format="currency-signed" />} icon={TrendingUp} tone="up" />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -99,7 +100,7 @@ function FlowStat({
   tone,
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   icon: typeof TrendingUp;
   tone: "up" | "down";
 }) {
