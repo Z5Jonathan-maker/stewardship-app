@@ -3,6 +3,8 @@ import { ArrowUpRight, ArrowRight, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { GivenThisMonth } from "@/components/app/given-this-month";
+import { CategoryIcon } from "@/components/app/category-icon";
+import { categoryMeta } from "@/lib/categories";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, TrendLine } from "@/components/app/charts";
 import { formatCurrency, formatPercent, clamp } from "@/lib/utils";
@@ -89,8 +91,12 @@ export default function DashboardPage() {
               return (
                 <div key={b.id}>
                   <div className="mb-1.5 flex items-center justify-between text-sm">
-                    <span className="font-medium text-evergreen-800">
-                      {b.emoji} {b.name}
+                    <span className="flex items-center gap-2 font-medium text-evergreen-800">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: categoryMeta(b.name).color }}
+                      />
+                      {b.name}
                     </span>
                     <span className={`tabular-nums ${over ? "font-semibold text-destructive" : "text-evergreen-700"}`}>
                       {formatCurrency(b.actual)} / {formatCurrency(b.budgeted)}
@@ -99,7 +105,7 @@ export default function DashboardPage() {
                   <Progress
                     value={clamp(ratio)}
                     aria-label={`${b.name} budget used`}
-                    indicatorClassName={over ? "bg-destructive" : "bg-brand-500"}
+                    indicatorColor={over ? "#d64545" : categoryMeta(b.name).color}
                   />
                 </div>
               );
@@ -135,13 +141,11 @@ export default function DashboardPage() {
           <CardContent className="divide-y divide-border">
             {recent.map((t) => (
               <div key={t.id} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-xs font-semibold text-evergreen-700">
-                    {t.merchant[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-evergreen-900">{t.merchant}</p>
-                    <p className="text-xs text-muted-foreground">{t.category}</p>
+                <div className="flex min-w-0 items-center gap-3">
+                  <CategoryIcon category={t.category} className="h-9 w-9 rounded-full" iconClassName="h-[18px] w-[18px]" />
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-evergreen-900">{t.merchant}</p>
+                    <p className="truncate text-xs text-muted-foreground">{t.category}</p>
                   </div>
                 </div>
                 <span className={`text-sm font-semibold tabular-nums ${t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"}`}>

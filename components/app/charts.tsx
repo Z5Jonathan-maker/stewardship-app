@@ -1,4 +1,6 @@
 import { formatCurrency } from "@/lib/utils";
+import { categoryMeta } from "@/lib/categories";
+import { CategoryIcon } from "@/components/app/category-icon";
 
 const GRIDLINES = [0.25, 0.5, 0.75, 1];
 
@@ -133,32 +135,34 @@ export function TrendLine({
   );
 }
 
-/** Horizontal spending breakdown bars. */
+/** Horizontal spending breakdown, color-coded by category. */
 export function BreakdownBars({
   items,
 }: {
-  items: { name: string; emoji: string; amount: number }[];
+  items: { name: string; amount: number }[];
 }) {
   const total = items.reduce((s, i) => s + i.amount, 0) || 1;
   return (
-    <div className="space-y-3">
+    <div className="space-y-3.5">
       {items.slice(0, 6).map((item) => {
         const pct = item.amount / total;
+        const { color } = categoryMeta(item.name);
         return (
-          <div key={item.name}>
-            <div className="mb-1 flex items-center justify-between text-sm">
-              <span className="text-evergreen-800">
-                {item.emoji} {item.name}
-              </span>
-              <span className="font-medium tabular-nums text-evergreen-900">
-                {formatCurrency(item.amount)}
-              </span>
-            </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-              <div
-                className="h-full rounded-full bg-brand-500 transition-all duration-500"
-                style={{ width: `${pct * 100}%` }}
-              />
+          <div key={item.name} className="flex items-center gap-3">
+            <CategoryIcon category={item.name} className="h-8 w-8 rounded-lg" iconClassName="h-4 w-4" />
+            <div className="min-w-0 flex-1">
+              <div className="mb-1 flex items-center justify-between text-sm">
+                <span className="truncate text-evergreen-800">{item.name}</span>
+                <span className="font-medium tabular-nums text-evergreen-900">
+                  {formatCurrency(item.amount)}
+                </span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${pct * 100}%`, backgroundColor: color }}
+                />
+              </div>
             </div>
           </div>
         );

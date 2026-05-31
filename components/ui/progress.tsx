@@ -5,6 +5,8 @@ interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 0–1 ratio */
   value: number;
   indicatorClassName?: string;
+  /** Explicit indicator color (overrides the default/brand fill). */
+  indicatorColor?: string;
 }
 
 /** Lightweight progress bar (no Radix dependency). */
@@ -12,6 +14,7 @@ export function Progress({
   value,
   className,
   indicatorClassName,
+  indicatorColor,
   ...props
 }: ProgressProps) {
   const pct = clamp(value) * 100;
@@ -32,7 +35,7 @@ export function Progress({
           "h-full rounded-full bg-primary transition-all duration-500",
           indicatorClassName
         )}
-        style={{ width: `${pct}%` }}
+        style={{ width: `${pct}%`, backgroundColor: indicatorColor }}
       />
     </div>
   );

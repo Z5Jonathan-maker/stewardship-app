@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Plus, Landmark, PiggyBank, CreditCard, TrendingUp, Home, Banknote } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/page-header";
+import { InstitutionLogo } from "@/components/app/category-icon";
 import { formatCurrency } from "@/lib/utils";
 import {
   accounts,
@@ -15,15 +16,6 @@ import {
 } from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Accounts" };
-
-const typeIcon: Record<AccountType, typeof Landmark> = {
-  checking: Landmark,
-  savings: PiggyBank,
-  credit: CreditCard,
-  investment: TrendingUp,
-  property: Home,
-  loan: Banknote,
-};
 
 const typeLabel: Record<AccountType, string> = {
   checking: "Checking",
@@ -108,27 +100,22 @@ function AccountGroup({
       </h2>
       <Card>
         <CardContent className="divide-y divide-border p-0">
-          {items.map((a) => {
-            const Icon = typeIcon[a.type];
-            return (
-              <div key={a.id} className="flex items-center justify-between px-5 py-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-evergreen-700">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-evergreen-900">{a.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {a.institution} · {typeLabel[a.type]} ••{a.mask}
-                    </p>
-                  </div>
+          {items.map((a) => (
+            <div key={a.id} className="flex items-center justify-between px-5 py-4">
+              <div className="flex min-w-0 items-center gap-3">
+                <InstitutionLogo institution={a.institution} />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-evergreen-900">{a.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {a.institution} · {typeLabel[a.type]} ••{a.mask}
+                  </p>
                 </div>
-                <span className={`text-sm font-semibold ${a.balance < 0 ? "text-destructive" : "text-evergreen-900"}`}>
-                  {formatCurrency(a.balance)}
-                </span>
               </div>
-            );
-          })}
+              <span className={`shrink-0 pl-3 text-sm font-semibold tabular-nums ${a.balance < 0 ? "text-destructive" : "text-evergreen-900"}`}>
+                {formatCurrency(a.balance)}
+              </span>
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
 import { TransactionRow } from "@/components/app/transaction-row";
@@ -23,18 +22,6 @@ export default function TransactionsPage() {
       />
 
       <Card className="overflow-hidden">
-        <div className="flex items-center gap-3 border-b border-border p-4">
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              aria-label="Search transactions"
-              placeholder="Search transactions…"
-              className="h-10 w-full rounded-full border border-border bg-cream-50 pl-10 pr-4 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
-            />
-          </div>
-        </div>
-
         <div className="divide-y divide-border">
           <AddedTransactions />
           {transactions.map((t) => (

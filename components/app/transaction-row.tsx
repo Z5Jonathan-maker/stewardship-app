@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { CategoryIcon, CategoryChip } from "@/components/app/category-icon";
 import { formatCurrency, formatDateShort } from "@/lib/utils";
 import type { Transaction } from "@/lib/mock-data";
 
@@ -12,37 +13,34 @@ export function TransactionRow({
 }) {
   return (
     <div
-      className={`flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-cream-50 ${
+      className={`flex items-center gap-4 px-4 py-3 transition-colors hover:bg-cream-50 ${
         highlight ? "bg-brand-50/60" : ""
       }`}
     >
-      <div className="flex min-w-0 items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-semibold text-evergreen-700">
-          {t.merchant[0]}
+      <CategoryIcon category={t.category} />
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <span className="truncate text-sm font-medium text-evergreen-900">
+            {t.merchant}
+          </span>
+          {t.pending && (
+            <Badge variant="outline" className="shrink-0">Pending</Badge>
+          )}
         </div>
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="truncate text-sm font-medium text-evergreen-900">
-              {t.merchant}
-            </span>
-            {t.pending && (
-              <Badge variant="outline" className="shrink-0">Pending</Badge>
-            )}
-          </div>
-          <p className="truncate text-xs text-muted-foreground">{t.account}</p>
-        </div>
+        <p className="truncate text-xs text-muted-foreground">{t.account}</p>
       </div>
 
-      <div className="hidden sm:block">
-        <Badge variant="default">{t.category}</Badge>
+      <div className="hidden md:block">
+        <CategoryChip category={t.category} />
       </div>
 
-      <div className="w-20 shrink-0 text-right text-xs text-muted-foreground">
+      <div className="w-16 shrink-0 text-right text-xs text-muted-foreground sm:w-20">
         {formatDateShort(t.date)}
       </div>
 
       <div
-        className={`w-28 shrink-0 text-right text-sm font-semibold tabular-nums ${
+        className={`w-24 shrink-0 text-right text-sm font-semibold tabular-nums sm:w-28 ${
           t.amount > 0 ? "text-evergreen-600" : "text-evergreen-900"
         }`}
       >

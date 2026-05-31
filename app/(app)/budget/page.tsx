@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/app/page-header";
 import { Button } from "@/components/ui/button";
+import { CategoryIcon } from "@/components/app/category-icon";
+import { categoryMeta } from "@/lib/categories";
 import { formatCurrency, clamp } from "@/lib/utils";
 import {
   budget,
@@ -70,20 +72,27 @@ export default function BudgetPage() {
                     const ratio = b.actual / b.budgeted;
                     const over = ratio > 1;
                     return (
-                      <div key={b.id}>
-                        <div className="mb-1.5 flex items-center justify-between text-sm">
-                          <span className="font-medium text-evergreen-800">
-                            {b.emoji} {b.name}
-                          </span>
-                          <span className={`tabular-nums ${over ? "font-semibold text-destructive" : "text-evergreen-700"}`}>
-                            {formatCurrency(b.actual)} / {formatCurrency(b.budgeted)}
-                          </span>
-                        </div>
-                        <Progress
-                          value={clamp(ratio)}
-                          aria-label={`${b.name} budget used`}
-                          indicatorClassName={over ? "bg-destructive" : "bg-brand-500"}
+                      <div key={b.id} className="flex items-center gap-3">
+                        <CategoryIcon
+                          category={b.name}
+                          className="h-9 w-9"
+                          iconClassName="h-[18px] w-[18px]"
                         />
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1.5 flex items-center justify-between text-sm">
+                            <span className="truncate font-medium text-evergreen-800">
+                              {b.name}
+                            </span>
+                            <span className={`shrink-0 pl-2 tabular-nums ${over ? "font-semibold text-destructive" : "text-evergreen-700"}`}>
+                              {formatCurrency(b.actual)} / {formatCurrency(b.budgeted)}
+                            </span>
+                          </div>
+                          <Progress
+                            value={clamp(ratio)}
+                            aria-label={`${b.name} budget used`}
+                            indicatorColor={over ? "#d64545" : categoryMeta(b.name).color}
+                          />
+                        </div>
                       </div>
                     );
                   })}
