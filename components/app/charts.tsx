@@ -16,7 +16,6 @@ import {
 } from "recharts";
 import { formatCurrency } from "@/lib/utils";
 import { categoryMeta } from "@/lib/categories";
-import { CategoryIcon } from "@/components/app/category-icon";
 
 const INCOME = "#33745c"; // evergreen-500
 const EXPENSE = "#6285fb"; // brand-400
@@ -163,43 +162,6 @@ export function CashFlowBars({
         <Legend color={INCOME} label="Income" />
         <Legend color={EXPENSE} label="Expenses" />
       </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------- Category spending breakdown */
-
-export function BreakdownBars({
-  items,
-}: {
-  items: { name: string; amount: number }[];
-}) {
-  const total = items.reduce((s, i) => s + i.amount, 0) || 1;
-  return (
-    <div className="space-y-3.5">
-      {items.slice(0, 6).map((item) => {
-        const pct = item.amount / total;
-        const { color } = categoryMeta(item.name);
-        return (
-          <div key={item.name} className="flex items-center gap-3">
-            <CategoryIcon category={item.name} className="h-8 w-8 rounded-lg" iconClassName="h-4 w-4" />
-            <div className="min-w-0 flex-1">
-              <div className="mb-1 flex items-center justify-between text-sm">
-                <span className="truncate text-evergreen-800">{item.name}</span>
-                <span className="font-medium tabular-nums text-evergreen-900">
-                  {formatCurrency(item.amount)}
-                </span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${pct * 100}%`, backgroundColor: color }}
-                />
-              </div>
-            </div>
-          </div>
-        );
-      })}
     </div>
   );
 }

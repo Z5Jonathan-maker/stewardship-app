@@ -31,10 +31,15 @@ export async function POST(request: Request) {
   }
 
   // Map to API roles and ensure the transcript starts with a user turn.
+  // Bound the input so a client can't forward an unbounded payload to the
+  // model: cap per-message length and keep only the most recent turns.
+  const MAX_TURNS = 20;
+  const MAX_CHARS = 4000;
   const messages = turns
+    .slice(-MAX_TURNS)
     .map((t) => ({
       role: t.role === "user" ? ("user" as const) : ("assistant" as const),
-      content: String(t.text ?? ""),
+      content: String(t.text ?? "").slice(0, MAX_CHARS),
     }))
     .filter((m) => m.content.trim().length > 0);
   while (messages.length && messages[0].role === "assistant") messages.shift();

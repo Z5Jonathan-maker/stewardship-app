@@ -11,18 +11,23 @@ export function formatCurrency(
   opts: { compact?: boolean; signed?: boolean } = {}
 ) {
   const { compact = false, signed = false } = opts;
+  // Round to the displayed precision before deciding the sign, so values like
+  // -0.001 don't render as "−$0.00".
+  const places = compact ? 1 : 2;
+  const rounded =
+    Math.round((amount + Number.EPSILON) * 10 ** places) / 10 ** places || 0;
   const formatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     notation: compact ? "compact" : "standard",
-    maximumFractionDigits: compact ? 1 : 2,
+    maximumFractionDigits: places,
     minimumFractionDigits: compact ? 0 : 2,
-  }).format(Math.abs(amount));
+  }).format(Math.abs(rounded));
 
   if (signed) {
-    return `${amount < 0 ? "−" : "+"}${formatted}`;
+    return `${rounded < 0 ? "−" : "+"}${formatted}`;
   }
-  return amount < 0 ? `−${formatted}` : formatted;
+  return rounded < 0 ? `−${formatted}` : formatted;
 }
 
 /** Format a 0–1 ratio as a percentage string. */
