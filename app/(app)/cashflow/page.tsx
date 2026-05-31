@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
-import { CashFlowBars, BreakdownBars } from "@/components/app/charts";
+import { CashFlowBars, SpendingDonut } from "@/components/app/charts";
 import { CountUp } from "@/components/app/count-up";
 import { formatCurrency, formatPercent } from "@/lib/utils";
 import {
@@ -73,7 +73,7 @@ export default function CashFlowPage() {
             <CardTitle>Where the money went</CardTitle>
           </CardHeader>
           <CardContent>
-            <BreakdownBars items={spendingByCategory} />
+            <SpendingDonut items={spendingByCategory} />
           </CardContent>
         </Card>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -199,6 +200,78 @@ export function BreakdownBars({
           </div>
         );
       })}
+    </div>
+  );
+}
+
+/** Donut segment path (pure SVG) for a value between two angles. */
+function donutSegment(start: number, end: number) {
+  const cx = 50;
+  const cy = 50;
+  const rO = 46;
+  const rI = 30;
+  const pt = (r: number, a: number) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  const large = end - start > Math.PI ? 1 : 0;
+  const [x1, y1] = pt(rO, start);
+  const [x2, y2] = pt(rO, end);
+  const [x3, y3] = pt(rI, end);
+  const [x4, y4] = pt(rI, start);
+  return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${rO} ${rO} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} L ${x3.toFixed(2)} ${y3.toFixed(2)} A ${rI} ${rI} 0 ${large} 0 ${x4.toFixed(2)} ${y4.toFixed(2)} Z`;
+}
+
+/** Donut of spending by category, with a center total and a value legend.
+ * Hand-drawn SVG (decorative — the legend carries the data as text). */
+export function SpendingDonut({
+  items,
+}: {
+  items: { name: string; amount: number }[];
+}) {
+  const top = items.slice(0, 6);
+  const total = top.reduce((s, i) => s + i.amount, 0) || 1;
+  const gap = 0.045;
+  let angle = -Math.PI / 2;
+  const segments = top.map((i) => {
+    const sweep = (i.amount / total) * (Math.PI * 2);
+    const start = angle + gap / 2;
+    const end = angle + sweep - gap / 2;
+    angle += sweep;
+    return { d: donutSegment(start, Math.max(start, end)), color: categoryMeta(i.name).color };
+  });
+
+  return (
+    <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-6">
+      <div className="relative h-[176px] w-[176px] shrink-0">
+        <motion.svg
+          viewBox="0 0 100 100"
+          className="h-full w-full -rotate-0"
+          aria-hidden
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {segments.map((s, i) => (
+            <path key={i} d={s.d} fill={s.color} />
+          ))}
+        </motion.svg>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-[11px] uppercase tracking-wide text-muted-foreground">Total</span>
+          <span className="font-display text-lg font-semibold tabular-nums text-evergreen-900">
+            {formatCurrency(total, { compact: true })}
+          </span>
+        </div>
+      </div>
+
+      <ul className="w-full min-w-0 space-y-2">
+        {top.map((i) => (
+          <li key={i.name} className="flex items-center gap-2 text-sm">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: categoryMeta(i.name).color }} />
+            <span className="truncate text-evergreen-800">{i.name}</span>
+            <span className="ml-auto shrink-0 font-medium tabular-nums text-evergreen-900">
+              {formatCurrency(i.amount)}
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AppMockup } from "@/components/marketing/app-mockup";
+import { Reveal } from "@/components/marketing/reveal";
 import { formatCurrency } from "@/lib/utils";
 import { givingYtd, debtPaidYtd } from "@/lib/mock-data";
 
@@ -22,12 +23,24 @@ export default function HomePage() {
     <>
       <Hero />
       <TrustBar />
-      <Pillars />
-      <FeatureDeepDives />
-      <Stewardship />
-      <Couples />
-      <Security />
-      <FinalCta />
+      <Reveal>
+        <Pillars />
+      </Reveal>
+      <Reveal>
+        <FeatureDeepDives />
+      </Reveal>
+      <Reveal>
+        <Stewardship />
+      </Reveal>
+      <Reveal>
+        <Couples />
+      </Reveal>
+      <Reveal>
+        <Security />
+      </Reveal>
+      <Reveal>
+        <FinalCta />
+      </Reveal>
     </>
   );
 }

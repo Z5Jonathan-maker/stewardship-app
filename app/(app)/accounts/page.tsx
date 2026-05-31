@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/page-header";
 import { InstitutionLogo } from "@/components/app/category-icon";
+import { Sparkline } from "@/components/app/sparkline";
+import { accountSeries } from "@/lib/account-series";
 import { formatCurrency } from "@/lib/utils";
 import {
   accounts,
@@ -111,9 +113,17 @@ function AccountGroup({
                   </p>
                 </div>
               </div>
-              <span className={`shrink-0 pl-3 text-sm font-semibold tabular-nums ${a.balance < 0 ? "text-destructive" : "text-evergreen-900"}`}>
-                {formatCurrency(a.balance)}
-              </span>
+              <div className="flex shrink-0 items-center gap-4 pl-3">
+                <div className="hidden sm:block">
+                  <Sparkline
+                    data={accountSeries(a.id, a.balance)}
+                    color={a.balance < 0 ? "#9aa39c" : "#33745c"}
+                  />
+                </div>
+                <span className={`text-sm font-semibold tabular-nums ${a.balance < 0 ? "text-destructive" : "text-evergreen-900"}`}>
+                  {formatCurrency(a.balance)}
+                </span>
+              </div>
             </div>
           ))}
         </CardContent>
