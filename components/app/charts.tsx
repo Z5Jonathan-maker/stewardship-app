@@ -91,7 +91,7 @@ export function TrendLine({
         <XAxis dataKey="month" hide />
         <YAxis hide domain={["dataMin", "dataMax"]} />
         <Tooltip
-          cursor={{ stroke: "#cdd6d0", strokeDasharray: "4 4" }}
+          cursor={{ stroke: "rgba(130,140,135,0.5)", strokeDasharray: "4 4" }}
           content={(p: TooltipProps<number, string>) =>
             p.active && p.payload?.length ? (
               <TooltipCard
@@ -134,7 +134,7 @@ export function CashFlowBars({
       {mounted ? (
         <ResponsiveContainer width="100%" height={height}>
           <BarChart data={data} barGap={4} barCategoryGap="26%" margin={{ top: 8, right: 4, bottom: 0, left: 4 }}>
-            <CartesianGrid vertical={false} stroke="#e6e0d4" strokeDasharray="4 4" />
+            <CartesianGrid vertical={false} stroke="rgba(130,140,135,0.22)" strokeDasharray="4 4" />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#7a857f" }} dy={4} />
             <YAxis hide />
             <Tooltip

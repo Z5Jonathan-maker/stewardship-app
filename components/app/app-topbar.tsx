@@ -3,6 +3,7 @@ import { Search, Bell, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { MobileNav } from "@/components/app/mobile-nav";
+import { ThemeToggle } from "@/components/app/theme-provider";
 import { household } from "@/lib/mock-data";
 
 export function AppTopbar() {
@@ -30,6 +31,7 @@ export function AppTopbar() {
             <Plus className="h-4 w-4" /> Add account
           </Link>
         </Button>
+        <ThemeToggle />
         <Button variant="ghost" size="icon" aria-label="Notifications">
           <Bell className="h-5 w-5" />
         </Button>

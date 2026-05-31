@@ -118,3 +118,33 @@
     background-size: 22px 22px;
   }
 }
+
+/*
+ * Dark theme. The app was built largely on literal brand-color utilities
+ * (evergreen/cream/brand), so we remap the ones used as surfaces/ink/accent
+ * when a `.dark` ancestor is present (only the logged-in app sets it — the
+ * marketing + auth sides stay light). Rules are unlayered so they win over
+ * Tailwind's utilities layer. Semantic tokens (bg-card, border-border, etc.)
+ * already flip via the `.dark` CSS variables above.
+ */
+.dark .bg-cream-100 { background-color: hsl(165 28% 6.5%); }
+.dark .bg-cream-50,
+.dark .bg-cream-50\/80,
+.dark .bg-cream-50\/70 { background-color: hsl(165 28% 9%); }
+.dark .bg-cream-200 { background-color: hsl(165 22% 14%); }
+.dark .hover\:bg-cream-50:hover { background-color: hsl(165 24% 12%); }
+.dark .hover\:bg-cream-200:hover { background-color: hsl(165 22% 16%); }
+
+.dark .text-evergreen-900 { color: hsl(150 14% 94%); }
+.dark .text-evergreen-800 { color: hsl(150 12% 86%); }
+.dark .text-evergreen-700 { color: hsl(158 10% 64%); }
+.dark .text-evergreen-600 { color: hsl(152 46% 57%); }
+
+.dark .bg-brand-50,
+.dark .bg-brand-50\/50,
+.dark .bg-brand-50\/60 { background-color: hsl(226 44% 17%); }
+.dark .bg-evergreen-50 { background-color: hsl(158 34% 12%); }
+
+.dark .text-brand-600 { color: hsl(224 100% 76%); }
+.dark .text-brand-700 { color: hsl(224 92% 82%); }
+.dark .border-brand-200 { border-color: hsl(226 30% 30%); }
