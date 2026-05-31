@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, ArrowRight, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { GivenThisMonth } from "@/components/app/given-this-month";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, TrendLine } from "@/components/app/charts";
 import { formatCurrency, formatPercent, clamp } from "@/lib/utils";
@@ -38,7 +39,7 @@ export default function DashboardPage() {
         <StatCard label="Net worth" value={formatCurrency(netWorth)} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} positive />
         <StatCard label="Left to spend" value={formatCurrency(leftToSpend)} delta="On track" positive />
         <StatCard label="Spending" value={formatCurrency(monthlySpending)} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
-        <StatCard label="Given this month" value={formatCurrency(totalGiving)} delta={`${formatPercent(givingRate, 1)} of income`} positive accent />
+        <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={`${formatPercent(givingRate, 1)} of income`} positive accent />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -186,7 +187,7 @@ function StatCard({
   accent,
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   delta: string;
   positive?: boolean;
   accent?: boolean;

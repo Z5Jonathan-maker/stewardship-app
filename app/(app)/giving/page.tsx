@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { HandHeart, Plus } from "lucide-react";
+import { HandHeart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/app/page-header";
-import { formatCurrency, formatPercent, formatDateLong } from "@/lib/utils";
+import { GiftRow } from "@/components/app/gift-row";
+import { LogGiftButton } from "@/components/app/forms/log-gift-button";
+import { AddedGifts } from "@/components/app/added/added-gifts";
+import { GivenThisMonth } from "@/components/app/given-this-month";
+import { formatCurrency, formatPercent } from "@/lib/utils";
 import {
   transactions,
   monthlyIncome,
@@ -30,11 +32,7 @@ export default function GivingPage() {
       <PageHeader
         title="Giving"
         subtitle="“Give, and it will be given to you.” — Luke 6:38"
-        action={
-          <Button size="sm">
-            <Plus className="h-4 w-4" /> Log a gift
-          </Button>
-        }
+        action={<LogGiftButton />}
       />
 
       {/* Hero giving card */}
@@ -75,7 +73,7 @@ export default function GivingPage() {
 
       {/* This month stats */}
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
-        <MiniCard label="Given this month" value={formatCurrency(totalGiving)} />
+        <MiniCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} />
         <MiniCard label="Giving rate" value={formatPercent(givingRate, 1)} />
         <MiniCard label="Income this month" value={formatCurrency(monthlyIncome)} />
       </div>
@@ -86,26 +84,9 @@ export default function GivingPage() {
           <CardTitle>Recent gifts</CardTitle>
         </CardHeader>
         <CardContent className="divide-y divide-border">
+          <AddedGifts />
           {givingTxns.map((t) => (
-            <div key={t.id} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-                  <HandHeart className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-evergreen-900">{t.merchant}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatDateLong(t.date)}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="brand">{t.category}</Badge>
-                <span className="w-24 text-right text-sm font-semibold text-evergreen-900">
-                  {formatCurrency(t.amount)}
-                </span>
-              </div>
-            </div>
+            <GiftRow key={t.id} t={t} />
           ))}
         </CardContent>
       </Card>
@@ -117,7 +98,7 @@ export default function GivingPage() {
   );
 }
 
-function MiniCard({ label, value }: { label: string; value: string }) {
+function MiniCard({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <Card>
       <CardContent className="p-5">

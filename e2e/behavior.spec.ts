@@ -37,6 +37,30 @@ test("assistant API route reports unavailable without a key", async ({ request }
   expect([200, 503]).toContain(res.status());
 });
 
+test("can create a goal and it appears on the page", async ({ page }) => {
+  await page.goto("/goals");
+  await page.getByRole("button", { name: "New goal" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel("Goal name").fill("Adventure Fund");
+  await dialog.getByLabel("Target amount").fill("3000");
+  await dialog.getByRole("button", { name: "Create goal" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Adventure Fund" })
+  ).toBeVisible();
+});
+
+test("logging a gift appears in recent gifts", async ({ page }) => {
+  await page.goto("/giving");
+  await page.getByRole("button", { name: "Log a gift" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel("Given to").fill("Hope Mission");
+  await dialog.getByLabel("Amount").fill("75");
+  await dialog.getByRole("button", { name: "Log gift" }).click();
+  await expect(page.getByText("Hope Mission")).toBeVisible();
+});
+
 test("mobile drawer: opens, traps focus, and closes on Escape", async ({ page }) => {
   await page.goto("/dashboard");
   const burger = page.getByRole("button", { name: "Open menu" });
