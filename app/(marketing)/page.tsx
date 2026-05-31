@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AppMockup } from "@/components/marketing/app-mockup";
 import { Reveal } from "@/components/marketing/reveal";
+import { InstitutionLogo } from "@/components/app/category-icon";
 import { formatCurrency } from "@/lib/utils";
 import { givingYtd, debtPaidYtd } from "@/lib/mock-data";
 
@@ -30,10 +31,16 @@ export default function HomePage() {
         <FeatureDeepDives />
       </Reveal>
       <Reveal>
+        <Institutions />
+      </Reveal>
+      <Reveal>
         <Stewardship />
       </Reveal>
       <Reveal>
         <Couples />
+      </Reveal>
+      <Reveal>
+        <Testimonials />
       </Reveal>
       <Reveal>
         <Security />
@@ -356,6 +363,106 @@ function MiniStat({ label, value }: { label: string; value: string }) {
       <p className="font-display text-xl font-semibold text-evergreen-900">{value}</p>
       <p className="text-xs text-evergreen-700">{label}</p>
     </div>
+  );
+}
+
+/* ---------------------------------------------------------- Institutions */
+
+const INSTITUTIONS = [
+  "Chase",
+  "Bank of America",
+  "Wells Fargo",
+  "Fidelity",
+  "Vanguard",
+  "Schwab",
+  "Ally",
+  "Capital One",
+  "Citi",
+  "American Express",
+  "SoFi",
+  "Rocket",
+];
+
+function Institutions() {
+  return (
+    <section className="border-y border-border bg-card">
+      <div className="container py-14 text-center">
+        <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
+          Connects securely to your accounts
+        </p>
+        <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-evergreen-900 sm:text-3xl">
+          Works with 13,000+ banks and brokerages
+        </h2>
+        <div className="mx-auto mt-9 flex max-w-4xl flex-wrap items-center justify-center gap-3">
+          {INSTITUTIONS.map((name) => (
+            <div
+              key={name}
+              className="flex items-center gap-2.5 rounded-xl border border-border bg-cream-50 px-4 py-2.5"
+            >
+              <InstitutionLogo institution={name} className="h-8 w-8 rounded-lg text-[10px]" />
+              <span className="text-sm font-medium text-evergreen-800">{name}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-7 text-sm text-evergreen-700">
+          Read-only, bank-level encryption. Unite can never move your money.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------- Testimonials */
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "We finally give generously without the anxiety. Putting the tithe first changed how we see every dollar.",
+    name: "Marcus & Tola A.",
+    role: "Married 6 years",
+  },
+  {
+    quote:
+      "The debt-free finish line kept us going — we paid off the car almost a year early and watched our net worth climb.",
+    name: "The Nguyen Family",
+    role: "Two kids, one budget",
+  },
+  {
+    quote:
+      "Scripture meets our spreadsheet. It finally feels like stewardship, not just budgeting.",
+    name: "Hannah R.",
+    role: "Small-group leader",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="container py-20 lg:py-28">
+      <SectionHeading
+        eyebrow="Loved by households"
+        title="Peace, generosity, and progress"
+        subtitle="Real change looks like calmer money conversations and a fuller giving record."
+      />
+      <div className="mt-12 grid gap-5 md:grid-cols-3">
+        {TESTIMONIALS.map((t) => (
+          <div key={t.name} className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft">
+            <Quote className="h-7 w-7 text-brand-400" />
+            <p className="mt-4 flex-1 text-evergreen-800 leading-relaxed text-pretty">
+              {t.quote}
+            </p>
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-evergreen-700 text-sm font-semibold text-cream-50">
+                {t.name[0]}
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-evergreen-900">{t.name}</p>
+                <p className="text-xs text-muted-foreground">{t.role}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
