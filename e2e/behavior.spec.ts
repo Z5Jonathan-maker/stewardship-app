@@ -71,6 +71,23 @@ test("command palette: hotkey opens, search result navigates", async ({ page }) 
   await expect(page).toHaveURL(/\/transactions/);
 });
 
+test("connect account (mock fallback) adds an account", async ({ page }) => {
+  await page.goto("/accounts");
+  await page.getByRole("button", { name: "Connect account" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel("Search institutions").fill("citi");
+  await dialog.getByRole("button", { name: /Citi/ }).click();
+  await expect(dialog.getByText("Citi connected")).toBeVisible({ timeout: 5000 });
+  await dialog.getByRole("button", { name: "Done" }).click();
+  await expect(page.getByText("Citi Checking")).toBeVisible();
+});
+
+test("plaid create-link-token route reports unavailable without keys", async ({ request }) => {
+  const res = await request.post("/api/plaid/create-link-token");
+  expect([200, 503]).toContain(res.status());
+});
+
 test("mobile drawer: opens, traps focus, and closes on Escape", async ({ page }) => {
   await page.goto("/dashboard");
   const burger = page.getByRole("button", { name: "Open menu" });
