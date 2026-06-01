@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import type { AccountBase } from "plaid";
 import { getPlaidClient } from "@/lib/plaid";
+import { getCurrentHouseholdId } from "@/lib/auth";
+import {
+  savePlaidItem,
+  upsertAccounts,
+  type NormalizedAccount,
+} from "@/lib/data/plaid-repo";
 import type { Account, AccountType } from "@/lib/mock-data";
 
 export const runtime = "nodejs";
@@ -35,30 +41,56 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Exchange the short-lived public token for a long-lived access token.
-    // NOTE: in production this access_token is a secret and must be stored
-    // server-side (DB), keyed to the authenticated user — never sent to the
-    // browser. For this keyless demo we use it immediately and discard it.
+    // Exchange the short-lived public token for a long-lived access token. The
+    // access_token is a bank credential: never sent to the browser. When a DB +
+    // household exist it's encrypted (envelope) and persisted; otherwise (the
+    // keyless/no-DB demo) it's used once for the balance read and discarded.
     const exchange = await client.itemPublicTokenExchange({ public_token: publicToken });
     const accessToken = exchange.data.access_token;
 
     const accountsResp = await client.accountsGet({ access_token: accessToken });
-    const accounts: Account[] = accountsResp.data.accounts.map((a) => {
+    const normalized = accountsResp.data.accounts.map((a) => {
       const type = mapType(a);
       const isLiability = type === "credit" || type === "loan";
       const balance =
         (isLiability
           ? -(a.balances.current ?? 0)
           : a.balances.available ?? a.balances.current ?? 0) || 0;
-      return {
-        id: `plaid_${a.account_id}`,
-        name: a.name,
-        institution,
-        type,
-        mask: a.mask ?? "0000",
-        balance,
-      };
+      return { plaid: a, type, balance };
     });
+
+    // Persist when we have a household (real product path).
+    const householdId = await getCurrentHouseholdId();
+    if (householdId) {
+      const itemId = await savePlaidItem({
+        householdId,
+        institution,
+        accessToken,
+        syncCursor: undefined,
+      });
+      if (itemId) {
+        const toStore: NormalizedAccount[] = normalized.map(({ plaid, type, balance }) => ({
+          plaidAccountId: plaid.account_id,
+          name: plaid.name,
+          institution,
+          type,
+          mask: plaid.mask ?? null,
+          balanceDollars: balance,
+        }));
+        await upsertAccounts(householdId, itemId, toStore);
+        // Transaction backfill happens in the Inngest sync (see
+        // app/api/inngest) so this request stays fast.
+      }
+    }
+
+    const accounts: Account[] = normalized.map(({ plaid, type, balance }) => ({
+      id: `plaid_${plaid.account_id}`,
+      name: plaid.name,
+      institution,
+      type,
+      mask: plaid.mask ?? "0000",
+      balance,
+    }));
 
     return NextResponse.json({ accounts });
   } catch (err) {
