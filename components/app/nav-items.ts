@@ -9,6 +9,7 @@ import {
   Sparkles,
   Settings,
   Compass,
+  Unlock,
   type LucideIcon,
 } from "lucide-react";
 
@@ -26,6 +27,7 @@ export const appNav: NavItem[] = [
   { label: "Budget", href: "/budget", icon: PieChart },
   { label: "Cash Flow", href: "/cashflow", icon: LineChart },
   { label: "Goals", href: "/goals", icon: Target },
+  { label: "Debt Freedom", href: "/debt", icon: Unlock },
   { label: "Giving", href: "/giving", icon: HandHeart },
   { label: "Accounts", href: "/accounts", icon: Wallet },
   { label: "Ask Unite", href: "/assistant", icon: Sparkles },

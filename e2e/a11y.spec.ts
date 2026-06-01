@@ -18,6 +18,7 @@ const routes = [
   "/budget",
   "/cashflow",
   "/goals",
+  "/debt",
   "/giving",
   "/accounts",
   "/assistant",

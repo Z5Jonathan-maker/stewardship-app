@@ -7,6 +7,7 @@ import { GiftRow } from "@/components/app/gift-row";
 import { LogGiftButton } from "@/components/app/forms/log-gift-button";
 import { SowSeedButton } from "@/components/app/forms/sow-seed-button";
 import { SeedJournal } from "@/components/app/seed-journal";
+import { FirstfruitsCard } from "@/components/app/firstfruits-card";
 import { AddedGifts } from "@/components/app/added/added-gifts";
 import { GivenThisMonth } from "@/components/app/given-this-month";
 import { formatCurrency, formatPercent } from "@/lib/utils";
@@ -83,6 +84,11 @@ export default function GivingPage() {
         <MiniCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} />
         <MiniCard label="Giving rate" value={formatPercent(givingRate, 1)} />
         <MiniCard label="Income this month" value={formatCurrency(monthlyIncome)} />
+      </div>
+
+      {/* Firstfruits — the tithe, off the top */}
+      <div className="mt-4">
+        <FirstfruitsCard />
       </div>
 
       {/* Recent gifts */}
