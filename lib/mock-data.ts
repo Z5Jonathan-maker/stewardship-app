@@ -94,8 +94,8 @@ export const transactions: Transaction[] = [
 
 export const budget: BudgetCategory[] = [
   { id: "b0", name: "Take-home Income", group: "Income", emoji: "💵", budgeted: 8360, actual: 8361.1 },
-  { id: "b1", name: "Tithe (10%)", group: "Giving", emoji: "⛪", budgeted: 836, actual: 650 },
-  { id: "b2", name: "Generosity & Offerings", group: "Giving", emoji: "🤲", budgeted: 200, actual: 145 },
+  { id: "b1", name: "Tithe (10%)", group: "Giving", emoji: "⛪", budgeted: 836, actual: 836.11 },
+  { id: "b2", name: "Generosity & Offerings", group: "Giving", emoji: "🤲", budgeted: 200, actual: 200 },
   { id: "b3", name: "Housing", group: "Fixed", emoji: "🏠", budgeted: 1980, actual: 1980 },
   { id: "b4", name: "Utilities", group: "Fixed", emoji: "💡", budgeted: 320, actual: 232.07 },
   { id: "b5", name: "Phone & Internet", group: "Fixed", emoji: "📱", budgeted: 150, actual: 90 },
@@ -187,11 +187,11 @@ export const netCashFlow = monthlyIncome - monthlyOutflow;
 
 export const givingRate = monthlyIncome > 0 ? monthlyGiving / monthlyIncome : 0;
 
-// Giving, year-to-date (Jan–May 2026). Kept consistent with the ~10% tithe
-// rhythm above so every screen reports the same generosity story.
+// Giving, year-to-date (Jan–May 2026). Derived from the monthly rhythm so the
+// monthly and YTD giving stories can never contradict each other.
 export const ytdMonths = 5;
 export const ytdIncome = monthlyIncome * ytdMonths;
-export const givingYtd = 4180;
+export const givingYtd = Math.round(monthlyGiving * ytdMonths);
 export const givingAnnualGoal = Math.round(monthlyIncome * 12 * 0.1);
 export const givingYtdRate = ytdIncome > 0 ? givingYtd / ytdIncome : 0;
 /** Debt retired so far this year (for the marketing couples card). */

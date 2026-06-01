@@ -9,6 +9,7 @@ import {
   SpendingCountUp,
 } from "@/components/app/live-stats";
 import { DashboardRecent } from "@/components/app/dashboard-recent";
+import { RoadmapWidget } from "@/components/app/roadmap-widget";
 import { CountUp } from "@/components/app/count-up";
 import { categoryMeta } from "@/lib/categories";
 import { PageHeader } from "@/components/app/page-header";
@@ -49,6 +50,10 @@ export default function DashboardPage() {
         <StatCard label="Spending" value={<SpendingCountUp base={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} />
         <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={<LiveGivingRate givingBase={totalGiving} income={monthlyIncome} />} positive accent />
       </div>
+
+      <Card className="mt-4">
+        <RoadmapWidget />
+      </Card>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         {/* Cash flow */}

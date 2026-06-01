@@ -13,6 +13,7 @@ const routes = [
   "/login",
   "/signup",
   "/dashboard",
+  "/roadmap",
   "/transactions",
   "/budget",
   "/cashflow",

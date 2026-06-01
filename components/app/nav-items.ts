@@ -8,6 +8,7 @@ import {
   Wallet,
   Sparkles,
   Settings,
+  Compass,
   type LucideIcon,
 } from "lucide-react";
 
@@ -20,6 +21,7 @@ export interface NavItem {
 /** Primary app navigation — shared by the desktop sidebar and mobile drawer. */
 export const appNav: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Roadmap", href: "/roadmap", icon: Compass },
   { label: "Transactions", href: "/transactions", icon: Receipt },
   { label: "Budget", href: "/budget", icon: PieChart },
   { label: "Cash Flow", href: "/cashflow", icon: LineChart },
