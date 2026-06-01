@@ -47,6 +47,7 @@ export async function POST(request: Request) {
     // keyless/no-DB demo) it's used once for the balance read and discarded.
     const exchange = await client.itemPublicTokenExchange({ public_token: publicToken });
     const accessToken = exchange.data.access_token;
+    const plaidItemId = exchange.data.item_id;
 
     const accountsResp = await client.accountsGet({ access_token: accessToken });
     const normalized = accountsResp.data.accounts.map((a) => {
@@ -64,6 +65,7 @@ export async function POST(request: Request) {
     if (householdId) {
       const itemId = await savePlaidItem({
         householdId,
+        plaidItemId,
         institution,
         accessToken,
         syncCursor: undefined,

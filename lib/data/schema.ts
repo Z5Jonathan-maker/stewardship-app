@@ -56,6 +56,10 @@ export const plaidItems = pgTable("plaid_items", {
   householdId: uuid("household_id")
     .references(() => households.id, { onDelete: "cascade" })
     .notNull(),
+  // Plaid's own item identifier (from the public-token exchange). Distinct from
+  // our `id`; webhooks reference the item by this value, so it must be stored
+  // and indexed to resolve incoming webhooks back to the right row.
+  plaidItemId: text("plaid_item_id").notNull().unique(),
   institution: text("institution").notNull(),
   // KMS envelope-encrypted access token + wrapped data-encryption key.
   // Never plaintext, never returned to the client.
