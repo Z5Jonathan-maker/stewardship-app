@@ -82,3 +82,18 @@ export function groupByDay<T extends { date: string }>(items: T[]) {
   }
   return groups;
 }
+
+// ---- Money: integer cents <-> dollars boundary -------------------------
+// The database stores money as integer cents (bigint) to avoid float drift.
+// The UI works in dollars and formats via formatCurrency. These helpers are
+// the single conversion boundary between the two.
+
+/** Dollars (number, possibly fractional) -> integer cents. */
+export function toCents(dollars: number): number {
+  return Math.round((dollars + Number.EPSILON) * 100);
+}
+
+/** Integer cents -> dollars (number). */
+export function fromCents(cents: number): number {
+  return cents / 100;
+}
