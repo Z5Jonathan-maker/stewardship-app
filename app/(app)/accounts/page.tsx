@@ -10,18 +10,24 @@ import {
   LiveLiabilities,
   LiveAccountCount,
 } from "@/components/app/live-stats";
-import {
-  accounts,
-  assets,
-  liabilities,
-  totalAssets,
-  totalLiabilities,
-  netWorth,
-} from "@/lib/mock-data";
+import { getHouseholdSnapshot } from "@/lib/data/selectors";
+import { getCurrentHouseholdId } from "@/lib/auth";
 
 export const metadata: Metadata = { title: "Accounts" };
+// Reads per-household data (DB or mock) at request time.
+export const dynamic = "force-dynamic";
 
-export default function AccountsPage() {
+export default async function AccountsPage() {
+  // Reads from Postgres when configured, else the mock household (the seam).
+  const householdId = await getCurrentHouseholdId();
+  const { accounts } = await getHouseholdSnapshot(householdId ?? undefined);
+
+  const assets = accounts.filter((a) => a.balance >= 0);
+  const liabilities = accounts.filter((a) => a.balance < 0);
+  const totalAssets = assets.reduce((s, a) => s + a.balance, 0);
+  const totalLiabilities = liabilities.reduce((s, a) => s + a.balance, 0);
+  const netWorth = totalAssets + totalLiabilities;
+
   return (
     <div className="mx-auto max-w-5xl">
       <PageHeader
