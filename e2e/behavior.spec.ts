@@ -61,6 +61,26 @@ test("logging a gift appears in recent gifts", async ({ page }) => {
   await expect(page.getByText("Hope Mission")).toBeVisible();
 });
 
+test("sow a seed, then record its harvest", async ({ page }) => {
+  await page.goto("/giving");
+  // Sow
+  await page.getByRole("button", { name: "Sow a seed" }).first().click();
+  const sow = page.getByRole("dialog");
+  await expect(sow).toBeVisible();
+  await sow.getByLabel("Sown into").fill("Test Seed Fund");
+  await sow.getByLabel("Amount").fill("100");
+  await sow.getByLabel("Believing for").fill("A clear answer");
+  await sow.getByRole("button", { name: "Sow this seed" }).click();
+  await expect(page.getByText(/into Test Seed Fund/)).toBeVisible();
+  // Harvest
+  await page.getByRole("button", { name: "Record the harvest" }).first().click();
+  const harvest = page.getByRole("dialog");
+  await expect(harvest).toBeVisible();
+  await harvest.getByLabel("What happened?").fill("It came to pass.");
+  await harvest.getByRole("button", { name: "Save testimony" }).click();
+  await expect(page.getByText("It came to pass.")).toBeVisible();
+});
+
 test("connecting an account updates net worth and the account count", async ({ page }) => {
   await page.goto("/accounts");
   const countBefore = await page.getByText(/accounts connected/).textContent();

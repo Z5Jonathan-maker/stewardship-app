@@ -26,6 +26,27 @@ export interface NewGoal {
   targetDate: string;
 }
 
+/** A seed sown in faith — a gift with an assignment + the word stood on, and
+ * later, the testimony when the harvest comes. Tools to practice faith; this
+ * is a journal, never a return-on-giving promise. */
+export interface Seed {
+  id: string;
+  date: string;
+  to: string; // where it was sown
+  amount: number;
+  believingFor: string; // the assignment
+  scripture: string; // the word being stood on (optional)
+  harvest: string | null; // the testimony, recorded when it comes
+  harvestDate: string | null;
+}
+
+export interface NewSeed {
+  to: string;
+  amount: number;
+  believingFor: string;
+  scripture: string;
+}
+
 interface HouseholdState {
   /** User-added transactions this session (the seed ledger stays server-rendered). */
   transactions: Transaction[];
@@ -35,6 +56,8 @@ interface HouseholdState {
   budgetOverrides: Record<string, number>;
   /** Accounts the user connected this session (via Plaid or the mock flow). */
   accounts: Account[];
+  /** Seeds sown in faith (the Seed & Harvest journal). */
+  seeds: Seed[];
 }
 
 interface HouseholdContextValue extends HouseholdState {
@@ -42,6 +65,8 @@ interface HouseholdContextValue extends HouseholdState {
   addGoal: (g: NewGoal) => void;
   setBudgetAmount: (id: string, amount: number) => void;
   addAccounts: (a: Account[]) => void;
+  addSeed: (s: NewSeed) => void;
+  recordHarvest: (id: string, harvest: string) => void;
   /** Sum of gifts added this session (for live "given this month"). */
   addedGiving: number;
   /** Net-worth delta from connected accounts (signed balances). */
@@ -79,6 +104,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     goals: [],
     budgetOverrides: {},
     accounts: [],
+    seeds: [],
   });
   const [ready, setReady] = React.useState(false);
 
@@ -95,6 +121,7 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
               ? parsed.budgetOverrides
               : {},
           accounts: Array.isArray(parsed.accounts) ? parsed.accounts : [],
+          seeds: Array.isArray(parsed.seeds) ? parsed.seeds : [],
         });
       }
     } catch {
@@ -142,6 +169,34 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
       const fresh = a.filter((x) => !seen.has(x.id));
       return { ...s, accounts: [...fresh, ...s.accounts] };
     });
+  }, []);
+
+  const addSeed = React.useCallback((seed: NewSeed) => {
+    setState((s) => ({
+      ...s,
+      seeds: [
+        {
+          id: uid("seed"),
+          date: today(),
+          to: seed.to,
+          amount: seed.amount,
+          believingFor: seed.believingFor,
+          scripture: seed.scripture,
+          harvest: null,
+          harvestDate: null,
+        },
+        ...s.seeds,
+      ],
+    }));
+  }, []);
+
+  const recordHarvest = React.useCallback((id: string, harvest: string) => {
+    setState((s) => ({
+      ...s,
+      seeds: s.seeds.map((seed) =>
+        seed.id === id ? { ...seed, harvest, harvestDate: today() } : seed
+      ),
+    }));
   }, []);
 
   const addedGiving = React.useMemo(
@@ -193,6 +248,8 @@ export function HouseholdProvider({ children }: { children: React.ReactNode }) {
     addGoal,
     setBudgetAmount,
     addAccounts,
+    addSeed,
+    recordHarvest,
     addedGiving,
     addedNetWorth,
     addedAssets,

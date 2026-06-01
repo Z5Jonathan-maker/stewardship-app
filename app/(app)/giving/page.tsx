@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { HandHeart } from "lucide-react";
+import { HandHeart, Sprout } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/app/page-header";
 import { GiftRow } from "@/components/app/gift-row";
 import { LogGiftButton } from "@/components/app/forms/log-gift-button";
+import { SowSeedButton } from "@/components/app/forms/sow-seed-button";
+import { SeedJournal } from "@/components/app/seed-journal";
 import { AddedGifts } from "@/components/app/added/added-gifts";
 import { GivenThisMonth } from "@/components/app/given-this-month";
 import { formatCurrency, formatPercent } from "@/lib/utils";
@@ -32,7 +34,12 @@ export default function GivingPage() {
       <PageHeader
         title="Giving"
         subtitle="“Give, and it will be given to you.” — Luke 6:38"
-        action={<LogGiftButton />}
+        action={
+          <div className="flex gap-2">
+            <SowSeedButton variant="outline" />
+            <LogGiftButton />
+          </div>
+        }
       />
 
       {/* Hero giving card */}
@@ -91,7 +98,24 @@ export default function GivingPage() {
         </CardContent>
       </Card>
 
-      <p className="mt-6 text-center text-sm text-muted-foreground">
+      {/* Seed & Harvest journal */}
+      <div className="mt-10">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="flex items-center gap-2 font-display text-xl font-semibold text-evergreen-900">
+              <Sprout className="h-5 w-5 text-brand-500" /> Seed &amp; Harvest
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Sow with intent, stand on the Word, and record the testimony when
+              the harvest comes.
+            </p>
+          </div>
+          <SowSeedButton />
+        </div>
+        <SeedJournal />
+      </div>
+
+      <p className="mt-8 text-center text-sm text-muted-foreground">
         Unite keeps a tidy record of your giving for year-end tax statements.
       </p>
     </div>
