@@ -40,6 +40,13 @@ export async function getAuthUserId(): Promise<string | null> {
 export async function getCurrentHouseholdId(): Promise<string | null> {
   const db = getDb();
   if (!db) return null;
+
+  // Dev-only override: lets a local server render a specific seeded household
+  // without Clerk. Ignored in production and when unset.
+  if (process.env.NODE_ENV !== "production" && process.env.DEV_HOUSEHOLD_ID) {
+    return process.env.DEV_HOUSEHOLD_ID;
+  }
+
   const authId = await getAuthUserId();
   if (!authId) return null;
 
