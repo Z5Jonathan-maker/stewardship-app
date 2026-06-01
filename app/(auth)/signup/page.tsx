@@ -1,10 +1,25 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/auth-card";
+import { authConfigured } from "@/components/auth/auth-provider";
 
 export const metadata: Metadata = { title: "Start free" };
 
-export default function SignupPage() {
+export default async function SignupPage() {
+  if (authConfigured()) {
+    const { SignUp } = await import("@clerk/nextjs");
+    return (
+      <SignUp
+        signInUrl="/login"
+        forceRedirectUrl="/dashboard"
+        appearance={{
+          variables: { colorPrimary: "#3b63f0" },
+          elements: { card: "shadow-none border-none bg-transparent" },
+        }}
+      />
+    );
+  }
+
   return (
     <AuthCard
       title="Start your 30 days free"

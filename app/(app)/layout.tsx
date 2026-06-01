@@ -4,17 +4,22 @@ import { AppTopbar } from "@/components/app/app-topbar";
 import { HouseholdProvider } from "@/components/app/household-store";
 import { PageTransition } from "@/components/app/page-transition";
 import { ThemeProvider } from "@/components/app/theme-provider";
+import { ensureHousehold } from "@/lib/auth";
 
 // Private, data-bearing screens — keep them out of search indexes.
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // First-sign-in provisioning: creates the user + household once, on first
+  // authenticated visit. No-op without Clerk + a database (demo flow).
+  await ensureHousehold();
+
   return (
     <HouseholdProvider>
       <ThemeProvider>
