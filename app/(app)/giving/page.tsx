@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HandHeart, Sprout } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatTile } from "@/components/app/stat-tile";
 import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/app/page-header";
 import { GiftRow } from "@/components/app/gift-row";
@@ -129,16 +130,5 @@ export default function GivingPage() {
 }
 
 function MiniCard({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <Card>
-      <CardContent className="p-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-        <p className="mt-1.5 font-display text-2xl font-semibold text-evergreen-900">
-          {value}
-        </p>
-      </CardContent>
-    </Card>
-  );
+  return <StatTile label={label} value={value} />;
 }

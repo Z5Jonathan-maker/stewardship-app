@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDownRight, ArrowRight, BookOpen } from "lucide-react";
+import { ArrowUpRight, ArrowRight, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatTile } from "@/components/app/stat-tile";
 import { Progress } from "@/components/ui/progress";
 import {
   GivenThisMonth,
@@ -45,10 +46,10 @@ export default function DashboardPage() {
 
       {/* Stat row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Net worth" value={<NetWorthCountUp base={netWorth} />} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} trend="up" />
-        <StatCard label="Left to spend" value={<CountUp value={leftToSpend} />} delta="On track" trend="up" />
-        <StatCard label="Spending" value={<SpendingCountUp base={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} trend="neutral" />
-        <StatCard label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={<LiveGivingRate givingBase={totalGiving} income={monthlyIncome} />} trend="up" accent />
+        <StatTile label="Net worth" value={<NetWorthCountUp base={netWorth} />} delta={`${formatCurrency(netWorthMonthChange, { signed: true })} this month`} trend="up" />
+        <StatTile label="Left to spend" value={<CountUp value={leftToSpend} />} delta="On track" trend="up" />
+        <StatTile label="Spending" value={<SpendingCountUp base={monthlySpending} />} delta={`of ${formatCurrency(spendingBudgeted, { compact: true })} budget`} trend="neutral" />
+        <StatTile label="Given this month" value={<GivenThisMonth base={totalGiving} />} delta={<LiveGivingRate givingBase={totalGiving} income={monthlyIncome} />} trend="up" accent="brand" />
       </div>
 
       <Card className="mt-4">
@@ -183,40 +184,3 @@ export default function DashboardPage() {
 
 // evergreen-600 (not the lighter `success` token) keeps small delta text above
 // the 4.5:1 WCAG AA contrast threshold on cream/white and brand-50 cards.
-const trendMeta = {
-  up: { Icon: ArrowUpRight, color: "text-evergreen-600" },
-  down: { Icon: ArrowDownRight, color: "text-destructive" },
-  neutral: { Icon: null, color: "text-muted-foreground" },
-} as const;
-
-function StatCard({
-  label,
-  value,
-  delta,
-  trend = "neutral",
-  accent,
-}: {
-  label: string;
-  value: React.ReactNode;
-  delta: React.ReactNode;
-  trend?: "up" | "down" | "neutral";
-  accent?: boolean;
-}) {
-  const { Icon, color } = trendMeta[trend];
-  return (
-    <Card className={`shadow-soft transition-shadow hover:shadow-lift ${accent ? "bg-brand-50" : ""}`}>
-      <CardContent className="p-5">
-        <p className="text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
-          {label}
-        </p>
-        <p className="mt-2 font-display text-[1.75rem] font-semibold leading-none tracking-tight tabular-nums text-evergreen-900">
-          {value}
-        </p>
-        <p className={`mt-2 inline-flex items-center gap-1 text-xs font-medium ${color}`}>
-          {Icon && <Icon className="h-3 w-3" />}
-          {delta}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
