@@ -13,6 +13,7 @@ import {
   fieldInputClass,
 } from "@/components/ui/dialog";
 import { useHousehold, type Seed } from "@/components/app/household-store";
+import { StatTile } from "@/components/app/stat-tile";
 import { formatCurrency, formatDateLong } from "@/lib/utils";
 
 /** Illustrative seeds so the journal is never empty on first visit. These are
@@ -178,16 +179,5 @@ function SeedCard({
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <Card>
-      <CardContent className="p-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-        <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-          {value}
-        </p>
-      </CardContent>
-    </Card>
-  );
+  return <StatTile label={label} value={value} />;
 }

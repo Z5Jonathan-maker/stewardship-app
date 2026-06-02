@@ -12,6 +12,7 @@ import {
   fieldInputClass,
 } from "@/components/ui/dialog";
 import { CategoryIcon } from "@/components/app/category-icon";
+import { StatTile } from "@/components/app/stat-tile";
 import { useHousehold } from "@/components/app/household-store";
 import { PageHeader } from "@/components/app/page-header";
 import { categoryMeta } from "@/lib/categories";
@@ -181,13 +182,10 @@ function SummaryCard({
   tone: "income" | "neutral" | "accent";
 }) {
   return (
-    <Card className={tone === "accent" ? "bg-brand-50" : tone === "income" ? "bg-evergreen-50" : ""}>
-      <CardContent className="p-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-        <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-          {value}
-        </p>
-      </CardContent>
-    </Card>
+    <StatTile
+      label={label}
+      value={value}
+      accent={tone === "income" ? "evergreen" : tone === "accent" ? "brand" : "none"}
+    />
   );
 }
