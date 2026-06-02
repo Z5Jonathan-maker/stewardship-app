@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Card, CardContent } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
+import { StatTile } from "@/components/app/stat-tile";
 import { AccountRow } from "@/components/app/account-row";
 import { ConnectAccountButton } from "@/components/app/forms/connect-account-button";
 import { AddedAccounts } from "@/components/app/added/added-accounts";
@@ -38,30 +39,9 @@ export default async function AccountsPage() {
 
       {/* Net worth summary */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="bg-evergreen-50">
-          <CardContent className="p-5">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Assets</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-700">
-              <LiveAssets base={totalAssets} />
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-5">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Liabilities</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-              <LiveLiabilities base={totalLiabilities} />
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="bg-brand-50">
-          <CardContent className="p-5">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Net worth</p>
-            <p className="mt-1.5 font-display text-2xl font-semibold tabular-nums text-evergreen-900">
-              <LiveNetWorth base={netWorth} />
-            </p>
-          </CardContent>
-        </Card>
+        <StatTile label="Assets" value={<LiveAssets base={totalAssets} />} accent="evergreen" valueClassName="text-evergreen-700" />
+        <StatTile label="Liabilities" value={<LiveLiabilities base={totalLiabilities} />} />
+        <StatTile label="Net worth" value={<LiveNetWorth base={netWorth} />} accent="brand" />
       </div>
 
       <div className="mt-6">

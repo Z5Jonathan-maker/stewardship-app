@@ -109,16 +109,16 @@ function FlowStat({
   tone: "up" | "down";
 }) {
   return (
-    <Card>
+    <Card className="shadow-soft transition-shadow hover:shadow-lift">
       <CardContent className="flex items-center gap-4 p-5">
         <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${tone === "up" ? "bg-evergreen-50 text-evergreen-600" : "bg-brand-50 text-brand-600"}`}>
           <Icon className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <p className="text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
             {label}
           </p>
-          <p className="font-display text-xl font-semibold text-evergreen-900">
+          <p className="font-display text-xl font-semibold tabular-nums leading-none text-evergreen-900">
             {value}
           </p>
         </div>
