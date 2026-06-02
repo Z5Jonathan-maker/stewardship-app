@@ -15,12 +15,12 @@ const MAP: Record<string, InstitutionMeta> = {
   Vanguard: { color: "#8e1a22", initials: "VG", logo: "/logos/vanguard.png" },
   "Capital One": { color: "#b0241c", initials: "C1", logo: "/logos/capital-one.png" },
   Rocket: { color: "#13233b", initials: "RM", logo: "/logos/rocket.png" },
-  "Wells Fargo": { color: "#9c1420", initials: "WF" },
-  "Bank of America": { color: "#0a3f6e", initials: "BA" },
-  Schwab: { color: "#0b5cab", initials: "SC" },
-  Citi: { color: "#0a5293", initials: "CI" },
-  "American Express": { color: "#1d5fa8", initials: "AX" },
-  SoFi: { color: "#0a2540", initials: "SF" },
+  "Wells Fargo": { color: "#9c1420", initials: "WF", logo: "/logos/wells-fargo.png" },
+  "Bank of America": { color: "#0a3f6e", initials: "BA", logo: "/logos/bank-of-america.png" },
+  Schwab: { color: "#0b5cab", initials: "SC", logo: "/logos/schwab.png" },
+  Citi: { color: "#0a5293", initials: "CI", logo: "/logos/citi.png" },
+  "American Express": { color: "#1d5fa8", initials: "AX", logo: "/logos/american-express.png" },
+  SoFi: { color: "#0a2540", initials: "SF", logo: "/logos/sofi.png" },
 };
 
 export function institutionMeta(name: string): InstitutionMeta {
