@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AppMockup } from "@/components/marketing/app-mockup";
+import { FeaturePreview } from "@/components/marketing/feature-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { InstitutionLogo } from "@/components/app/category-icon";
 import { formatCurrency } from "@/lib/utils";
@@ -241,7 +242,7 @@ function FeatureDeepDives() {
               </ul>
             </div>
             <div className={d.reverse ? "lg:order-1" : ""}>
-              <FeatureGlass icon={d.icon} label={d.badge} />
+              <FeaturePreview badge={d.badge} />
             </div>
           </div>
         ))}
@@ -250,37 +251,6 @@ function FeatureDeepDives() {
   );
 }
 
-function FeatureGlass({
-  icon: Icon,
-  label,
-}: {
-  icon: typeof PieChart;
-  label: string;
-}) {
-  return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card to-cream-50 shadow-lift">
-      <div className="absolute inset-0 bg-grid opacity-50" />
-      <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full bg-card px-3 py-1.5 text-xs font-semibold text-evergreen-800 shadow-soft">
-        <Icon className="h-4 w-4 text-brand-500" /> {label}
-      </div>
-      <div className="absolute inset-x-6 bottom-6 rounded-xl border border-border bg-card/90 p-5 shadow-soft backdrop-blur">
-        <div className="h-2 w-24 rounded-full bg-brand-200" />
-        <div className="mt-3 h-8 w-40 rounded-lg bg-evergreen-100" />
-        <div className="mt-4 space-y-2">
-          <div className="h-2.5 w-full rounded-full bg-muted">
-            <div className="h-full w-3/4 rounded-full bg-brand-500" />
-          </div>
-          <div className="h-2.5 w-full rounded-full bg-muted">
-            <div className="h-full w-1/2 rounded-full bg-evergreen-500" />
-          </div>
-          <div className="h-2.5 w-full rounded-full bg-muted">
-            <div className="h-full w-2/5 rounded-full bg-brand-300" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ----------------------------------------------------------- Stewardship */
 
