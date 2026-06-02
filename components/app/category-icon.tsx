@@ -1,6 +1,10 @@
 import { categoryMeta, tint, shade } from "@/lib/categories";
-import { institutionMeta } from "@/lib/institutions";
 import { cn } from "@/lib/utils";
+
+// InstitutionLogo now shows real self-hosted marks with a monogram fallback;
+// it lives in its own client component. Re-exported so existing imports
+// (`@/components/app/category-icon`) keep working.
+export { InstitutionLogo } from "@/components/app/institution-logo";
 
 /** A category in a colored, rounded token — the core visual unit for spending. */
 export function CategoryIcon({
@@ -42,29 +46,6 @@ export function CategoryChip({
       style={{ backgroundColor: tint(color), color: shade(color) }}
     >
       {category}
-    </span>
-  );
-}
-
-/** Brand-colored institution monogram for account rows. */
-export function InstitutionLogo({
-  institution,
-  className,
-}: {
-  institution: string;
-  className?: string;
-}) {
-  const { color, initials } = institutionMeta(institution);
-  return (
-    <span
-      className={cn(
-        "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xs font-bold tracking-tight text-white",
-        className
-      )}
-      style={{ backgroundColor: color }}
-      aria-hidden
-    >
-      {initials}
     </span>
   );
 }
