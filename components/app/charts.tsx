@@ -12,7 +12,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  type TooltipProps,
+  type TooltipContentProps,
 } from "recharts";
 import { formatCurrency } from "@/lib/utils";
 import { categoryMeta } from "@/lib/categories";
@@ -91,7 +91,7 @@ export function TrendLine({
         <YAxis hide domain={["dataMin", "dataMax"]} />
         <Tooltip
           cursor={{ stroke: "rgba(130,140,135,0.5)", strokeDasharray: "4 4" }}
-          content={(p: TooltipProps<number, string>) =>
+          content={(p: TooltipContentProps) =>
             p.active && p.payload?.length ? (
               <TooltipCard
                 title={String(p.label)}
@@ -138,7 +138,7 @@ export function CashFlowBars({
             <YAxis hide />
             <Tooltip
               cursor={{ fill: "rgba(20,52,43,0.04)" }}
-              content={(p: TooltipProps<number, string>) =>
+              content={(p: TooltipContentProps) =>
                 p.active && p.payload?.length ? (
                   <TooltipCard
                     title={String(p.label)}

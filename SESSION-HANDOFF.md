@@ -22,15 +22,17 @@ debt, roadmap, settings, marketing + pricing). "Ask Unite" streams from
 
 ### Open threads (from the `/audit`, by priority)
 
-- 🟡 **Next.js 14.2.35 → 15+** — four advisories (RSC DoS, image-optimizer DoS,
-  rewrite smuggling, image cache) with no fix in the 14.x line. The async-API
-  migration surface here is tiny (no `cookies()`/`headers()`, no dynamic route
-  params, no `[...]` segments; Clerk `auth()` already awaited), so the upgrade is
-  lower-risk than usual. Bundle the `eslint-config-next` bump (clears the `glob`
-  high) and React 19.
-- 🟢 **18 outdated majors** — staged, tested upgrades (not `audit fix --force`).
-  Suggested order: Anthropic SDK → Clerk 7 → React 19 + Next 15 → Tailwind 4 last.
-- ✅ `engines` field + DESIGN.md / AGENTS.md / SESSION-HANDOFF.md — done (this branch).
+- ✅ **Next.js 14 → 15 + React 18 → 19** — done (this branch). Next 15.5,
+  React 19.2, eslint-config-next 15 (clears the `glob` high), react-plaid-link 4,
+  recharts 3 (custom tooltip retyped to `TooltipContentProps`). All 4 highs
+  cleared; build + typecheck + lint + 115 e2e all pass. Note: `next lint` now
+  warns it's removed in Next 16 — migrate to the ESLint CLI when going to 16.
+- 🟢 **Remaining outdated majors** — Clerk 6→7, Tailwind 3→4 (config rewrite,
+  do last), @anthropic-ai/sdk 0.69→0.100, framer-motion 11→12, typescript 5→6,
+  eslint 8→9 (flat config). Staged, tested — not `audit fix --force`.
+- 🟢 **8 moderate advisories remain** (down from 4 high + 5 moderate) — mostly
+  dev-only transitive (esbuild/postcss via tooling).
+- ✅ `engines` field + DESIGN.md / AGENTS.md / SESSION-HANDOFF.md — done.
 
 ### Not wired yet (needs the user's accounts — see SETUP.md)
 
