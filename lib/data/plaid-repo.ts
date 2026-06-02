@@ -34,6 +34,7 @@ export interface NormalizedTransaction {
 /** Store a freshly-linked Plaid item with its encrypted access token. */
 export async function savePlaidItem(args: {
   householdId: string;
+  plaidItemId: string;
   institution: string;
   accessToken: string;
   syncCursor?: string;
@@ -45,6 +46,7 @@ export async function savePlaidItem(args: {
     .insert(t.plaidItems)
     .values({
       householdId: args.householdId,
+      plaidItemId: args.plaidItemId,
       institution: args.institution,
       accessTokenCiphertext: env.ciphertext,
       encryptedDek: env.wrappedDek,
