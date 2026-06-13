@@ -156,7 +156,7 @@ export function ConnectAccountButton({
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label="Search institutions"
                 placeholder="Search 13,000+ institutions"
-                className="h-11 w-full rounded-xl border border-input bg-card pl-10 pr-4 text-sm text-evergreen-900 shadow-sm outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
+                className="h-11 w-full rounded-xl border border-input bg-card pl-10 pr-4 text-sm text-evergreen-900 shadow-xs outline-hidden transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
               />
             </div>
             <div className="max-h-72 space-y-1 overflow-y-auto">

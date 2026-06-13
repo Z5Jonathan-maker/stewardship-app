@@ -34,11 +34,11 @@ export function Drawer({
     <Dialog.Root>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-evergreen-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-evergreen-900/40 backdrop-blur-xs data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
         <Dialog.Content
           aria-describedby={undefined}
           className={cn(
-            "fixed inset-y-0 z-50 flex w-72 max-w-[80%] flex-col bg-cream-50 shadow-lift focus:outline-none",
+            "fixed inset-y-0 z-50 flex w-72 max-w-[80%] flex-col bg-cream-50 shadow-lift focus:outline-hidden",
             "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:duration-300 data-[state=closed]:duration-200",
             side === "left"
               ? "left-0 data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left"

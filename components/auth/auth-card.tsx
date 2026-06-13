@@ -63,7 +63,7 @@ function Field({
       <input
         type={type}
         placeholder={placeholder}
-        className="h-11 w-full rounded-xl border border-input bg-card px-4 text-sm text-evergreen-900 shadow-sm outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
+        className="h-11 w-full rounded-xl border border-input bg-card px-4 text-sm text-evergreen-900 shadow-xs outline-hidden transition focus:border-brand-400 focus:ring-2 focus:ring-brand-200"
       />
     </label>
   );

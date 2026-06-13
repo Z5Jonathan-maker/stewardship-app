@@ -150,10 +150,10 @@ export function CommandMenu() {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-evergreen-900/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-evergreen-900/40 backdrop-blur-xs data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl border border-border bg-card shadow-lift focus:outline-none data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95"
+          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl border border-border bg-card shadow-lift focus:outline-hidden data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95"
         >
           <Dialog.Title className="sr-only">Search</Dialog.Title>
           <div className="flex items-center gap-3 border-b border-border px-4">
@@ -165,7 +165,7 @@ export function CommandMenu() {
               onKeyDown={onInputKeyDown}
               aria-label="Search"
               placeholder="Search transactions, accounts, goals…"
-              className="h-12 w-full bg-transparent text-sm text-evergreen-900 outline-none placeholder:text-muted-foreground"
+              className="h-12 w-full bg-transparent text-sm text-evergreen-900 outline-hidden placeholder:text-muted-foreground"
             />
           </div>
 

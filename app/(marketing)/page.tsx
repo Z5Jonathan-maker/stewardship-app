@@ -59,7 +59,7 @@ function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-60" aria-hidden />
-      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-gradient-to-b from-brand-50/70 to-transparent" aria-hidden />
+      <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-linear-to-b from-brand-50/70 to-transparent" aria-hidden />
       <div className="container relative grid gap-12 py-16 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:py-24">
         <div className="animate-fade-up">
           <Badge variant="brand" className="mb-5">
@@ -305,7 +305,7 @@ function Couples() {
             ))}
           </div>
         </div>
-        <div className="rounded-2xl border border-border bg-gradient-to-br from-brand-50 to-cream-50 p-8 shadow-soft">
+        <div className="rounded-2xl border border-border bg-linear-to-br from-brand-50 to-cream-50 p-8 shadow-soft">
           <div className="flex -space-x-3">
             {["J", "G"].map((i) => (
               <div key={i} className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-card bg-evergreen-700 font-display text-lg font-semibold text-cream-50">

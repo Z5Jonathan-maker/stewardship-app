@@ -1,6 +1,142 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1200px) {
+    max-width: 1200px;
+  }
+}
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-evergreen-50: #eef6f2;
+  --color-evergreen-100: #d6e9df;
+  --color-evergreen-200: #aed3c0;
+  --color-evergreen-300: #7fb59c;
+  --color-evergreen-400: #519077;
+  --color-evergreen-500: #33745c;
+  --color-evergreen-600: #245a4a;
+  --color-evergreen-700: #1b443a;
+  --color-evergreen-800: #13322b;
+  --color-evergreen-900: #0c211c;
+
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dbe5ff;
+  --color-brand-200: #bdd0ff;
+  --color-brand-300: #93b0ff;
+  --color-brand-400: #6285fb;
+  --color-brand-500: #3b63f0;
+  --color-brand-600: #2849d8;
+  --color-brand-700: #2139ae;
+  --color-brand-800: #1f338a;
+  --color-brand-900: #1e306e;
+
+  --color-cream-50: #fdfcf8;
+  --color-cream-100: #f8f5ec;
+  --color-cream-200: #efe9da;
+  --color-cream-300: #e4dac3;
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-display), var(--font-sans), ui-sans-serif, sans-serif;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 8px);
+
+  --shadow-soft:
+    0 1px 2px rgba(12, 33, 28, 0.04), 0 8px 24px -12px rgba(12, 33, 28, 0.12);
+  --shadow-lift:
+    0 2px 4px rgba(12, 33, 28, 0.04), 0 18px 40px -16px rgba(12, 33, 28, 0.18);
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+@utility bg-grid {
+  /* Subtle dotted/grid texture used on marketing hero */
+  background-image: radial-gradient(
+    hsl(var(--foreground) / 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
 
 @layer base {
   :root {
@@ -99,23 +235,6 @@
       transition-duration: 0.001ms !important;
       scroll-behavior: auto !important;
     }
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  .text-pretty {
-    text-wrap: pretty;
-  }
-  /* Subtle dotted/grid texture used on marketing hero */
-  .bg-grid {
-    background-image: radial-gradient(
-      hsl(var(--foreground) / 0.05) 1px,
-      transparent 1px
-    );
-    background-size: 22px 22px;
   }
 }
 

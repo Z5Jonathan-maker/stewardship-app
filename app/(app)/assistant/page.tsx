@@ -320,7 +320,7 @@ export default function AssistantPage() {
           onChange={(e) => setInput(e.target.value)}
           disabled={pending}
           placeholder="Ask about spending, giving, goals…"
-          className="h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-200 disabled:opacity-60"
+          className="h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm outline-hidden focus:border-brand-400 focus:ring-2 focus:ring-brand-200 disabled:opacity-60"
         />
         {pending ? (
           <Button

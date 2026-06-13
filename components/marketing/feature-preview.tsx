@@ -17,12 +17,12 @@ const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask
 export function FeaturePreview({ badge }: { badge: string }) {
   const Icon = ICONS[badge as keyof typeof ICONS] ?? PieChart;
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card to-cream-50 shadow-lift">
+    <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border bg-linear-to-br from-card to-cream-50 shadow-lift">
       <div className="absolute inset-0 bg-grid opacity-50" />
       <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full bg-card px-3 py-1.5 text-xs font-semibold text-evergreen-800 shadow-soft">
         <Icon className="h-4 w-4 text-brand-500" /> {badge}
       </div>
-      <div className="absolute inset-x-6 bottom-6 rounded-xl border border-border bg-card/95 p-4 shadow-soft backdrop-blur">
+      <div className="absolute inset-x-6 bottom-6 rounded-xl border border-border bg-card/95 p-4 shadow-soft backdrop-blur-sm">
         {badge === "Cash Flow" ? (
           <CashFlowBars data={cashFlow} height={150} />
         ) : badge === "Goals" ? (
