@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
+    "@eslint/eslintrc": "^3.3.5",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.3",
     "@types/pg": "^8.20.0",
