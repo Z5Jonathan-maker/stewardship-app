@@ -12,6 +12,8 @@ interface LogoProps {
 export const BRAND_NAVY = "#04265E";
 export const BRAND_GREEN = "#58A888";
 export const BRAND_OVERLAP = "#2F8579";
+/** Wordmark-text green, darkened to ≥4.5:1 contrast on the cream canvas. */
+export const BRAND_GREEN_TEXT = "#27705A";
 
 /**
  * UniFi brand mark — two leaves, navy and green, overlapping.
@@ -54,7 +56,9 @@ export function Logo({ className, markOnly = false, tone = "default" }: LogoProp
           )}
         >
           Uni
-          <span className="text-[#58A888]">Fi</span>
+          <span className={tone === "inverted" ? "text-[#58A888]" : "text-[#27705A]"}>
+            Fi
+          </span>
         </span>
       )}
     </span>
