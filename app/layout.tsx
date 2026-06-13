@@ -18,11 +18,11 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: {
-    default: "uniFi — Faithful stewardship of every dollar",
-    template: "%s · uniFi",
+    default: "UniFi — Faithful stewardship of every dollar",
+    template: "%s · UniFi",
   },
   description:
-    "uniFi is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
+    "UniFi is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
   metadataBase: new URL("https://unifi.finance"),
 };
 

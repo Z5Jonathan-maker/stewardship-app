@@ -1,4 +1,4 @@
-# AGENTS.md — uniFi
+# AGENTS.md — UniFi
 
 Operating constitution for AI agents working in this repo. Pairs with
 `CLAUDE.md` (design/brand guidance), `ARCHITECTURE.md` (backend design of
@@ -16,7 +16,7 @@ polish, stewardship-first mission.
 - **Tailwind CSS** with a token-based design system (light + dark) — see DESIGN.md
 - **Drizzle ORM** + **Neon** (Postgres); all money stored as integer **cents**
 - **Clerk** auth · **Plaid** bank linking · **Inngest** durable sync
-- **Anthropic SDK** (`claude-opus-4-8`) powers "Ask uniFi"
+- **Anthropic SDK** (`claude-opus-4-8`) powers "Ask UniFi"
 - **Playwright** + axe for e2e/a11y
 
 Every external dependency **degrades gracefully**: with no keys, the app falls
@@ -61,7 +61,7 @@ push work that you haven't built locally.
 
 ## Model routing
 
-`claude-opus-4-8` for "Ask uniFi" (server route `app/api/assistant/route.ts`,
+`claude-opus-4-8` for "Ask UniFi" (server route `app/api/assistant/route.ts`,
 prompt-cached system + financial-context prefix). Keep the context builder
 (`lib/assistant-context.ts`) deterministic.
 

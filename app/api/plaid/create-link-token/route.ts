@@ -15,7 +15,7 @@ export async function POST() {
   try {
     const resp = await client.linkTokenCreate({
       user: { client_user_id: "demo-household" }, // per-user id once auth lands
-      client_name: "uniFi",
+      client_name: "UniFi",
       products: [Products.Transactions],
       country_codes: [CountryCode.Us],
       language: "en",

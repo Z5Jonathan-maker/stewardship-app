@@ -34,7 +34,7 @@ interface Message {
 }
 
 /**
- * Local stewardship fallback for "Ask uniFi". The page calls the Claude-backed
+ * Local stewardship fallback for "Ask UniFi". The page calls the Claude-backed
  * `/api/assistant` route first; this keyword-matched mock is used only when no
  * ANTHROPIC_API_KEY is configured (e.g. the public demo) or the request fails,
  * so the experience always degrades gracefully.
@@ -93,7 +93,7 @@ export default function AssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "unifi",
-      text: "Hi Jonathan 👋 I'm uniFi, your stewardship companion. Ask me anything about your money — I'll answer from your real numbers, with wisdom and care.",
+      text: "Hi Jonathan 👋 I'm UniFi, your stewardship companion. Ask me anything about your money — I'll answer from your real numbers, with wisdom and care.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -185,7 +185,7 @@ export default function AssistantPage() {
         </div>
         <div>
           <h1 className="font-display text-xl font-semibold text-evergreen-900">
-            Ask uniFi
+            Ask UniFi
           </h1>
           <p className="text-sm text-muted-foreground">
             Answers from your data, grounded in stewardship.
@@ -197,7 +197,7 @@ export default function AssistantPage() {
       <div
         role="log"
         aria-live="polite"
-        aria-label="Conversation with uniFi"
+        aria-label="Conversation with UniFi"
         className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card p-5"
       >
         {showEmpty ? (
@@ -269,7 +269,7 @@ export default function AssistantPage() {
             {pending && (
               <div className="flex justify-start">
                 <div className="flex max-w-[85%] items-center gap-1.5 rounded-2xl rounded-bl-sm bg-cream-100 px-4 py-3.5">
-                  <span className="sr-only">uniFi is thinking…</span>
+                  <span className="sr-only">UniFi is thinking…</span>
                   <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.3s]" />
                   <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400 [animation-delay:-0.15s]" />
                   <span className="h-2 w-2 animate-bounce rounded-full bg-brand-400" />
@@ -340,7 +340,7 @@ export default function AssistantPage() {
         )}
       </form>
       <p className="mt-2 text-center text-xs text-muted-foreground">
-        uniFi offers guidance, not professional financial advice.
+        UniFi offers guidance, not professional financial advice.
       </p>
     </div>
   );

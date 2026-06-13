@@ -16,7 +16,7 @@ export default function AuthLayout({
       {/* Form side */}
       <div className="flex flex-col bg-cream-50 px-6 py-8">
         <header>
-          <Link href="/" aria-label="uniFi home">
+          <Link href="/" aria-label="UniFi home">
             <Logo />
           </Link>
         </header>
@@ -37,7 +37,7 @@ export default function AuthLayout({
             Luke 16:10
           </p>
           <p className="mt-8 max-w-md text-cream-100/80">
-            uniFi is your home base for faithful money management — budgeting,
+            UniFi is your home base for faithful money management — budgeting,
             giving, goals, and cash flow, all in one calm place.
           </p>
         </div>

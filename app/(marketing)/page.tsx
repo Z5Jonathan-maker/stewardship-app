@@ -69,7 +69,7 @@ function Hero() {
             The faithful way to manage your money.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-evergreen-700 text-pretty">
-            uniFi brings every account, budget, and goal into one calm, clear
+            UniFi brings every account, budget, and goal into one calm, clear
             place — so you can give generously, save with purpose, and steward
             well what you&apos;ve been entrusted with.
           </p>
@@ -154,7 +154,7 @@ function Pillars() {
       <SectionHeading
         eyebrow="Everything in one place"
         title="Your home base for money clarity"
-        subtitle="Four simple disciplines, woven together. uniFi makes faithful money management feel calm instead of complicated."
+        subtitle="Four simple disciplines, woven together. UniFi makes faithful money management feel calm instead of complicated."
       />
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {pillars.map((p) => (
@@ -192,7 +192,7 @@ const deepDives = [
     badge: "Cash Flow",
     icon: LineChart,
     title: "Know what you'll have left — before you spend it",
-    body: "Most apps stop at \"here's what you spent.\" uniFi projects your balance forward from upcoming income and bills, so there are no surprises at month's end.",
+    body: "Most apps stop at \"here's what you spent.\" UniFi projects your balance forward from upcoming income and bills, so there are no surprises at month's end.",
     points: ["Forward-looking projections", "Recurring bill detection", "Month-in-review recap"],
     reverse: true,
   },
@@ -204,7 +204,7 @@ const deepDives = [
     points: ["Multiple goals at once", "Auto-progress as you sync", "Debt-free milestones"],
   },
   {
-    badge: "Ask uniFi",
+    badge: "Ask UniFi",
     icon: Sparkles,
     title: "Ask a question, get a faithful answer",
     body: "\"How much did we give this year?\" \"Can we afford the trip?\" The built-in assistant answers from your real numbers — clear guidance grounded in stewardship.",
@@ -269,7 +269,7 @@ function Stewardship() {
           1 Peter 4:10
         </p>
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-cream-100/80 text-pretty">
-          Money is a tool, not a master. uniFi is built on a simple conviction:
+          Money is a tool, not a master. UniFi is built on a simple conviction:
           everything we have is a gift to be managed well. That&apos;s why
           giving comes first, debt has a finish line, and every feature is
           designed to bring peace — not pressure — to your financial life.
@@ -375,7 +375,7 @@ function Institutions() {
           ))}
         </div>
         <p className="mt-7 text-sm text-evergreen-700">
-          Read-only, bank-level encryption. uniFi can never move your money.
+          Read-only, bank-level encryption. UniFi can never move your money.
         </p>
       </div>
     </section>
@@ -441,7 +441,7 @@ function Testimonials() {
 function Security() {
   const items = [
     { icon: ShieldCheck, title: "Encryption by design", body: "Your data will be encrypted in transit and at rest, and guarded like it's our own." },
-    { icon: CheckCircle2, title: "Read-only by design", body: "We'll connect through trusted aggregators like Plaid — uniFi is built so it can never move your money." },
+    { icon: CheckCircle2, title: "Read-only by design", body: "We'll connect through trusted aggregators like Plaid — UniFi is built so it can never move your money." },
     { icon: Users, title: "You stay in control", body: "Disconnect any account and delete your data whenever you choose. No lock-in, ever." },
   ];
   return (
@@ -450,7 +450,7 @@ function Security() {
         <SectionHeading
           eyebrow="Our security commitments"
           title="Built to be worthy of your trust"
-          subtitle="Stewardship means protecting what's entrusted to us — including your data. Here's how we're designing uniFi to earn that trust."
+          subtitle="Stewardship means protecting what's entrusted to us — including your data. Here's how we're designing UniFi to earn that trust."
         />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {items.map((i) => (

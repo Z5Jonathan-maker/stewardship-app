@@ -40,12 +40,12 @@ export function SiteFooter() {
           <div className="max-w-xs">
             <Logo tone="inverted" />
             <p className="mt-4 text-sm leading-relaxed text-cream-100/70">
-              Faithful stewardship of every dollar. uniFi brings your whole
+              Faithful stewardship of every dollar. UniFi brings your whole
               financial life into one calm, clear place — so you can give,
               save, and live with purpose.
             </p>
             <p className="mt-6 text-xs text-cream-100/50">
-              © {new Date().getFullYear()} uniFi LLC. All rights reserved.
+              © {new Date().getFullYear()} UniFi LLC. All rights reserved.
             </p>
           </div>
 

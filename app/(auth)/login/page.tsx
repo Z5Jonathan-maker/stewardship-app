@@ -30,7 +30,7 @@ export default async function LoginPage() {
       submitLabel="Sign in"
       footer={
         <>
-          New to uniFi?{" "}
+          New to UniFi?{" "}
           <Link href="/signup" className="font-semibold text-brand-600 hover:underline">
             Create an account
           </Link>

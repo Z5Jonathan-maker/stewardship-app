@@ -79,7 +79,7 @@ export function SettingsClient() {
       <Card>
         <CardHeader>
           <CardTitle>Appearance</CardTitle>
-          <CardDescription>Choose how uniFi looks on this device.</CardDescription>
+          <CardDescription>Choose how UniFi looks on this device.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="inline-flex rounded-full border border-border bg-muted p-1">

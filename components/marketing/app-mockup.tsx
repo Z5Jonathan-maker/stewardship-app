@@ -14,7 +14,7 @@ import {
 } from "@/lib/mock-data";
 
 /**
- * A faithful, static preview of the uniFi dashboard — used as the hero
+ * A faithful, static preview of the UniFi dashboard — used as the hero
  * "screenshot". Built from real components & mock data so it always matches
  * the product.
  */
