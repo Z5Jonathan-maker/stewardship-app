@@ -41,6 +41,7 @@ export function BudgetClient() {
       <PageHeader
         title="May Budget"
         subtitle="Tithe-first budgeting. Give every dollar a purpose."
+        range="This month"
         action={<EditBudgetDialog budgeted={budgeted} onSave={setBudgetAmount} />}
       />
 

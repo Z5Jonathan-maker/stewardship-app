@@ -21,6 +21,7 @@ export default function TransactionsPage() {
       <PageHeader
         title="Transactions"
         subtitle={<LiveTransactionsSummary count={transactions.length} income={income} spent={spent} />}
+        range="This month"
         action={<AddTransactionButton />}
       />
 
