@@ -3,6 +3,7 @@ import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/app/page-header";
 import { CashFlowBars, SpendingDonut } from "@/components/app/charts";
+import { SankeyFlow } from "@/components/app/sankey-flow";
 import {
   IncomeCountUp,
   OutflowCountUp,
@@ -39,6 +40,15 @@ export default function CashFlowPage() {
         <FlowStat label="Money out this month" value={<OutflowCountUp base={monthlyOutflow} />} icon={ArrowDownRight} tone="down" />
         <FlowStat label="Net cash flow" value={<NetCashFlowCountUp base={netCashFlow} />} icon={TrendingUp} tone="up" />
       </div>
+
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle>Where your money flowed</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SankeyFlow />
+        </CardContent>
+      </Card>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">

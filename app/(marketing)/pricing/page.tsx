@@ -66,7 +66,7 @@ export default function PricingPage() {
       <section className="container py-16 lg:py-24">
         <div className="mx-auto max-w-2xl text-center">
           <Badge variant="brand" className="mb-4">Simple & honest</Badge>
-          <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance sm:text-5xl">
+          <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance sm:text-5xl">
             Pricing that respects your budget
           </h1>
           <p className="mt-5 text-lg text-evergreen-700 text-pretty">
@@ -90,12 +90,12 @@ export default function PricingPage() {
                   Most popular
                 </span>
               )}
-              <h2 className="font-display text-xl font-semibold text-evergreen-900">
+              <h2 className="font-serif text-xl font-semibold text-evergreen-900">
                 {tier.name}
               </h2>
               <p className="mt-2 text-sm text-evergreen-700">{tier.description}</p>
               <div className="mt-5 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-semibold text-evergreen-900">
+                <span className="font-serif text-4xl font-semibold text-evergreen-900">
                   {tier.price}
                 </span>
                 <span className="text-sm text-muted-foreground">{tier.cadence}</span>

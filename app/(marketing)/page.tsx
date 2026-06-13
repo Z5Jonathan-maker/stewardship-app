@@ -65,7 +65,7 @@ function Hero() {
           <Badge variant="brand" className="mb-5">
             <Sparkles className="h-3 w-3" /> Faith-centered money, beautifully simple
           </Badge>
-          <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-evergreen-900 text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-evergreen-900 text-balance sm:text-5xl lg:text-6xl">
             The faithful way to manage your money.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-evergreen-700 text-pretty">
@@ -112,7 +112,7 @@ function TrustBar() {
       <div className="container grid grid-cols-2 gap-8 py-10 md:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <p className="font-display text-3xl font-semibold text-evergreen-900">
+            <p className="font-serif text-3xl font-semibold text-evergreen-900">
               {s.value}
             </p>
             <p className="mt-1 text-sm text-evergreen-700">{s.label}</p>
@@ -165,7 +165,7 @@ function Pillars() {
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white">
               <p.icon className="h-6 w-6" />
             </div>
-            <h3 className="mt-5 font-display text-xl font-semibold text-evergreen-900">
+            <h3 className="mt-5 font-serif text-xl font-semibold text-evergreen-900">
               {p.title}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-evergreen-700">
@@ -226,7 +226,7 @@ function FeatureDeepDives() {
               <Badge variant="brand">
                 <d.icon className="h-3 w-3" /> {d.badge}
               </Badge>
-              <h3 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance">
+              <h3 className="mt-4 font-serif text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance">
                 {d.title}
               </h3>
               <p className="mt-4 text-lg leading-relaxed text-evergreen-700 text-pretty">
@@ -260,12 +260,12 @@ function Stewardship() {
       <div className="absolute inset-0 bg-grid opacity-[0.07]" aria-hidden />
       <div className="container relative max-w-3xl text-center">
         <Quote className="mx-auto h-10 w-10 text-brand-400" />
-        <blockquote className="mt-6 font-display text-2xl font-medium leading-relaxed tracking-tight text-balance sm:text-3xl">
+        <blockquote className="mt-6 font-serif text-2xl font-medium leading-relaxed tracking-tight text-balance sm:text-3xl">
           “Each of you should use whatever gift you have received to serve
           others, as faithful stewards of God&apos;s grace in its various
           forms.”
         </blockquote>
-        <p className="mt-4 text-sm font-semibold uppercase tracking-widest text-brand-300">
+        <p className="mt-4 text-sm font-semibold uppercase tracking-widest text-leaf">
           1 Peter 4:10
         </p>
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-cream-100/80 text-pretty">
@@ -289,7 +289,7 @@ function Couples() {
           <Badge variant="brand">
             <Users className="h-3 w-3" /> Built for households
           </Badge>
-          <h3 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance">
+          <h3 className="mt-4 font-serif text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance">
             Manage money together, on the same page
           </h3>
           <p className="mt-4 text-lg leading-relaxed text-evergreen-700 text-pretty">
@@ -308,12 +308,12 @@ function Couples() {
         <div className="rounded-2xl border border-border bg-linear-to-br from-brand-50 to-cream-50 p-8 shadow-soft">
           <div className="flex -space-x-3">
             {["J", "G"].map((i) => (
-              <div key={i} className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-card bg-evergreen-700 font-display text-lg font-semibold text-cream-50">
+              <div key={i} className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-card bg-evergreen-700 font-serif text-lg font-semibold text-cream-50">
                 {i}
               </div>
             ))}
           </div>
-          <p className="mt-5 font-display text-xl font-semibold text-evergreen-900">
+          <p className="mt-5 font-serif text-xl font-semibold text-evergreen-900">
             Jonathan &amp; Grace
           </p>
           <p className="text-sm text-evergreen-700">Stewarding together since 2024</p>
@@ -330,7 +330,7 @@ function Couples() {
 function MiniStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl border border-border bg-card p-4">
-      <p className="font-display text-xl font-semibold text-evergreen-900">{value}</p>
+      <p className="font-serif text-xl font-semibold text-evergreen-900">{value}</p>
       <p className="text-xs text-evergreen-700">{label}</p>
     </div>
   );
@@ -357,10 +357,10 @@ function Institutions() {
   return (
     <section className="border-y border-border bg-card">
       <div className="container py-14 text-center">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
+        <p className="text-sm font-semibold uppercase tracking-widest text-leaf-deep">
           Connects securely to your accounts
         </p>
-        <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-evergreen-900 sm:text-3xl">
+        <h2 className="mt-2 font-serif text-2xl font-semibold tracking-tight text-evergreen-900 sm:text-3xl">
           Works with 13,000+ banks and brokerages
         </h2>
         <div className="mx-auto mt-9 flex max-w-4xl flex-wrap items-center justify-center gap-3">
@@ -456,7 +456,7 @@ function Security() {
           {items.map((i) => (
             <div key={i.title} className="rounded-2xl border border-border bg-card p-6 shadow-soft">
               <i.icon className="h-7 w-7 text-brand-500" />
-              <h3 className="mt-4 font-display text-lg font-semibold text-evergreen-900">
+              <h3 className="mt-4 font-serif text-lg font-semibold text-evergreen-900">
                 {i.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-evergreen-700">{i.body}</p>
@@ -476,7 +476,7 @@ function FinalCta() {
       <div className="relative overflow-hidden rounded-3xl bg-evergreen-800 px-8 py-16 text-center shadow-lift sm:px-16">
         <div className="absolute inset-0 bg-grid opacity-[0.08]" aria-hidden />
         <div className="relative mx-auto max-w-2xl">
-          <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-cream-50 text-balance sm:text-4xl">
+          <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight text-cream-50 text-balance sm:text-4xl">
             Start stewarding well today
           </h2>
           <p className="mt-4 text-lg text-cream-100/80 text-pretty">
@@ -510,10 +510,10 @@ function SectionHeading({
 }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
+      <p className="text-sm font-semibold uppercase tracking-widest text-leaf-deep">
         {eyebrow}
       </p>
-      <h2 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance sm:text-4xl">
+      <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight tracking-tight text-evergreen-900 text-balance sm:text-4xl">
         {title}
       </h2>
       <p className="mt-4 text-lg leading-relaxed text-evergreen-700 text-pretty">

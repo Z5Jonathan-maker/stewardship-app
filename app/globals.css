@@ -52,16 +52,21 @@
   --color-evergreen-800: #13322b;
   --color-evergreen-900: #0c211c;
 
-  --color-brand-50: #eef3ff;
-  --color-brand-100: #dbe5ff;
-  --color-brand-200: #bdd0ff;
-  --color-brand-300: #93b0ff;
-  --color-brand-400: #6285fb;
-  --color-brand-500: #3b63f0;
-  --color-brand-600: #2849d8;
-  --color-brand-700: #2139ae;
-  --color-brand-800: #1f338a;
-  --color-brand-900: #1e306e;
+  /* Brand navy, ramped from the logo mark (#04265E at 800). */
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #dae5f6;
+  --color-brand-200: #b6cbec;
+  --color-brand-300: #8aaade;
+  --color-brand-400: #5b83c9;
+  --color-brand-500: #3463ac;
+  --color-brand-600: #1b4a8e;
+  --color-brand-700: #0e3a77;
+  --color-brand-800: #04265e;
+  --color-brand-900: #021b45;
+
+  /* Leaf green from the logo mark; -deep passes AA as text on cream. */
+  --color-leaf: #58a888;
+  --color-leaf-deep: #27705a;
 
   --color-cream-50: #fdfcf8;
   --color-cream-100: #f8f5ec;
@@ -71,6 +76,8 @@
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display:
     var(--font-display), var(--font-sans), ui-sans-serif, sans-serif;
+  /* Editorial serif for marketing headlines (Monarch study). */
+  --font-serif: var(--font-serif-display), Georgia, "Times New Roman", serif;
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 4px);
@@ -150,10 +157,10 @@
     --muted: 41 38% 94%;             /* cream-100 */
     --muted-foreground: 165 12% 38%;
 
-    --accent: 226 100% 96%;          /* brand-50 */
-    --accent-foreground: 226 55% 28%;
+    --accent: 217 62% 96%;           /* brand-50 — navy tint */
+    --accent-foreground: 215 79% 26%;
 
-    --primary: 226 85% 59%;          /* brand-500 — the blue accent */
+    --primary: 217 92% 19%;          /* brand-800 — the logo navy */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 165 35% 14%;        /* evergreen-800 */
@@ -167,13 +174,13 @@
 
     --border: 40 25% 88%;
     --input: 40 25% 88%;
-    --ring: 226 85% 59%;
+    --ring: 217 92% 19%;
 
     --radius: 0.875rem;
   }
 
   .dark {
-    /* Dark theme — deep evergreen, same blue accent */
+    /* Dark theme — deep evergreen, lifted logo navy as accent */
     --background: 165 40% 7%;
     --foreground: 43 40% 96%;
 
@@ -186,7 +193,7 @@
     --accent: 165 30% 16%;
     --accent-foreground: 43 40% 96%;
 
-    --primary: 226 90% 66%;
+    --primary: 217 56% 71%;         /* brand-300 — navy lifted for dark bg */
     --primary-foreground: 165 45% 9%;
 
     --secondary: 165 28% 16%;
@@ -200,7 +207,7 @@
 
     --border: 165 22% 18%;
     --input: 165 22% 18%;
-    --ring: 226 90% 66%;
+    --ring: 217 56% 71%;
   }
 }
 
