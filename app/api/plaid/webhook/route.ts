@@ -60,7 +60,7 @@ async function verifyPlaidWebhook(
     const jwk = resp.data.key;
     if (jwk.expired_at !== null) return false; // rotated-out key — reject
     publicKey = crypto.createPublicKey({
-      key: { kty: jwk.kty, crv: jwk.crv, x: jwk.x, y: jwk.y } as crypto.JsonWebKey,
+      key: { kty: jwk.kty, crv: jwk.crv, x: jwk.x, y: jwk.y } as JsonWebKey,
       format: "jwk",
     });
     keyCache.set(kid, publicKey);
