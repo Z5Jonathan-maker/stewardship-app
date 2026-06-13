@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://unifi.finance";
+const BASE_URL = "https://uunifi.com";
 
 export default function robots(): MetadataRoute.Robots {
   return {

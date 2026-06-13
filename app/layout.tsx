@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   description:
     "UniFi is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
-  metadataBase: new URL("https://unifi.finance"),
+  metadataBase: new URL("https://uunifi.com"),
 };
 
 export default function RootLayout({
