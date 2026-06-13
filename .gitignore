@@ -44,3 +44,7 @@ __pycache__/
 venv/
 /drizzle/
 .vercel
+
+# Clerk CLI agent-skill install artifacts (not app code)
+.agents/
+skills-lock.json
