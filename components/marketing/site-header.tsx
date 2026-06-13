@@ -24,7 +24,7 @@ export function SiteHeader() {
       </div>
 
       <div className="container flex h-16 items-center justify-between gap-6">
-        <Link href="/" aria-label="Unite Financial home">
+        <Link href="/" aria-label="uniFi home">
           <Logo />
         </Link>
 

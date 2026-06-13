@@ -1,10 +1,10 @@
-# CLAUDE.md — Unite Financial
+# CLAUDE.md — uniFi
 
 Guidance for working in this repo.
 
 ## What this is
 
-Unite Financial is a Christ-centered personal-finance app. It is **inspired by
+uniFi is a Christ-centered personal-finance app. It is **inspired by
 Monarch** (monarch.com) — the current design leader in the space — and
 deliberately borrows Monarch's structure and polish while differentiating on:
 
@@ -53,9 +53,9 @@ npm run dev      # local dev
 npm run build    # must pass before pushing
 ```
 
-## Ask Unite (live Claude integration)
+## Ask uniFi (live Claude integration)
 
-"Ask Unite" is wired to Claude. The client (`app/(app)/assistant/page.tsx`)
+"Ask uniFi" is wired to Claude. The client (`app/(app)/assistant/page.tsx`)
 POSTs the conversation to the server route `app/api/assistant/route.ts`, which
 calls `claude-opus-4-8` via the official `@anthropic-ai/sdk`, grounded in a
 deterministic financial snapshot built from `lib/mock-data.ts` (see

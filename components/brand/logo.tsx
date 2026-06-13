@@ -9,7 +9,7 @@ interface LogoProps {
 }
 
 /**
- * Unite Financial brand mark — two strokes rising and joining at a point.
+ * uniFi brand mark — two strokes rising and joining at a point.
  * A nod to "two distinct lines that come together, joined in common purpose":
  * faith + finances, partners, household + community.
  */
@@ -50,7 +50,7 @@ export function Logo({ className, markOnly = false, tone = "default" }: LogoProp
             wordColor
           )}
         >
-          Unite
+          uniFi
         </span>
       )}
     </span>

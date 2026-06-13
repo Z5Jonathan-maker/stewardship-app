@@ -9,7 +9,7 @@ import { budget, goals, cashFlow } from "@/lib/mock-data";
 
 // badge -> icon map (kept here so the server page doesn't pass a component
 // function across the client boundary, which Next forbids).
-const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask Unite": Sparkles } as const;
+const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask uniFi": Sparkles } as const;
 
 // Real, per-feature previews for the marketing deep-dive sections — the same
 // components the product renders, so the landing page shows the actual UI
@@ -27,7 +27,7 @@ export function FeaturePreview({ badge }: { badge: string }) {
           <CashFlowBars data={cashFlow} height={150} />
         ) : badge === "Goals" ? (
           <GoalsPreview />
-        ) : badge === "Ask Unite" ? (
+        ) : badge === "Ask uniFi" ? (
           <AskPreview />
         ) : (
           <BudgetPreview />
@@ -89,7 +89,7 @@ function AskPreview() {
       </div>
       <div className="w-fit max-w-[88%] rounded-2xl rounded-bl-sm bg-cream-100 px-3 py-2 text-xs text-evergreen-800">
         <span className="mb-1 inline-flex items-center gap-1 font-semibold text-brand-600">
-          <Sparkles className="h-3 w-3" /> Unite
+          <Sparkles className="h-3 w-3" /> uniFi
         </span>
         <br />
         You&apos;ve given <span className="font-semibold tabular-nums">{formatCurrency(12480)}</span> so far this year — about 12.4% of your income. Faithful work.

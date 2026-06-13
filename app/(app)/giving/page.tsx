@@ -123,7 +123,7 @@ export default function GivingPage() {
       </div>
 
       <p className="mt-8 text-center text-sm text-muted-foreground">
-        Unite keeps a tidy record of your giving for year-end tax statements.
+        uniFi keeps a tidy record of your giving for year-end tax statements.
       </p>
     </div>
   );

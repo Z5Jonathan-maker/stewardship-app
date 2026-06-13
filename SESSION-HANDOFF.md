@@ -1,4 +1,4 @@
-# SESSION-HANDOFF.md — Unite Financial
+# SESSION-HANDOFF.md — uniFi
 
 Rolling state for the next session. Update the top section each time.
 
@@ -8,7 +8,7 @@ Rolling state for the next session. Update the top section each time.
 seed, selectors, Clerk auth + household provisioning, KMS envelope encryption,
 Inngest sync, RLS, GDPR delete, e2e/integration tests). Frontend is full and
 polished (dashboard, accounts, transactions, budget, cashflow, goals, giving,
-debt, roadmap, settings, marketing + pricing). "Ask Unite" streams from
+debt, roadmap, settings, marketing + pricing). "Ask uniFi" streams from
 `claude-opus-4-8`. Vercel deploy is wired (framework pinned to Next.js).
 
 `npm run build` / `typecheck` / `lint` all pass on `main`.

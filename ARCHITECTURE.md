@@ -1,4 +1,4 @@
-# Unite Financial — Backend Architecture
+# uniFi — Backend Architecture
 
 > Status: **blueprint / not yet implemented.** This is the design of record for
 > the backend (Phase 1). Review before scaffolding. The frontend it sits under

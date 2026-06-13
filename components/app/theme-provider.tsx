@@ -10,7 +10,7 @@ const ThemeContext = React.createContext<{
   toggle: () => void;
   setTheme: (t: Theme) => void;
 } | null>(null);
-const STORAGE_KEY = "unite-theme";
+const STORAGE_KEY = "unifi-theme";
 
 /** Holds the app's theme and applies a `.dark` class to its subtree (so the
  * marketing/auth sides stay light). Hydrates the stored/system preference

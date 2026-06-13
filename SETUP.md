@@ -1,6 +1,6 @@
 # Going Live — Free Setup Guide
 
-Get Unite running with **real auth, a real database, and real (sandbox) bank
+Get uniFi running with **real auth, a real database, and real (sandbox) bank
 linking** for **$0**. Three free accounts, ~20 minutes. Each maps to a block in
 `.env.local`; the app degrades to the mock/demo when a block is missing, so you
 can do these one at a time and watch each light up.
@@ -15,7 +15,7 @@ can do these one at a time and watch each light up.
 ## 1. Database — Neon (free, ~5 min)
 
 1. Go to **https://neon.tech** → **Sign up** (GitHub login is fastest).
-2. **Create a project**: name it `unite`, pick the region closest to you,
+2. **Create a project**: name it `unifi`, pick the region closest to you,
    Postgres 16. Click **Create**.
 3. On the project dashboard, find **Connection string** (a "Connect" button or
    the Dashboard widget). You need **two** forms of it:
@@ -57,7 +57,7 @@ DEV_HOUSEHOLD_ID=<that uuid>
 ## 2. Auth — Clerk (free up to 10,000 users, ~5 min)
 
 1. Go to **https://clerk.com** → **Sign up** → **Create application**.
-   Name it `Unite`, enable **Email** and **Google** sign-in (toggle whichever
+   Name it `uniFi`, enable **Email** and **Google** sign-in (toggle whichever
    methods you want).
 2. On the **API Keys** page, copy the two keys into `.env.local`:
    ```
@@ -110,7 +110,7 @@ These aren't needed to see auth + DB + bank-linking work; add when ready.
   `.env.local`. For local dev you can instead run `npx inngest-cli dev` which
   auto-discovers `app/api/inngest`. Without it, account balances still sync on
   link; only the background transaction backfill waits.
-- **Anthropic** (Ask Unite live answers): `ANTHROPIC_API_KEY` from
+- **Anthropic** (Ask uniFi live answers): `ANTHROPIC_API_KEY` from
   https://console.anthropic.com . Without it the assistant uses the local mock.
 - **Real KMS** (production-grade token encryption): set `APP_ENCRYPTION_KEY` to
   a strong random value for now (`openssl rand -base64 32`). For production,
@@ -128,7 +128,7 @@ These aren't needed to see auth + DB + bank-linking work; add when ready.
 | Clerk keys | Real sign-in + per-user household resolution | Demo auth form |
 | Plaid keys | Real Plaid Link bank connection + encrypted sync | Mock institution picker |
 | `INNGEST_*` | Durable background transaction sync | Balances sync on link only |
-| `ANTHROPIC_API_KEY` | Live "Ask Unite" answers | Local stewardship mock |
+| `ANTHROPIC_API_KEY` | Live "Ask uniFi" answers | Local stewardship mock |
 
 ## Deploying (when ready)
 

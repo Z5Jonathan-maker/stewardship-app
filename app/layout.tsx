@@ -18,12 +18,12 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: {
-    default: "Unite Financial — Faithful stewardship of every dollar",
-    template: "%s · Unite Financial",
+    default: "uniFi — Faithful stewardship of every dollar",
+    template: "%s · uniFi",
   },
   description:
-    "Unite is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
-  metadataBase: new URL("https://unitefinancial.app"),
+    "uniFi is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
+  metadataBase: new URL("https://unifi.finance"),
 };
 
 export default function RootLayout({

@@ -187,7 +187,7 @@ export function ConnectAccountButton({
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
               <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-brand-500" />
-              Read-only, bank-level encryption. Unite can never move your money.
+              Read-only, bank-level encryption. uniFi can never move your money.
             </p>
           </>
         )}

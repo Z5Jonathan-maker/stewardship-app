@@ -1,8 +1,8 @@
 {
-  "name": "unite-financial",
+  "name": "unifi",
   "version": "0.1.0",
   "private": true,
-  "description": "Unite Financial — faithful stewardship of every dollar. A Christian budgeting, cash-flow, and goals app.",
+  "description": "uniFi — faithful stewardship of every dollar. A Christian budgeting, cash-flow, and goals app.",
   "engines": {
     "node": ">=20"
   },

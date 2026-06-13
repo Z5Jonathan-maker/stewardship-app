@@ -14,7 +14,7 @@ import {
 } from "@/lib/mock-data";
 
 /**
- * A faithful, static preview of the Unite dashboard — used as the hero
+ * A faithful, static preview of the uniFi dashboard — used as the hero
  * "screenshot". Built from real components & mock data so it always matches
  * the product.
  */
@@ -29,7 +29,7 @@ export function AppMockup() {
         <span className="h-3 w-3 rounded-full bg-amber-400/50" />
         <span className="h-3 w-3 rounded-full bg-evergreen-400/50" />
         <div className="ml-3 rounded-md bg-card px-3 py-1 text-[11px] text-muted-foreground">
-          app.unitefinancial.com/dashboard
+          app.unifi.finance/dashboard
         </div>
       </div>
 

@@ -12,7 +12,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r border-border bg-cream-50 lg:flex">
       <div className="flex h-16 items-center px-6">
-        <Link href="/dashboard" aria-label="Unite home">
+        <Link href="/dashboard" aria-label="uniFi home">
           <Logo />
         </Link>
       </div>

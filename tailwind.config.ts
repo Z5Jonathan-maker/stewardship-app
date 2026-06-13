@@ -50,7 +50,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Brand scales — Unite Financial
+        // Brand scales — uniFi
         // Evergreen: the calm, trustworthy "ink" (Monarch's warmth, our depth)
         evergreen: {
           50: "#eef6f2",

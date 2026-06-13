@@ -1,5 +1,5 @@
 /**
- * Mock financial data for Unite Financial.
+ * Mock financial data for uniFi.
  * Everything the app renders is derived from this module so the UI is fully
  * demonstrable before real Plaid wiring lands. Replace these with live data
  * sources (Plaid + DB) without touching the components.

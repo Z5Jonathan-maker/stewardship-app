@@ -30,6 +30,6 @@ export const appNav: NavItem[] = [
   { label: "Debt Freedom", href: "/debt", icon: Unlock },
   { label: "Giving", href: "/giving", icon: HandHeart },
   { label: "Accounts", href: "/accounts", icon: Wallet },
-  { label: "Ask Unite", href: "/assistant", icon: Sparkles },
+  { label: "Ask uniFi", href: "/assistant", icon: Sparkles },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
