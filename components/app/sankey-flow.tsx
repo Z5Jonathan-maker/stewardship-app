@@ -62,11 +62,20 @@ export function SankeyFlow({ className }: { className?: string }) {
   const cats = budget.filter((b) => b.group !== "Income" && b.actual > 0);
   const total = monthlyIncome;
 
-  const groups = GROUP_ORDER.map((g) => ({
-    label: g,
-    amount: cats.filter((c) => c.group === g).reduce((s, c) => s + c.actual, 0),
-    hue: GROUP_HUES[g],
-  })).filter((g) => g.amount > 0);
+  const spent = cats.reduce((s, c) => s + c.actual, 0);
+  const surplus = total - spent;
+
+  const groups = [
+    ...GROUP_ORDER.map((g) => ({
+      label: g,
+      amount: cats.filter((c) => c.group === g).reduce((s, c) => s + c.actual, 0),
+      hue: GROUP_HUES[g],
+    })),
+    // Income not yet out the door — surplus is part of the story too.
+    ...(surplus > 0
+      ? [{ label: "Left to steward", amount: surplus, hue: { ribbon: "#D7E8E1", node: "#27705A" } }]
+      : []),
+  ].filter((g) => g.amount > 0);
 
   const catItems = GROUP_ORDER.flatMap((g) =>
     cats
