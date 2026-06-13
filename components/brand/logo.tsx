@@ -1,58 +1,51 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
-  /** Hide the wordmark, show only the mark. */
+  /** Show only the leaf mark (square), no wordmark. */
   markOnly?: boolean;
-  /** Force a single color (e.g. for footer on dark bg). */
+  /** Use the cream-on-dark lockup (e.g. the evergreen footer). */
   tone?: "default" | "inverted";
 }
 
+/** Canonical UniFi brand colors (sampled from the master logo raster). */
+export const BRAND_NAVY = "#04265E";
+export const BRAND_GREEN = "#58A888";
+export const BRAND_OVERLAP = "#2F8579";
+/** Wordmark-text green, darkened to ≥4.5:1 contrast on the cream canvas. */
+export const BRAND_GREEN_TEXT = "#27705A";
+
 /**
- * Unite Financial brand mark — two strokes rising and joining at a point.
- * A nod to "two distinct lines that come together, joined in common purpose":
- * faith + finances, partners, household + community.
+ * UniFi logo — the real artwork, cropped from the master raster
+ * (public/brand/unifi-logo-master.jpg) with the cream background keyed to
+ * transparency. Three assets: full lockup, cream-on-dark lockup, and the
+ * square leaf mark for compact/icon contexts. Size via `className` height;
+ * width follows the intrinsic aspect ratio.
  */
 export function Logo({ className, markOnly = false, tone = "default" }: LogoProps) {
-  const wordColor =
-    tone === "inverted" ? "text-cream-50" : "text-evergreen-900";
+  if (markOnly) {
+    return (
+      <Image
+        src="/brand/unifi-mark.png"
+        alt="UniFi"
+        width={174}
+        height={174}
+        className={cn("h-7 w-auto object-contain", className)}
+      />
+    );
+  }
+  const src =
+    tone === "inverted"
+      ? "/brand/unifi-logo-inverted.png"
+      : "/brand/unifi-logo.png";
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <span className="relative inline-flex h-8 w-8 items-center justify-center">
-        <svg
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8"
-          aria-hidden="true"
-        >
-          <rect width="32" height="32" rx="9" className="fill-evergreen-800" />
-          {/* Two strokes converging upward */}
-          <path
-            d="M9 23 L16 9"
-            className="stroke-cream-50"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <path
-            d="M23 23 L16 9"
-            className="stroke-brand-400"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <circle cx="16" cy="9" r="2.4" className="fill-brand-400" />
-        </svg>
-      </span>
-      {!markOnly && (
-        <span
-          className={cn(
-            "font-display text-[1.15rem] font-semibold tracking-tight",
-            wordColor
-          )}
-        >
-          Unite
-        </span>
-      )}
-    </span>
+    <Image
+      src={src}
+      alt="UniFi"
+      width={674}
+      height={215}
+      className={cn("h-7 w-auto object-contain", className)}
+    />
   );
 }

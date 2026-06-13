@@ -12,7 +12,7 @@ export function AppTopbar() {
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-cream-50/80 px-4 backdrop-blur-md sm:gap-4 sm:px-6">
       {/* Mobile: hamburger + logo (the sidebar is hidden < lg) */}
       <MobileNav />
-      <Link href="/dashboard" aria-label="Unite home" className="lg:hidden">
+      <Link href="/dashboard" aria-label="UniFi home" className="lg:hidden">
         <Logo markOnly />
       </Link>
 

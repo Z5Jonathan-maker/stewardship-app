@@ -10,7 +10,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 interface ChatTurn {
-  role: "user" | "assistant" | "unite";
+  role: "user" | "assistant" | "unifi";
   text: string;
 }
 

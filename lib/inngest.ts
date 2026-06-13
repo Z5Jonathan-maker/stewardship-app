@@ -6,7 +6,7 @@ import { Inngest } from "inngest";
  * request handlers time out; Inngest functions don't). Inert without
  * INNGEST_EVENT_KEY: the serve endpoint registers but has nothing to call.
  */
-export const inngest = new Inngest({ id: "unite-financial" });
+export const inngest = new Inngest({ id: "unifi" });
 
 export function inngestConfigured(): boolean {
   return Boolean(process.env.INNGEST_EVENT_KEY && process.env.INNGEST_SIGNING_KEY);

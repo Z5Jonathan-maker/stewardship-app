@@ -1,8 +1,8 @@
 {
-  "name": "unite-financial",
+  "name": "unifi",
   "version": "0.1.0",
   "private": true,
-  "description": "Unite Financial — faithful stewardship of every dollar. A Christian budgeting, cash-flow, and goals app.",
+  "description": "uniFi — faithful stewardship of every dollar. A Christian budgeting, cash-flow, and goals app.",
   "engines": {
     "node": ">=20"
   },
@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
@@ -18,17 +18,17 @@
     "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.69.0",
-    "@clerk/nextjs": "^6.39.5",
+    "@anthropic-ai/sdk": "^0.104.1",
+    "@clerk/nextjs": "^7.5.2",
     "@neondatabase/serverless": "^1.1.0",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-dialog": "^1.1.16",
+    "@radix-ui/react-popover": "^1.1.16",
+    "@radix-ui/react-slot": "^1.2.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
-    "framer-motion": "^11.18.2",
-    "inngest": "^4.5.0",
+    "framer-motion": "^12.40.0",
+    "inngest": "^4.5.1",
     "lucide-react": "^0.460.0",
     "next": "^15.5.19",
     "pg": "^8.21.0",
@@ -41,19 +41,20 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
+    "@eslint/eslintrc": "^3.3.5",
     "@playwright/test": "^1.60.0",
-    "@types/node": "^20.14.10",
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^25.9.3",
     "@types/pg": "^8.20.0",
-    "@types/react": "^19.2.16",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.31.10",
-    "eslint": "^8.57.1",
+    "eslint": "^9",
     "eslint-config-next": "^15.5.19",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^4.3.1",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.22.4",
-    "typescript": "^5.6.3"
+    "typescript": "^6.0.3"
   }
 }

@@ -42,6 +42,7 @@ export default function DashboardPage() {
       <PageHeader
         title={`Good evening, ${household.members[0]}`}
         subtitle="Here's how your household is doing this month."
+        range="This month"
       />
 
       {/* Stat row */}

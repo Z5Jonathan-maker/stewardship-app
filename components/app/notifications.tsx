@@ -43,7 +43,7 @@ export function Notifications() {
         <Popover.Content
           align="end"
           sideOffset={10}
-          className="z-50 w-[min(20rem,calc(100vw-1.5rem))] rounded-2xl border border-border bg-card p-2 shadow-lift focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out data-[state=open]:zoom-in-95"
+          className="z-50 w-[min(20rem,calc(100vw-1.5rem))] rounded-2xl border border-border bg-card p-2 shadow-lift focus:outline-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out data-[state=open]:zoom-in-95"
         >
           <div className="flex items-center justify-between px-2 py-1.5">
             <p className="text-sm font-semibold text-evergreen-900">Notifications</p>
@@ -57,7 +57,7 @@ export function Notifications() {
               </button>
             )}
           </div>
-          <div className="max-h-[22rem] overflow-y-auto">
+          <div className="max-h-88 overflow-y-auto">
             {items.map((n) => (
               <button
                 key={n.id}

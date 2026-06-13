@@ -9,7 +9,7 @@ import { budget, goals, cashFlow } from "@/lib/mock-data";
 
 // badge -> icon map (kept here so the server page doesn't pass a component
 // function across the client boundary, which Next forbids).
-const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask Unite": Sparkles } as const;
+const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask UniFi": Sparkles } as const;
 
 // Real, per-feature previews for the marketing deep-dive sections — the same
 // components the product renders, so the landing page shows the actual UI
@@ -17,17 +17,17 @@ const ICONS = { Budgeting: PieChart, "Cash Flow": LineChart, Goals: Target, "Ask
 export function FeaturePreview({ badge }: { badge: string }) {
   const Icon = ICONS[badge as keyof typeof ICONS] ?? PieChart;
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card to-cream-50 shadow-lift">
+    <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border bg-linear-to-br from-card to-cream-50 shadow-lift">
       <div className="absolute inset-0 bg-grid opacity-50" />
       <div className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-full bg-card px-3 py-1.5 text-xs font-semibold text-evergreen-800 shadow-soft">
         <Icon className="h-4 w-4 text-brand-500" /> {badge}
       </div>
-      <div className="absolute inset-x-6 bottom-6 rounded-xl border border-border bg-card/95 p-4 shadow-soft backdrop-blur">
+      <div className="absolute inset-x-6 bottom-6 rounded-xl border border-border bg-card/95 p-4 shadow-soft backdrop-blur-sm">
         {badge === "Cash Flow" ? (
           <CashFlowBars data={cashFlow} height={150} />
         ) : badge === "Goals" ? (
           <GoalsPreview />
-        ) : badge === "Ask Unite" ? (
+        ) : badge === "Ask UniFi" ? (
           <AskPreview />
         ) : (
           <BudgetPreview />
@@ -89,7 +89,7 @@ function AskPreview() {
       </div>
       <div className="w-fit max-w-[88%] rounded-2xl rounded-bl-sm bg-cream-100 px-3 py-2 text-xs text-evergreen-800">
         <span className="mb-1 inline-flex items-center gap-1 font-semibold text-brand-600">
-          <Sparkles className="h-3 w-3" /> Unite
+          <Sparkles className="h-3 w-3" /> UniFi
         </span>
         <br />
         You&apos;ve given <span className="font-semibold tabular-nums">{formatCurrency(12480)}</span> so far this year — about 12.4% of your income. Faithful work.

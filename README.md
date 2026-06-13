@@ -1,8 +1,8 @@
-# Unite Financial
+# UniFi
 
 **Faithful stewardship of every dollar.**
 
-Unite is a Christ-centered personal finance app — budgeting, cash flow,
+UniFi is a Christ-centered personal finance app — budgeting, cash flow,
 goals, generous giving, and a built-in Q&A assistant — in one calm, clear
 place. The design takes deep inspiration from [Monarch](https://www.monarch.com)
 (widely regarded as the best-designed money app today), reworked with our own
@@ -25,13 +25,13 @@ place of Monarch's orange.
 
 ```bash
 npm install
-cp .env.example .env.local   # add ANTHROPIC_API_KEY to enable "Ask Unite"
+cp .env.example .env.local   # add ANTHROPIC_API_KEY to enable "Ask UniFi"
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run test:e2e # Playwright: a11y + behavior across every route
 ```
 
-### "Ask Unite" assistant
+### "Ask UniFi" assistant
 
 The assistant (`/assistant`) is wired to Claude (`claude-opus-4-8`) via a
 server route (`app/api/assistant`) using the official `@anthropic-ai/sdk`.
@@ -68,7 +68,7 @@ lib/
 
 ## Roadmap
 
-- [x] Wire "Ask Unite" to the Claude API, grounded in account data
+- [x] Wire "Ask UniFi" to the Claude API, grounded in account data
 - [ ] Real Plaid Link integration (sandbox → production)
 - [ ] Auth + per-household database (swap the mock snapshot for real data)
 - [ ] Streaming responses for the assistant

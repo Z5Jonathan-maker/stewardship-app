@@ -84,7 +84,7 @@ interface HouseholdContextValue extends HouseholdState {
   ready: boolean;
 }
 
-const STORAGE_KEY = "unite-household-v1";
+const STORAGE_KEY = "unifi-household-v1";
 
 const HouseholdContext = React.createContext<HouseholdContextValue | null>(null);
 

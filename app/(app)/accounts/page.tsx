@@ -75,8 +75,8 @@ export default async function AccountsPage() {
       <div className="mt-6 rounded-2xl border border-dashed border-border bg-cream-50 p-6 text-center">
         <p className="text-sm font-medium text-evergreen-900">Connect another account</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Unite securely links your accounts through Plaid. Connections are
-          read-only — Unite never moves your money.
+          UniFi securely links your accounts through Plaid. Connections are
+          read-only — UniFi never moves your money.
         </p>
         <ConnectAccountButton label="Add via secure link" variant="outline" className="mt-4" />
       </div>

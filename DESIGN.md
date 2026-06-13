@@ -1,4 +1,4 @@
-# DESIGN.md — Unite Financial
+# DESIGN.md — UniFi
 
 Visual identity spec. The source of truth for tokens is the code
 (`app/globals.css` for CSS variables, `tailwind.config.ts` for named scales) —

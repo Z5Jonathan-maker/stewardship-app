@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Fraunces, Inter, Sora } from "next/font/google";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import "./globals.css";
 
@@ -16,14 +16,22 @@ const sora = Sora({
   display: "swap",
 });
 
+// Editorial serif for marketing headlines (see docs/design/monarch-study.md).
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-serif-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "Unite Financial — Faithful stewardship of every dollar",
-    template: "%s · Unite Financial",
+    default: "UniFi — Faithful stewardship of every dollar",
+    template: "%s · UniFi",
   },
   description:
-    "Unite is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
-  metadataBase: new URL("https://unitefinancial.app"),
+    "UniFi is a Christ-centered money app: budgeting, cash flow, goals, and generous giving, all in one calm, clear place. Steward what you've been given.",
+  metadataBase: new URL("https://uunifi.com"),
 };
 
 export default function RootLayout({
@@ -32,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable}`}>
+    <html lang="en" className={`${inter.variable} ${sora.variable} ${fraunces.variable}`}>
       <body>
         <AuthProvider>{children}</AuthProvider>
       </body>

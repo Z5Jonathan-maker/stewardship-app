@@ -36,7 +36,7 @@ export interface Envelope {
 /** The local KEK (dev only). In prod, wrap/unwrap go through KMS instead. */
 function devKek(): Buffer {
   const secret =
-    process.env.APP_ENCRYPTION_KEY ?? "unite-dev-kek-not-for-production";
+    process.env.APP_ENCRYPTION_KEY ?? "unifi-dev-kek-not-for-production";
   return createHash("sha256").update(secret).digest(); // 32 bytes
 }
 
